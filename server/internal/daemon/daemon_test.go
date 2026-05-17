@@ -1641,7 +1641,7 @@ func TestReportTaskResult_CompletedHitsCompleteEndpoint(t *testing.T) {
 	t.Cleanup(srv.Close)
 
 	d := &Daemon{client: NewClient(srv.URL), logger: slog.Default()}
-	d.reportTaskResult(context.Background(), "task-1", TaskResult{
+	d.reportTaskResult(context.Background(), Task{ID: "task-1"}, TaskResult{
 		Status:     "completed",
 		Comment:    "all good",
 		BranchName: "agent/foo",
@@ -1712,7 +1712,7 @@ func TestReportTaskResult_NonCompletedHitsFailEndpoint(t *testing.T) {
 			t.Cleanup(srv.Close)
 
 			d := &Daemon{client: NewClient(srv.URL), logger: slog.Default()}
-			d.reportTaskResult(context.Background(), "task-x", TaskResult{
+			d.reportTaskResult(context.Background(), Task{ID: "task-x"}, TaskResult{
 				Status:        tc.status,
 				Comment:       "rate limit reached",
 				SessionID:     "ses-x",
