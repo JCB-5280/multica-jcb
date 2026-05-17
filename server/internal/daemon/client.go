@@ -7,7 +7,9 @@ import (
 	"errors"
 	"fmt"
 	"io"
+	"mime/multipart"
 	"net/http"
+	"os"
 	"runtime"
 	"strings"
 	"time"
@@ -374,6 +376,48 @@ func (c *Client) GetTaskGCCheck(ctx context.Context, taskID string) (*TaskGCStat
 		return nil, err
 	}
 	return &resp, nil
+}
+
+// UploadTaskOutputFile uploads a file produced by an agent task to the server
+// so it appears in the workspace Files view.
+func (c *Client) UploadTaskOutputFile(ctx context.Context, taskID, filePath, filename string) error {
+	data, err := os.ReadFile(filePath)
+	if err != nil {
+		return fmt.Errorf("read file: %w", err)
+	}
+
+	var body bytes.Buffer
+	mw := multipart.NewWriter(&body)
+	fw, err := mw.CreateFormFile("file", filename)
+	if err != nil {
+		return fmt.Errorf("create form file: %w", err)
+	}
+	if _, err := fw.Write(data); err != nil {
+		return fmt.Errorf("write form file: %w", err)
+	}
+	mw.Close()
+
+	req, err := http.NewRequestWithContext(ctx, http.MethodPost,
+		c.baseURL+"/api/daemon/tasks/"+taskID+"/output-files", &body)
+	if err != nil {
+		return fmt.Errorf("create request: %w", err)
+	}
+	req.Header.Set("Content-Type", mw.FormDataContentType())
+	if c.token != "" {
+		req.Header.Set("Authorization", "Bearer "+c.token)
+	}
+	c.setIdentityHeaders(req)
+
+	resp, err := c.client.Do(req)
+	if err != nil {
+		return fmt.Errorf("upload request: %w", err)
+	}
+	defer resp.Body.Close()
+	io.Copy(io.Discard, resp.Body)
+	if resp.StatusCode >= 400 {
+		return fmt.Errorf("upload failed: HTTP %d", resp.StatusCode)
+	}
+	return nil
 }
 
 func (c *Client) Deregister(ctx context.Context, runtimeIDs []string) error {

@@ -2068,7 +2068,7 @@ func (d *Daemon) handleTask(ctx context.Context, task Task, slot int) {
 		return
 	}
 
-	d.reportTaskResult(ctx, task.ID, result, taskLog)
+	d.reportTaskResult(ctx, task, result, taskLog)
 
 	// Write GC metadata after the task finishes so the periodic GC loop
 	// can look up the parent record (issue / chat session / autopilot run /
@@ -2093,13 +2093,17 @@ func (d *Daemon) handleTask(ctx context.Context, task Task, slot int) {
 // the agent may have built a real session before getting stuck, and we want
 // the next chat turn to resume there rather than start over and "forget"
 // the conversation.
-func (d *Daemon) reportTaskResult(ctx context.Context, taskID string, result TaskResult, taskLog *slog.Logger) {
+func (d *Daemon) reportTaskResult(ctx context.Context, task Task, result TaskResult, taskLog *slog.Logger) {
 	switch result.Status {
 	case "completed":
 		taskLog.Info("task completed", "status", result.Status)
-		if err := d.client.CompleteTask(ctx, taskID, result.Comment, result.BranchName, result.SessionID, result.WorkDir); err != nil {
+		// Upload any files the agent wrote to multica-output/ before reporting success.
+		if result.WorkDir != "" {
+			d.uploadOutputFiles(ctx, task, result.WorkDir, taskLog)
+		}
+		if err := d.client.CompleteTask(ctx, task.ID, result.Comment, result.BranchName, result.SessionID, result.WorkDir); err != nil {
 			taskLog.Error("complete task failed, falling back to fail", "error", err)
-			if failErr := d.client.FailTask(ctx, taskID, fmt.Sprintf("complete task failed: %s", err.Error()), result.SessionID, result.WorkDir, "agent_error"); failErr != nil {
+			if failErr := d.client.FailTask(ctx, task.ID, fmt.Sprintf("complete task failed: %s", err.Error()), result.SessionID, result.WorkDir, "agent_error"); failErr != nil {
 				taskLog.Error("fail task fallback also failed", "error", failErr)
 			}
 		}
@@ -2113,8 +2117,34 @@ func (d *Daemon) reportTaskResult(ctx context.Context, taskID string, result Tas
 			}
 		}
 		taskLog.Info("task did not complete, reporting failure", "status", result.Status, "failure_reason", failureReason)
-		if err := d.client.FailTask(ctx, taskID, result.Comment, result.SessionID, result.WorkDir, failureReason); err != nil {
+		if err := d.client.FailTask(ctx, task.ID, result.Comment, result.SessionID, result.WorkDir, failureReason); err != nil {
 			taskLog.Error("report failed task failed", "error", err)
+		}
+	}
+}
+
+const outputDirName = "multica-output"
+
+// uploadOutputFiles scans <workDir>/multica-output/ and uploads any files found
+// as workspace-level attachments linked to the task's workspace.
+func (d *Daemon) uploadOutputFiles(ctx context.Context, task Task, workDir string, log *slog.Logger) {
+	outputDir := filepath.Join(workDir, outputDirName)
+	entries, err := os.ReadDir(outputDir)
+	if err != nil {
+		if !os.IsNotExist(err) {
+			log.Warn("failed to read multica-output dir", "dir", outputDir, "error", err)
+		}
+		return
+	}
+	for _, entry := range entries {
+		if entry.IsDir() {
+			continue
+		}
+		filePath := filepath.Join(outputDir, entry.Name())
+		if err := d.client.UploadTaskOutputFile(ctx, task.ID, filePath, entry.Name()); err != nil {
+			log.Warn("failed to upload output file", "file", entry.Name(), "error", err)
+		} else {
+			log.Info("uploaded output file", "file", entry.Name())
 		}
 	}
 }

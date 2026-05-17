@@ -524,6 +524,130 @@ func isTextPreviewable(contentType, filename string) bool {
 }
 
 // ---------------------------------------------------------------------------
+// ListWorkspaceFiles — GET /api/workspaces/{slug}/files
+// ---------------------------------------------------------------------------
+
+// ListWorkspaceFiles returns workspace-level attachments (files produced by
+// agent tasks that have no issue, comment, or chat-session parent).
+func (h *Handler) ListWorkspaceFiles(w http.ResponseWriter, r *http.Request) {
+	workspaceID := h.resolveWorkspaceID(r)
+	wsUUID, ok := parseUUIDOrBadRequest(w, workspaceID, "workspace id")
+	if !ok {
+		return
+	}
+
+	files, err := h.Queries.ListWorkspaceFiles(r.Context(), db.ListWorkspaceFilesParams{
+		WorkspaceID: wsUUID,
+		Limit:       200,
+		Offset:      0,
+	})
+	if err != nil {
+		slog.Error("failed to list workspace files", "error", err)
+		writeError(w, http.StatusInternalServerError, "failed to list files")
+		return
+	}
+
+	resp := make([]AttachmentResponse, len(files))
+	for i, f := range files {
+		resp[i] = h.attachmentToResponse(f)
+	}
+	writeJSON(w, http.StatusOK, resp)
+}
+
+// ---------------------------------------------------------------------------
+// UploadTaskOutputFile — POST /api/daemon/tasks/{taskId}/output-files
+// ---------------------------------------------------------------------------
+
+// UploadTaskOutputFile is called by the daemon after a task completes to save
+// agent-produced files into workspace storage. Uses daemon authentication;
+// uploader_type is "agent".
+func (h *Handler) UploadTaskOutputFile(w http.ResponseWriter, r *http.Request) {
+	if h.Storage == nil {
+		writeError(w, http.StatusServiceUnavailable, "file upload not configured")
+		return
+	}
+
+	taskID := chi.URLParam(r, "taskId")
+	task, ok := h.requireDaemonTaskAccess(w, r, taskID)
+	if !ok {
+		return
+	}
+
+	wsID := h.TaskService.ResolveTaskWorkspaceID(r.Context(), task)
+	wsUUID := parseUUID(wsID)
+
+	r.Body = http.MaxBytesReader(w, r.Body, maxUploadSize)
+	if err := r.ParseMultipartForm(maxUploadSize); err != nil {
+		writeError(w, http.StatusBadRequest, "file too large or invalid multipart form")
+		return
+	}
+	defer r.MultipartForm.RemoveAll()
+
+	file, header, err := r.FormFile("file")
+	if err != nil {
+		writeError(w, http.StatusBadRequest, fmt.Sprintf("missing file field: %v", err))
+		return
+	}
+	defer file.Close()
+
+	buf := make([]byte, 512)
+	n, err := file.Read(buf)
+	if err != nil && err != io.EOF {
+		writeError(w, http.StatusBadRequest, "failed to read file")
+		return
+	}
+	contentType := http.DetectContentType(buf[:n])
+	if ct, ok := extContentTypes[strings.ToLower(path.Ext(header.Filename))]; ok {
+		contentType = ct
+	}
+	if _, err := file.Seek(0, io.SeekStart); err != nil {
+		writeError(w, http.StatusInternalServerError, "failed to read file")
+		return
+	}
+	data, err := io.ReadAll(file)
+	if err != nil {
+		writeError(w, http.StatusBadRequest, "failed to read file")
+		return
+	}
+
+	id, err := uuid.NewV7()
+	if err != nil {
+		slog.Error("failed to generate uuid", "error", err)
+		writeError(w, http.StatusInternalServerError, "internal error")
+		return
+	}
+	filename := id.String() + path.Ext(header.Filename)
+	key := "workspaces/" + wsID + "/" + filename
+
+	link, err := h.Storage.Upload(r.Context(), key, data, contentType, header.Filename)
+	if err != nil {
+		slog.Error("task output file upload failed", "error", err)
+		writeError(w, http.StatusInternalServerError, "upload failed")
+		return
+	}
+
+	params := db.CreateAttachmentParams{
+		ID:           pgtype.UUID{Bytes: id, Valid: true},
+		WorkspaceID:  wsUUID,
+		UploaderType: "agent",
+		UploaderID:   task.AgentID,
+		Filename:     header.Filename,
+		Url:          link,
+		ContentType:  contentType,
+		SizeBytes:    int64(len(data)),
+	}
+
+	att, err := h.Queries.CreateAttachment(r.Context(), params)
+	if err != nil {
+		slog.Error("failed to create task output attachment record", "error", err)
+		writeJSON(w, http.StatusOK, map[string]string{"url": link, "filename": header.Filename})
+		return
+	}
+
+	writeJSON(w, http.StatusOK, h.attachmentToResponse(att))
+}
+
+// ---------------------------------------------------------------------------
 // DeleteAttachment — DELETE /api/attachments/{id}
 // ---------------------------------------------------------------------------
 
