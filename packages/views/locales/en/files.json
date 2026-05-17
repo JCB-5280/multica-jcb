@@ -1,0 +1,19 @@
+{
+  "page": {
+    "title": "Files",
+    "empty": {
+      "title": "No files yet",
+      "description": "Files produced by agent tasks will appear here."
+    },
+    "load_error": "Failed to load files",
+    "delete_error": "Failed to delete file",
+    "delete_success": "File deleted",
+    "download": "Download",
+    "delete": "Delete",
+    "uploader_agent": "Agent",
+    "uploader_member": "Member",
+    "size_bytes": "{{size}} B",
+    "size_kb": "{{size}} KB",
+    "size_mb": "{{size}} MB"
+  }
+}

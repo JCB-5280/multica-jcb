@@ -1328,6 +1328,15 @@ export class ApiClient {
     await this.fetch(`/api/tasks/${taskId}/cancel`, { method: "POST" });
   }
 
+  async listWorkspaceFiles(_wsId: string): Promise<Attachment[]> {
+    // workspace is resolved server-side from the X-Workspace-Slug header
+    return this.fetch("/api/files");
+  }
+
+  async deleteWorkspaceFile(id: string): Promise<void> {
+    await this.fetch(`/api/attachments/${id}`, { method: "DELETE" });
+  }
+
   async listAttachments(issueId: string): Promise<Attachment[]> {
     return this.fetch(`/api/issues/${issueId}/attachments`);
   }

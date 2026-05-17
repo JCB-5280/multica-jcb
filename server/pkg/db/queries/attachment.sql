@@ -70,3 +70,19 @@ WHERE workspace_id = $2
 
 -- name: DeleteAttachment :exec
 DELETE FROM attachment WHERE id = $1 AND workspace_id = $2;
+
+-- name: ListWorkspaceFiles :many
+SELECT * FROM attachment
+WHERE workspace_id = $1
+  AND issue_id IS NULL
+  AND comment_id IS NULL
+  AND chat_session_id IS NULL
+ORDER BY created_at DESC
+LIMIT $2 OFFSET $3;
+
+-- name: CountWorkspaceFiles :one
+SELECT COUNT(*) FROM attachment
+WHERE workspace_id = $1
+  AND issue_id IS NULL
+  AND comment_id IS NULL
+  AND chat_session_id IS NULL;
