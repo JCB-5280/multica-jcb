@@ -87,7 +87,7 @@ Fill in:
 | Field | Value |
 |---|---|
 | **GitHub App name** | Anything recognizable, e.g. `Multica` or `Multica (staging)`. |
-| **Homepage URL** | Your Multica frontend, e.g. `https://multica.example.com`. |
+| **Homepage URL** | Your Multica frontend, e.g. `https://mato.example.com`. |
 | **Callback URL** | Leave blank — Multica doesn't use OAuth user identity. |
 | **Setup URL** | `https://<api-host>/api/github/setup`. **Check "Redirect on update"**. |
 | **Webhook → Active** | Enabled. |
@@ -100,7 +100,7 @@ Fill in:
 
 After **Create GitHub App**, note two things from the App's detail page:
 
-- The **public link** at the top — its tail is the slug. `https://github.com/apps/multica-acme` → slug = `multica-acme`.
+- The **public link** at the top — its tail is the slug. `https://github.com/apps/mato-acme` → slug = `mato-acme`.
 - The **webhook secret** you just generated (you can't read it back from GitHub later — save it now).
 
 <Callout type="warning">
@@ -112,7 +112,7 @@ After **Create GitHub App**, note two things from the App's detail page:
 On the API server:
 
 ```dotenv
-GITHUB_APP_SLUG=multica-acme
+GITHUB_APP_SLUG=mato-acme
 GITHUB_WEBHOOK_SECRET=<the webhook secret you generated>
 ```
 

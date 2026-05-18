@@ -1,15 +1,15 @@
 import { useEffect } from "react";
 import { Outlet, useNavigate, useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { WorkspaceSlugProvider, paths } from "@multica/core/paths";
+import { WorkspaceSlugProvider, paths } from "@mato/core/paths";
 import {
   workspaceBySlugOptions,
   workspaceListOptions,
-} from "@multica/core/workspace";
-import { setCurrentWorkspace } from "@multica/core/platform";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceSeen } from "@multica/views/workspace/use-workspace-seen";
-import { WorkspacePresencePrefetch } from "@multica/views/layout";
+} from "@mato/core/workspace";
+import { setCurrentWorkspace } from "@mato/core/platform";
+import { useAuthStore } from "@mato/core/auth";
+import { useWorkspaceSeen } from "@mato/views/workspace/use-workspace-seen";
+import { WorkspacePresencePrefetch } from "@mato/views/layout";
 import { useTabStore } from "@/stores/tab-store";
 
 /**

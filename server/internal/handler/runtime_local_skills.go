@@ -10,8 +10,8 @@ import (
 	"time"
 
 	"github.com/go-chi/chi/v5"
-	"github.com/multica-ai/multica/server/internal/util"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/mato-ai/mato/server/internal/util"
+	"github.com/mato-ai/mato/server/pkg/protocol"
 )
 
 type RuntimeLocalSkillRequestStatus string

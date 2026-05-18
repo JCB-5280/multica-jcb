@@ -1,8 +1,8 @@
 import { describe, expect, it, vi, beforeEach } from "vitest";
 import { render, screen, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import type { AgentRuntime } from "@multica/core/types";
-import { I18nProvider } from "@multica/core/i18n/react";
+import type { AgentRuntime } from "@mato/core/types";
+import { I18nProvider } from "@mato/core/i18n/react";
 import enCommon from "../../locales/en/common.json";
 import enOnboarding from "../../locales/en/onboarding.json";
 
@@ -23,9 +23,9 @@ const mocks = vi.hoisted(() => ({
 // Partial mock — preserve ONBOARDING_STEP_ORDER etc. that StepHeader
 // (rendered inside the fork) reaches for, while replacing the network
 // call we want to assert on.
-vi.mock("@multica/core/onboarding", async (importOriginal) => {
+vi.mock("@mato/core/onboarding", async (importOriginal) => {
   const actual =
-    await importOriginal<typeof import("@multica/core/onboarding")>();
+    await importOriginal<typeof import("@mato/core/onboarding")>();
   return {
     ...actual,
     joinCloudWaitlist: mocks.joinCloudWaitlist,

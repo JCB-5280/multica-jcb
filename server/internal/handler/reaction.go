@@ -7,9 +7,9 @@ import (
 
 	"github.com/go-chi/chi/v5"
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/multica-ai/multica/server/internal/logger"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/mato-ai/mato/server/internal/logger"
+	db "github.com/mato-ai/mato/server/pkg/db/generated"
+	"github.com/mato-ai/mato/server/pkg/protocol"
 )
 
 type ReactionResponse struct {

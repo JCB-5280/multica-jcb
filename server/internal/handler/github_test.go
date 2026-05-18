@@ -13,7 +13,7 @@ import (
 	"testing"
 	"time"
 
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
+	db "github.com/mato-ai/mato/server/pkg/db/generated"
 )
 
 func TestExtractIdentifiers(t *testing.T) {

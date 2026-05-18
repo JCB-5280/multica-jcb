@@ -1,6 +1,6 @@
-import type { LocaleAdapter, SupportedLocale } from "@multica/core/i18n";
+import type { LocaleAdapter, SupportedLocale } from "@mato/core/i18n";
 
-const STORAGE_KEY = "multica-locale";
+const STORAGE_KEY = "mato-locale";
 
 // Desktop adapter:
 //   - User choice: localStorage (set by Settings switcher).

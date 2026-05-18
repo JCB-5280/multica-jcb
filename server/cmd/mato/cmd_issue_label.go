@@ -8,11 +8,11 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/multica-ai/multica/server/internal/cli"
+	"github.com/mato-ai/mato/server/internal/cli"
 )
 
-// multica issue label {list|add|remove} — manages the labels attached to a
-// specific issue. The label itself is managed via `multica label ...`.
+// mato issue label {list|add|remove} — manages the labels attached to a
+// specific issue. The label itself is managed via `mato label ...`.
 
 var issueLabelCmd = &cobra.Command{
 	Use:   "label",

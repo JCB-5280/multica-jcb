@@ -68,7 +68,7 @@ graph TB
     end
 
     subgraph Agent["Agent Tier (user's machine)"]
-        Daemon["multica daemon\n(Go binary)"]
+        Daemon["mato daemon\n(Go binary)"]
         CLI["Agent CLI subprocess\n(Claude Code, Codex, Cursor…)"]
         Daemon --> CLI
     end
@@ -108,7 +108,7 @@ The web app (`apps/web/`) adds only Next.js-specific wiring. The desktop app (`a
 
 ### 3. The Daemon (local agent runtime)
 
-The daemon is a separate Go binary (`multica daemon`) that runs on a developer's local machine (or a CI server). Its job:
+The daemon is a separate Go binary (`mato daemon`) that runs on a developer's local machine (or a CI server). Its job:
 
 1. Connect to the server via WebSocket
 2. Register available agent runtimes (Claude Code, Codex, Cursor, etc.)

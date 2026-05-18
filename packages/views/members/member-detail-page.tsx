@@ -2,12 +2,12 @@
 
 import { ChevronRight, UserRound } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import type { MemberRole } from "@multica/core/types";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useCurrentWorkspace } from "@multica/core/paths";
-import { memberListOptions } from "@multica/core/workspace/queries";
-import { ActorAvatar as ActorAvatarBase } from "@multica/ui/components/common/actor-avatar";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
+import type { MemberRole } from "@mato/core/types";
+import { useWorkspaceId } from "@mato/core/hooks";
+import { useCurrentWorkspace } from "@mato/core/paths";
+import { memberListOptions } from "@mato/core/workspace/queries";
+import { ActorAvatar as ActorAvatarBase } from "@mato/ui/components/common/actor-avatar";
+import { Skeleton } from "@mato/ui/components/ui/skeleton";
 import { PageHeader } from "../layout/page-header";
 import { WorkspaceAvatar } from "../workspace/workspace-avatar";
 import { ActorIssuesPanel } from "../common/actor-issues-panel";

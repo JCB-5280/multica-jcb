@@ -2,14 +2,14 @@
 
 import { useEffect, useRef, useState } from "react";
 import { Camera, Loader2, Save } from "lucide-react";
-import { Input } from "@multica/ui/components/ui/input";
-import { Label } from "@multica/ui/components/ui/label";
-import { Button } from "@multica/ui/components/ui/button";
-import { Card, CardContent } from "@multica/ui/components/ui/card";
+import { Input } from "@mato/ui/components/ui/input";
+import { Label } from "@mato/ui/components/ui/label";
+import { Button } from "@mato/ui/components/ui/button";
+import { Card, CardContent } from "@mato/ui/components/ui/card";
 import { toast } from "sonner";
-import { useAuthStore } from "@multica/core/auth";
-import { api } from "@multica/core/api";
-import { useFileUpload } from "@multica/core/hooks/use-file-upload";
+import { useAuthStore } from "@mato/core/auth";
+import { api } from "@mato/core/api";
+import { useFileUpload } from "@mato/core/hooks/use-file-upload";
 import { useT } from "../../i18n";
 
 export function AccountTab() {

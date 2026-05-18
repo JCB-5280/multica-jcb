@@ -19,7 +19,7 @@
 
 ## 目录
 
-1. [Multica 是什么](#1-multica-是什么)
+1. [Multica 是什么](#1-mato-是什么)
 2. [核心概念词典](#2-核心概念词典)
 3. [功能全景（按模块）](#3-功能全景按模块)
    - 3.1 [Workspace 工作区](#31-workspace-工作区)
@@ -289,7 +289,7 @@ Agent 是 Multica 的灵魂。几乎所有功能都围绕"如何让一个 agent 
 
 #### Daemon 是什么
 
-`multica` CLI 在用户的机器上启动一个后台进程（macOS launchd / Linux systemd / Windows 服务风格），它：
+`mato` CLI 在用户的机器上启动一个后台进程（macOS launchd / Linux systemd / Windows 服务风格），它：
 
 1. **自动探测** `$PATH` 上安装的 coding CLI（`claude`, `codex`, `opencode`, `openclaw`, `hermes`, `gemini`, `pi`, `cursor-agent`, `kimi`, `kiro-cli`）
 2. 向 server **注册** 为一组 runtime（一个 CLI = 一个 runtime）
@@ -321,19 +321,19 @@ Agent 是 Multica 的灵魂。几乎所有功能都围绕"如何让一个 agent 
 
 | 命令 | 说明 |
 |------|------|
-| `multica setup` | 一键配置：填 URL + 登录 + 启动 daemon |
-| `multica login` | 浏览器打开 OAuth 登录，保存 90 天 PAT 到 `~/.multica/config.json` |
-| `multica login --token <pat>` | 无头登录（SSH/CI） |
-| `multica daemon start` | 后台启动 daemon（写 PID 到 `~/.multica/daemon.pid`，日志到 `~/.multica/daemon.log`） |
-| `multica daemon stop` | 发 SIGTERM，优雅关闭（等待进行中的任务完成，超时 30s） |
-| `multica daemon status` | 打印 daemon 状态、探测到的 agent、watch 中的 workspace |
-| `multica daemon logs -f` | 实时跟随日志 |
-| `multica daemon start --profile <name>` | 启动独立配置的 daemon（用于多环境，比如同时连 staging 和生产） |
+| `mato setup` | 一键配置：填 URL + 登录 + 启动 daemon |
+| `mato login` | 浏览器打开 OAuth 登录，保存 90 天 PAT 到 `~/.mato/config.json` |
+| `mato login --token <pat>` | 无头登录（SSH/CI） |
+| `mato daemon start` | 后台启动 daemon（写 PID 到 `~/.mato/daemon.pid`，日志到 `~/.mato/daemon.log`） |
+| `mato daemon stop` | 发 SIGTERM，优雅关闭（等待进行中的任务完成，超时 30s） |
+| `mato daemon status` | 打印 daemon 状态、探测到的 agent、watch 中的 workspace |
+| `mato daemon logs -f` | 实时跟随日志 |
+| `mato daemon start --profile <name>` | 启动独立配置的 daemon（用于多环境，比如同时连 staging 和生产） |
 
 #### 安全边界
 
-- 每个任务一个**独立工作目录** `~/multica_workspaces/{ws}/{task_short_id}/workdir/`
-- 环境变量**过滤**：阻止 agent 覆盖 daemon 的认证变量（`MULTICA_TOKEN` 等）
+- 每个任务一个**独立工作目录** `~/mato_workspaces/{ws}/{task_short_id}/workdir/`
+- 环境变量**过滤**：阻止 agent 覆盖 daemon 的认证变量（`MATO_TOKEN` 等）
 - 仓库访问**白名单**：agent 只能 checkout workspace 配置的仓库
 - Codex 有**版本相关的 sandbox 策略**
 
@@ -384,11 +384,11 @@ skill
 #### CLI 对应命令
 
 ```bash
-multica skill list
-multica skill get <id>
-multica skill create --title ...
-multica skill import --url https://...
-multica skill files upsert <skill-id> --path ...
+mato skill list
+mato skill get <id>
+mato skill create --title ...
+mato skill import --url https://...
+mato skill files upsert <skill-id> --path ...
 ```
 
 #### 产品里的位置
@@ -434,7 +434,7 @@ autopilot
 
 - **Schedule（cron）**：server 后台每 30 秒扫一次 `autopilot_trigger`，到点的触发出去
 - **Webhook**：给出一个带 `webhook_token` 的 URL，外部 POST 即可触发
-- **API / Manual**：UI 上点"立即运行"按钮，或用 CLI `multica autopilot trigger <id>`
+- **API / Manual**：UI 上点"立即运行"按钮，或用 CLI `mato autopilot trigger <id>`
 
 #### 并发策略
 
@@ -577,7 +577,7 @@ Inbox 是"主动注意力系统"，让用户不必一直盯着看板也知道哪
 
 #### 邀请接受的桌面特殊处理
 
-桌面端的 `multica://invite/{id}` 深链接**不是走路由**，而是触发 `WindowOverlay`——共享视图组件 `InvitePage` 装在原生窗口覆盖层里，保证拖拽移动窗口等原生体验。
+桌面端的 `mato://invite/{id}` 深链接**不是走路由**，而是触发 `WindowOverlay`——共享视图组件 `InvitePage` 装在原生窗口覆盖层里，保证拖拽移动窗口等原生体验。
 
 #### 产品里的位置
 
@@ -689,46 +689,46 @@ Settings 是所有"配置即工作"动作的汇总：agent 的 prompt、workspac
 
 ### 3.14 CLI 命令行工具
 
-`multica` 不只是启动 daemon 的工具，也是完整的命令行操作层。很多用户喜欢在终端里推进工作而不是开 UI。
+`mato` 不只是启动 daemon 的工具，也是完整的命令行操作层。很多用户喜欢在终端里推进工作而不是开 UI。
 
 #### 工作区 / 议题
 
 ```bash
-multica workspace list | get | watch | unwatch
-multica issue list | get | create | update | assign | status
-multica issue comment list | add | delete
-multica issue runs <id>                 # 查看任务执行历史
-multica issue run-messages <task-id>    # 查看某次执行的消息
+mato workspace list | get | watch | unwatch
+mato issue list | get | create | update | assign | status
+mato issue comment list | add | delete
+mato issue runs <id>                 # 查看任务执行历史
+mato issue run-messages <task-id>    # 查看某次执行的消息
 ```
 
 #### Agent / Skill / Autopilot / Project / Repo
 
 ```bash
-multica agent list | get | create | update | archive
-multica skill list | get | create | update | delete | import | files upsert
-multica autopilot list | get | create | update | trigger
-multica autopilot trigger-add --cron "0 9 * * 1-5"
-multica project list | get | create | update
-multica repo list | add | update | delete
+mato agent list | get | create | update | archive
+mato skill list | get | create | update | delete | import | files upsert
+mato autopilot list | get | create | update | trigger
+mato autopilot trigger-add --cron "0 9 * * 1-5"
+mato project list | get | create | update
+mato repo list | add | update | delete
 ```
 
 #### Runtime
 
 ```bash
-multica runtime list | usage | activity | update
+mato runtime list | usage | activity | update
 ```
 
 #### 配置 / 更新
 
 ```bash
-multica config show | set server_url ...
-multica auth status | logout
-multica version | update
+mato config show | set server_url ...
+mato auth status | logout
+mato version | update
 ```
 
 #### 产品里的位置
 
-CLI 是 Multica 对开发者友好度的体现。对于 agent 自己来说，也同等重要——**agent 在执行任务时能调用 `multica` 命令读写 issue、评论、查文档**，这正是 CLI 在 "agent 作为一等公民"架构里的作用。
+CLI 是 Multica 对开发者友好度的体现。对于 agent 自己来说，也同等重要——**agent 在执行任务时能调用 `mato` 命令读写 issue、评论、查文档**，这正是 CLI 在 "agent 作为一等公民"架构里的作用。
 
 ---
 
@@ -736,7 +736,7 @@ CLI 是 Multica 对开发者友好度的体现。对于 agent 自己来说，也
 
 ```
 ┌─────────────────────┐        ┌────────────────────┐        ┌──────────────────┐
-│  Next.js Web App    │        │  Electron Desktop  │        │  multica CLI     │
+│  Next.js Web App    │        │  Electron Desktop  │        │  mato CLI     │
 │  apps/web           │        │  apps/desktop      │        │  server/cmd/     │
 └──────────┬──────────┘        └──────────┬─────────┘        └────────┬─────────┘
            │  HTTP + WebSocket             │                           │  HTTP
@@ -782,7 +782,7 @@ CLI 是 Multica 对开发者友好度的体现。对于 agent 自己来说，也
 | **Web / Desktop 客户端** | UI、本地客户端状态（Zustand）、服务器状态缓存（TanStack Query）、WebSocket 订阅 | 业务规则、AI 调用 |
 | **Server** | 持久化、权限、任务编排、事件广播、Autopilot 调度、Runtime 健康监测 | 不直接执行 agent、不调 LLM |
 | **Daemon** | 探测并启动本地 CLI、管理任务工作目录、流式上报消息、session 恢复 | 不做业务决策、只认 server 给它的任务 |
-| **Agent CLI（Claude Code 等）** | 实际调用 LLM、执行工具调用、写文件、跑测试 | 不感知 Multica 的数据模型（所有上下文通过 `multica` CLI 命令读回） |
+| **Agent CLI（Claude Code 等）** | 实际调用 LLM、执行工具调用、写文件、跑测试 | 不感知 Multica 的数据模型（所有上下文通过 `mato` CLI 命令读回） |
 
 ### 实时层（WebSocket）
 
@@ -863,7 +863,7 @@ Server 启动三个 goroutine：
 ### 桌面端特有（不是路由，是 WindowOverlay）
 
 - **Create workspace overlay**
-- **Invite accept overlay**（来自 `multica://invite/{id}` 深链接）
+- **Invite accept overlay**（来自 `mato://invite/{id}` 深链接）
 - **Onboarding overlay**（首次或零工作区时）
 
 ---
@@ -888,7 +888,7 @@ Server 启动三个 goroutine：
 - **本地 daemon runtime 卡片**：在 Runtimes 页面自动显示本机 daemon
 - **自动更新**：`Settings → Updates` 检查/下载/安装新版本
 - **Immersive mode**：全屏模式，隐藏侧边栏
-- **深链接**：`multica://auth/callback?token=...` 和 `multica://invite/{id}`
+- **深链接**：`mato://auth/callback?token=...` 和 `mato://invite/{id}`
 - **拖动区**：macOS 的红绿灯 + 顶部 48px 拖拽条（`h-12`）用来移动窗口
 - **Workspace 单例守护**：`setCurrentWorkspace()` 管理当前活跃工作区的全局身份
 

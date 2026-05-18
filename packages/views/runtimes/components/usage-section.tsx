@@ -3,17 +3,17 @@
 import { useMemo, useState } from "react";
 import { BarChart3, ChevronRight, AlertCircle } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { Button } from "@multica/ui/components/ui/button";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { agentListOptions } from "@multica/core/workspace/queries";
-import type { RuntimeUsage } from "@multica/core/types";
+import { Skeleton } from "@mato/ui/components/ui/skeleton";
+import { Button } from "@mato/ui/components/ui/button";
+import { useWorkspaceId } from "@mato/core/hooks";
+import { agentListOptions } from "@mato/core/workspace/queries";
+import type { RuntimeUsage } from "@mato/core/types";
 import {
   runtimeUsageOptions,
   runtimeUsageByAgentOptions,
   runtimeUsageByHourOptions,
-} from "@multica/core/runtimes/queries";
-import { useCustomPricingStore } from "@multica/core/runtimes/custom-pricing-store";
+} from "@mato/core/runtimes/queries";
+import { useCustomPricingStore } from "@mato/core/runtimes/custom-pricing-store";
 import {
   formatTokens,
   estimateCost,

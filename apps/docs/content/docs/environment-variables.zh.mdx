@@ -13,15 +13,15 @@ Multica 的 [自部署](/self-host-quickstart) 服务器启动时从环境变量
 
 | 环境变量 | 默认值 | 生产必须设？ |
 |---|---|---|
-| `DATABASE_URL` | `postgres://multica:multica@localhost:5432/multica?sslmode=disable` | **是** |
+| `DATABASE_URL` | `postgres://mato:mato@localhost:5432/mato?sslmode=disable` | **是** |
 | `PORT` | `8080` | 否（除非换端口）|
-| `JWT_SECRET` | `multica-dev-secret-change-in-production` | **是**（默认值不安全）|
+| `JWT_SECRET` | `mato-dev-secret-change-in-production` | **是**（默认值不安全）|
 | `APP_ENV` | 空 | **是**（必须 `production`）|
 | `FRONTEND_ORIGIN` | 空 | **是**（self-host 要填你自己的域名）|
-| `MULTICA_DEV_VERIFICATION_CODE` | 空 | 否（生产必须保持为空）|
+| `MATO_DEV_VERIFICATION_CODE` | 空 | 否（生产必须保持为空）|
 
 <Callout type="warning">
-**生产环境保持 `MULTICA_DEV_VERIFICATION_CODE` 为空。** 固定本地测试验证码默认关闭；如果你设置 `MULTICA_DEV_VERIFICATION_CODE=888888`，在 `APP_ENV` 非 production 时，任何能请求验证码的人都能用这个固定值登录。`APP_ENV=production` 时该快捷码会被忽略。
+**生产环境保持 `MATO_DEV_VERIFICATION_CODE` 为空。** 固定本地测试验证码默认关闭；如果你设置 `MATO_DEV_VERIFICATION_CODE=888888`，在 `APP_ENV` 非 production 时，任何能请求验证码的人都能用这个固定值登录。`APP_ENV=production` 时该快捷码会被忽略。
 </Callout>
 
 ### 数据库连接池
@@ -42,7 +42,7 @@ Multica 支持两种邮件发送通道——[Resend](https://resend.com/) 适合
 | 环境变量 | 默认值 | 说明 |
 |---|---|---|
 | `RESEND_API_KEY` | 空 | Resend API key |
-| `RESEND_FROM_EMAIL` | `noreply@multica.ai` | 发件地址（必须是 Resend 账号已验证的域名；走 SMTP 时同时作为 `From:` 头）|
+| `RESEND_FROM_EMAIL` | `noreply@mato.ai` | 发件地址（必须是 Resend 账号已验证的域名；走 SMTP 时同时作为 `From:` 头）|
 
 ### SMTP relay
 
@@ -134,12 +134,12 @@ Multica 存储用户上传的附件（评论里的图片、文件等）。**优�
 
 | 环境变量 | 默认值 | 说明 |
 |---|---|---|
-| `MULTICA_SERVER_URL` | `ws://localhost:8080/ws` | server 地址（self-host 换成你的域名）|
-| `MULTICA_DAEMON_HEARTBEAT_INTERVAL` | `15s` | 心跳频率 |
-| `MULTICA_DAEMON_POLL_INTERVAL` | `3s` | 任务轮询频率 |
-| `MULTICA_DAEMON_MAX_CONCURRENT_TASKS` | `20` | 并发任务上限 |
-| `MULTICA_<PROVIDER>_PATH` | 对应 CLI 名 | 各 AI 编程工具的可执行文件路径（如 `MULTICA_CLAUDE_PATH`）|
-| `MULTICA_<PROVIDER>_MODEL` | 空 | 各 AI 编程工具的默认模型 |
+| `MATO_SERVER_URL` | `ws://localhost:8080/ws` | server 地址（self-host 换成你的域名）|
+| `MATO_DAEMON_HEARTBEAT_INTERVAL` | `15s` | 心跳频率 |
+| `MATO_DAEMON_POLL_INTERVAL` | `3s` | 任务轮询频率 |
+| `MATO_DAEMON_MAX_CONCURRENT_TASKS` | `20` | 并发任务上限 |
+| `MATO_<PROVIDER>_PATH` | 对应 CLI 名 | 各 AI 编程工具的可执行文件路径（如 `MATO_CLAUDE_PATH`）|
+| `MATO_<PROVIDER>_MODEL` | 空 | 各 AI 编程工具的默认模型 |
 
 完整解释每个参数对守护进程行为的影响，见 [守护进程与运行时](/daemon-runtimes)。
 
@@ -147,12 +147,12 @@ Multica 存储用户上传的附件（评论里的图片、文件等）。**优�
 
 | 环境变量 | 默认值 | 说明 |
 |---|---|---|
-| `FRONTEND_ORIGIN` | 空 | 前端地址。邀请邮件里的链接、CORS 白名单、cookie domain 都从这里推导。邮件链接在不设时会 fallback 到托管版域名 `https://app.multica.ai`——self-host 必须显式填 |
+| `FRONTEND_ORIGIN` | 空 | 前端地址。邀请邮件里的链接、CORS 白名单、cookie domain 都从这里推导。邮件链接在不设时会 fallback 到托管版域名 `https://app.mato.ai`——self-host 必须显式填 |
 | `CORS_ALLOWED_ORIGINS` | 空 | 额外的 CORS 允许来源（逗号分隔）|
 | `ALLOWED_ORIGINS` | 空 | WebSocket 专用的 origin 白名单（逗号分隔）；不设就按 `CORS_ALLOWED_ORIGINS` → `FRONTEND_ORIGIN` → `localhost:3000/5173/5174` 顺序回落 |
 
 <Callout type="warning">
-**`FRONTEND_ORIGIN` 不设就有两个静默失败**：（1）邀请邮件里的链接指向 `https://app.multica.ai`（托管版的域名），用户点了跳不回你的 self-host 实例；（2）WebSocket 连接的 Origin 校验回落到 `localhost:3000 / 5173 / 5174`，生产部署的 WebSocket 全部被拒，前端看起来「实时更新不工作」。
+**`FRONTEND_ORIGIN` 不设就有两个静默失败**：（1）邀请邮件里的链接指向 `https://app.mato.ai`（托管版的域名），用户点了跳不回你的 self-host 实例；（2）WebSocket 连接的 Origin 校验回落到 `localhost:3000 / 5173 / 5174`，生产部署的 WebSocket 全部被拒，前端看起来「实时更新不工作」。
 </Callout>
 
 ## GitHub 集成
@@ -186,4 +186,4 @@ Multica 存储用户上传的附件（评论里的图片、文件等）。**优�
 - [登录与注册配置](/auth-setup) —— 上面 auth 相关的那几个环境变量怎么真的配、陷阱在哪
 - [GitHub 集成](/github-integration) —— `GITHUB_APP_SLUG` / `GITHUB_WEBHOOK_SECRET` 背后的 GitHub App 怎么建
 - [故障排查](/troubleshooting) —— 配错了常见的症状和修复
-- [守护进程与运行时](/daemon-runtimes) —— `MULTICA_DAEMON_*` 参数的行为含义
+- [守护进程与运行时](/daemon-runtimes) —— `MATO_DAEMON_*` 参数的行为含义

@@ -9,18 +9,18 @@ import {
   ScrollText,
 } from "lucide-react";
 import { useQuery } from "@tanstack/react-query";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { runtimeListOptions } from "@multica/core/runtimes";
-import { agentTaskSnapshotOptions } from "@multica/core/agents";
-import { cn } from "@multica/ui/lib/utils";
-import { Button } from "@multica/ui/components/ui/button";
+import { useWorkspaceId } from "@mato/core/hooks";
+import { runtimeListOptions } from "@mato/core/runtimes";
+import { agentTaskSnapshotOptions } from "@mato/core/agents";
+import { cn } from "@mato/ui/lib/utils";
+import { Button } from "@mato/ui/components/ui/button";
 import {
   Card,
   CardAction,
   CardDescription,
   CardHeader,
   CardTitle,
-} from "@multica/ui/components/ui/card";
+} from "@mato/ui/components/ui/card";
 import {
   Dialog,
   DialogContent,
@@ -28,7 +28,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
+} from "@mato/ui/components/ui/dialog";
 import { toast } from "sonner";
 import { DaemonPanel } from "./daemon-panel";
 import type { DaemonStatus } from "../../../shared/daemon-types";

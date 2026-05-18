@@ -1,7 +1,7 @@
 "use client";
 
 import { createContext, useContext, useMemo, type ReactNode } from "react";
-import type { Attachment } from "@multica/core/types";
+import type { Attachment } from "@mato/core/types";
 import { openExternal } from "../platform";
 import { useDownloadAttachment } from "./use-download-attachment";
 

@@ -68,7 +68,7 @@ views/
 
 Atomic UI components with zero business logic. Based on shadcn/ui with Base UI primitives (`@base-ui/react`). When you need a new component, install it with `pnpm ui:add <name>` from the project root — this writes to this package.
 
-**Key rule:** UI has zero imports from `@multica/core`. If a UI component needs business logic, it should receive it as props.
+**Key rule:** UI has zero imports from `@mato/core`. If a UI component needs business logic, it should receive it as props.
 
 ---
 

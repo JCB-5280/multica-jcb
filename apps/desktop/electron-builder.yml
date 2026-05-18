@@ -1,4 +1,4 @@
-appId: ai.multica.desktop
+appId: ai.mato.desktop
 productName: Multica
 directories:
   buildResources: build
@@ -11,7 +11,7 @@ files:
 protocols:
   - name: Multica
     schemes:
-      - multica
+      - mato
 asarUnpack:
   - resources/**
 mac:
@@ -19,40 +19,40 @@ mac:
   target:
     - dmg
     - zip
-  # Hardcoded name avoids the `@multica/desktop-*` subdirectory that
+  # Hardcoded name avoids the `@mato/desktop-*` subdirectory that
   # `${name}` produces for scoped package names.
-  # Naming scheme: multica-desktop-<version>-<platform>-<arch>.<ext>
+  # Naming scheme: mato-desktop-<version>-<platform>-<arch>.<ext>
   # so the filename alone surfaces kind, version, platform, and CPU arch.
-  artifactName: multica-desktop-${version}-mac-${arch}.${ext}
+  artifactName: mato-desktop-${version}-mac-${arch}.${ext}
   # Notarize via notarytool. Requires APPLE_ID + APPLE_APP_SPECIFIC_PASSWORD
   # + APPLE_TEAM_ID env vars at package time. Non-mac contributors are
   # unaffected because `pnpm package` already requires the Developer ID
   # signing cert — notarization is a strict superset.
   notarize: true
 dmg:
-  artifactName: multica-desktop-${version}-mac-${arch}.${ext}
+  artifactName: mato-desktop-${version}-mac-${arch}.${ext}
 linux:
   # Override the Linux executable name to avoid leaking the scoped npm
-  # package name (`@multica/desktop`) into the installed binary, the
+  # package name (`@mato/desktop`) into the installed binary, the
   # `.desktop` file, and the hicolor icon filename. Without this override
   # electron-builder defaults `executableName` to the package `name`,
-  # which after slash-stripping becomes `@multicadesktop` — producing
-  # `/usr/share/applications/@multicadesktop.desktop`,
-  # `Icon=@multicadesktop`, and
-  # `/usr/share/icons/hicolor/*/apps/@multicadesktop.png`. The leading `@`
+  # which after slash-stripping becomes `@matodesktop` — producing
+  # `/usr/share/applications/@matodesktop.desktop`,
+  # `Icon=@matodesktop`, and
+  # `/usr/share/icons/hicolor/*/apps/@matodesktop.png`. The leading `@`
   # violates the freedesktop desktop-entry naming guidance, so GNOME /
   # Ubuntu fail to associate the running window with the `.desktop` entry
   # and fall back to the theme's default app icon (the Settings gear on
-  # Yaru). Forcing `multica` makes every Linux identity slot agree and
+  # Yaru). Forcing `mato` makes every Linux identity slot agree and
   # matches `StartupWMClass=Multica` (productName-derived).
-  executableName: multica
+  executableName: mato
   # Pin StartupWMClass to the WM_CLASS Electron emits on X11. Electron
   # derives WM_CLASS from `app.getName()`, which reads the *packaged*
   # ASAR's `package.json` — `productName` if present, otherwise `name`.
   # PR #2437 assumed electron-builder.yml's productName fed app.getName()
   # directly; it does not. With our source package.json carrying only
-  # `name: "@multica/desktop"`, packaged Electron emitted
-  # `WM_CLASS=@multica/desktop`, which broke association with this entry
+  # `name: "@mato/desktop"`, packaged Electron emitted
+  # `WM_CLASS=@mato/desktop`, which broke association with this entry
   # and reproduced #2515 on Ubuntu 0.2.31. The fix lives in two places
   # outside this file — `productName: "Multica"` on the source
   # package.json (so the ASAR carries it) and `app.setName("Multica")`
@@ -75,7 +75,7 @@ linux:
     - AppImage
     - deb
     - rpm
-  artifactName: multica-desktop-${version}-linux-${arch}.${ext}
+  artifactName: mato-desktop-${version}-linux-${arch}.${ext}
 rpm:
   # Disable RPM build-id symlinks. Electron apps embed the upstream Electron
   # binary, whose GNU build-id is identical across every app shipping the same
@@ -87,11 +87,11 @@ rpm:
 win:
   target:
     - nsis
-  artifactName: multica-desktop-${version}-windows-${arch}.${ext}
+  artifactName: mato-desktop-${version}-windows-${arch}.${ext}
 publish:
   provider: github
-  owner: multica-ai
-  repo: multica
+  owner: mato-ai
+  repo: mato
   # Align with our CLI release flow which pre-creates a *published* GitHub
   # Release via `gh release create`. The electron-builder default of
   # `releaseType: draft` conflicts with `existingType=release` and causes

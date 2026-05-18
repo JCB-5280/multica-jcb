@@ -45,7 +45,7 @@ func newWaitlistRequest(userID string, body map[string]string) *http.Request {
 }
 
 func TestJoinCloudWaitlistRecordsEmailAndReason(t *testing.T) {
-	userID := newWaitlistTestUser(t, "waitlist-ok@multica.ai")
+	userID := newWaitlistTestUser(t, "waitlist-ok@mato.ai")
 
 	w := httptest.NewRecorder()
 	req := newWaitlistRequest(userID, map[string]string{
@@ -84,7 +84,7 @@ func TestJoinCloudWaitlistRecordsEmailAndReason(t *testing.T) {
 }
 
 func TestJoinCloudWaitlistAllowsEmptyReason(t *testing.T) {
-	userID := newWaitlistTestUser(t, "waitlist-noreason@multica.ai")
+	userID := newWaitlistTestUser(t, "waitlist-noreason@mato.ai")
 
 	w := httptest.NewRecorder()
 	req := newWaitlistRequest(userID, map[string]string{
@@ -107,7 +107,7 @@ func TestJoinCloudWaitlistAllowsEmptyReason(t *testing.T) {
 }
 
 func TestJoinCloudWaitlistMissingEmailReturns400(t *testing.T) {
-	userID := newWaitlistTestUser(t, "waitlist-missing@multica.ai")
+	userID := newWaitlistTestUser(t, "waitlist-missing@mato.ai")
 
 	cases := []map[string]string{
 		{},                        // empty body
@@ -127,7 +127,7 @@ func TestJoinCloudWaitlistMissingEmailReturns400(t *testing.T) {
 }
 
 func TestJoinCloudWaitlistRejectsOverlongReason(t *testing.T) {
-	userID := newWaitlistTestUser(t, "waitlist-long@multica.ai")
+	userID := newWaitlistTestUser(t, "waitlist-long@mato.ai")
 
 	w := httptest.NewRecorder()
 	req := newWaitlistRequest(userID, map[string]string{
@@ -141,7 +141,7 @@ func TestJoinCloudWaitlistRejectsOverlongReason(t *testing.T) {
 }
 
 func TestJoinCloudWaitlistSecondCallOverwrites(t *testing.T) {
-	userID := newWaitlistTestUser(t, "waitlist-overwrite@multica.ai")
+	userID := newWaitlistTestUser(t, "waitlist-overwrite@mato.ai")
 
 	// First submission.
 	w := httptest.NewRecorder()

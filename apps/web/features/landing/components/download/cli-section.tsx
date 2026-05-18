@@ -5,8 +5,8 @@ import { Check, Copy, Terminal } from "lucide-react";
 import { useLocale } from "../../i18n";
 
 const INSTALL_CMD =
-  "curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh | bash";
-const SETUP_CMD = "multica setup";
+  "curl -fsSL https://raw.githubusercontent.com/mato-ai/mato/main/scripts/install.sh | bash";
+const SETUP_CMD = "mato setup";
 
 /**
  * Scenario-first CLI section. Copy leans into servers / remote dev

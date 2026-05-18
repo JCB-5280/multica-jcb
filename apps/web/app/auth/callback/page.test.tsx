@@ -1,6 +1,6 @@
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, waitFor } from "@testing-library/react";
-import { paths } from "@multica/core/paths";
+import { paths } from "@mato/core/paths";
 
 const {
   mockPush,
@@ -21,7 +21,7 @@ const {
 const makeUser = (overrides: Partial<{ onboarded_at: string | null }> = {}) => ({
   id: "user-1",
   name: "Test",
-  email: "test@multica.ai",
+  email: "test@mato.ai",
   avatar_url: null,
   onboarded_at: null,
   onboarding_questionnaire: {},
@@ -41,10 +41,10 @@ vi.mock("@tanstack/react-query", () => ({
 
 // Preserve the real sanitizeNextUrl so the "drop unsafe ?next=" behavior is
 // exercised rather than silently diverging from the source of truth.
-vi.mock("@multica/core/auth", async () => {
+vi.mock("@mato/core/auth", async () => {
   const actual =
-    await vi.importActual<typeof import("@multica/core/auth")>(
-      "@multica/core/auth",
+    await vi.importActual<typeof import("@mato/core/auth")>(
+      "@mato/core/auth",
     );
   return {
     ...actual,
@@ -53,14 +53,14 @@ vi.mock("@multica/core/auth", async () => {
   };
 });
 
-vi.mock("@multica/core/workspace/queries", () => ({
+vi.mock("@mato/core/workspace/queries", () => ({
   workspaceKeys: {
     list: () => ["workspaces"],
     myInvitations: () => ["invitations", "mine"],
   },
 }));
 
-vi.mock("@multica/core/api", () => ({
+vi.mock("@mato/core/api", () => ({
   api: {
     listWorkspaces: mockListWorkspaces,
     listMyInvitations: mockListMyInvitations,

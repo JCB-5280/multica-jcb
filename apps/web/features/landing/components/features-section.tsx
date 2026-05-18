@@ -18,14 +18,14 @@ import {
   Sparkles,
   UserMinus,
 } from "lucide-react";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@mato/ui/lib/utils";
 import { ImageIcon } from "./shared";
 import { useLocale } from "../i18n";
 import type { LandingDict } from "../i18n";
-import { StatusIcon, PriorityIcon } from "@multica/views/issues/components";
-import { STATUS_CONFIG } from "@multica/core/issues/config/status";
-import { PRIORITY_CONFIG } from "@multica/core/issues/config/priority";
-import type { IssueStatus, IssuePriority } from "@multica/core/types";
+import { StatusIcon, PriorityIcon } from "@mato/views/issues/components";
+import { STATUS_CONFIG } from "@mato/core/issues/config/status";
+import { PRIORITY_CONFIG } from "@mato/core/issues/config/priority";
+import type { IssueStatus, IssuePriority } from "@mato/core/types";
 
 /* ------------------------------------------------------------------ */
 /*  Mock ActorAvatar — mirrors the real ActorAvatar styling exactly     */
@@ -397,7 +397,7 @@ const mockToolCalls = [
   { type: "tool_use" as const, tool: "Read", summary: "server/internal/handler/comment.go" },
   { type: "tool_result" as const, preview: "func (h *CommentHandler) Create(w http.ResponseWriter, r *http.Request) { …" },
   { type: "tool_use" as const, tool: "Bash", summary: "go test ./internal/handler/ -run TestErrorResponses" },
-  { type: "tool_result" as const, preview: "ok  \tgithub.com/multica/server/internal/handler\t0.847s" },
+  { type: "tool_result" as const, preview: "ok  \tgithub.com/mato/server/internal/handler\t0.847s" },
 ];
 
 const mockTaskHistory = [

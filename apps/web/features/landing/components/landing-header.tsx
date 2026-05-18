@@ -1,9 +1,9 @@
 "use client";
 
 import Link from "next/link";
-import { MulticaIcon } from "@multica/ui/components/common/multica-icon";
-import { cn } from "@multica/ui/lib/utils";
-import { useAuthStore } from "@multica/core/auth";
+import { MulticaIcon } from "@mato/ui/components/common/mato-icon";
+import { cn } from "@mato/ui/lib/utils";
+import { useAuthStore } from "@mato/core/auth";
 import { useLocale } from "../i18n";
 import { GitHubMark, githubUrl, headerButtonClassName } from "./shared";
 
@@ -39,7 +39,7 @@ export function LandingHeader({
               variant === "dark" ? "text-white/92" : "text-[#0a0d12]",
             )}
           >
-            multica
+            mato
           </span>
         </Link>
 

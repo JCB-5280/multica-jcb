@@ -3,28 +3,28 @@
 import { useState, useRef } from "react";
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
-import { cn } from "@multica/ui/lib/utils";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { Button } from "@multica/ui/components/ui/button";
+import { cn } from "@mato/ui/lib/utils";
+import { Skeleton } from "@mato/ui/components/ui/skeleton";
+import { Button } from "@mato/ui/components/ui/button";
 import {
   Collapsible,
   CollapsibleContent,
   CollapsibleTrigger,
-} from "@multica/ui/components/ui/collapsible";
+} from "@mato/ui/components/ui/collapsible";
 import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from "@multica/ui/components/ui/tooltip";
+} from "@mato/ui/components/ui/tooltip";
 import { ChevronRight, ChevronDown, Brain, AlertCircle, AlertTriangle, Copy } from "lucide-react";
-import { useScrollFade } from "@multica/ui/hooks/use-scroll-fade";
-import { useAutoScroll } from "@multica/ui/hooks/use-auto-scroll";
-import { taskMessagesOptions } from "@multica/core/chat/queries";
-import { Markdown } from "@multica/views/common/markdown";
+import { useScrollFade } from "@mato/ui/hooks/use-scroll-fade";
+import { useAutoScroll } from "@mato/ui/hooks/use-auto-scroll";
+import { taskMessagesOptions } from "@mato/core/chat/queries";
+import { Markdown } from "@mato/views/common/markdown";
 import { copyMarkdown } from "../../editor";
-import type { AgentAvailability } from "@multica/core/agents";
-import type { ChatMessage, ChatPendingTask, TaskMessagePayload, TaskFailureReason } from "@multica/core/types";
-import type { ChatTimelineItem } from "@multica/core/chat";
+import type { AgentAvailability } from "@mato/core/agents";
+import type { ChatMessage, ChatPendingTask, TaskMessagePayload, TaskFailureReason } from "@mato/core/types";
+import type { ChatTimelineItem } from "@mato/core/chat";
 import { failureReasonLabel } from "../../agents/components/tabs/task-failure";
 import { TaskStatusPill } from "./task-status-pill";
 import { formatElapsedMs } from "../lib/format";

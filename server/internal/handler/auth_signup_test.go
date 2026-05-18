@@ -7,7 +7,7 @@ import (
 
 	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgconn"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
+	db "github.com/mato-ai/mato/server/pkg/db/generated"
 )
 
 func newTestHandler(cfg Config) *Handler {

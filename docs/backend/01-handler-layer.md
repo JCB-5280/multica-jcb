@@ -145,7 +145,7 @@ Handles the email magic-link flow:
 3. `GET /api/me` — returns the current user
 4. `POST /api/auth/logout` — clears the cookie
 
-The JWT is stored in an HttpOnly cookie (`multica_auth`). State-changing requests using cookie auth require a CSRF token. The PAT path (`mul_...` prefix tokens) bypasses CSRF but requires the Bearer header.
+The JWT is stored in an HttpOnly cookie (`mato_auth`). State-changing requests using cookie auth require a CSRF token. The PAT path (`mul_...` prefix tokens) bypasses CSRF but requires the Bearer header.
 
 **Signup restriction:** The server can be configured with `AllowSignup: false`, `AllowedEmails`, and `AllowedEmailDomains` to restrict who can create accounts. This is the primary self-hosting access control mechanism and will need to be replaced with a proper registration flow for SaaS.
 

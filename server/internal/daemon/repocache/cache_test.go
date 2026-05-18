@@ -1155,7 +1155,7 @@ func TestCreateWorktreeInstallsCoAuthoredByHook(t *testing.T) {
 		t.Fatalf("git log failed: %v", err)
 	}
 	commitMsg := string(out)
-	expectedTrailer := "Co-authored-by: multica-agent <github@multica.ai>"
+	expectedTrailer := "Co-authored-by: mato-agent <github@mato.ai>"
 	if !strings.Contains(commitMsg, expectedTrailer) {
 		t.Errorf("commit message missing Co-authored-by trailer.\ngot:\n%s", commitMsg)
 	}
@@ -1187,7 +1187,7 @@ func TestCoAuthoredByHookIdempotent(t *testing.T) {
 	}
 
 	// Commit with the trailer already in the message.
-	trailer := "Co-authored-by: multica-agent <github@multica.ai>"
+	trailer := "Co-authored-by: mato-agent <github@mato.ai>"
 	if err := os.WriteFile(filepath.Join(result.Path, "test.txt"), []byte("hello\n"), 0o644); err != nil {
 		t.Fatalf("write test file: %v", err)
 	}
@@ -1274,14 +1274,14 @@ func TestCreateWorktreeRemovesCoAuthoredByHookWhenDisabled(t *testing.T) {
 		t.Fatalf("git log failed: %v", err)
 	}
 	commitMsg := string(out)
-	if strings.Contains(commitMsg, "Co-authored-by: multica-agent") {
+	if strings.Contains(commitMsg, "Co-authored-by: mato-agent") {
 		t.Errorf("commit unexpectedly carries the Co-authored-by trailer with setting disabled.\ngot:\n%s", commitMsg)
 	}
 }
 
 // TestCreateWorktreeRemovesLegacyCoAuthoredByHook verifies the migration
 // path: bare clones already on disk from previous daemon versions carry a
-// prepare-commit-msg hook that does NOT include the multicaHookMarker
+// prepare-commit-msg hook that does NOT include the matoHookMarker
 // sentinel — only the older `# Installed by the Multica daemon.` comment.
 // Toggling the workspace setting off must still remove those legacy hooks,
 // otherwise users who flip the toggle in production keep seeing the trailer
@@ -1297,7 +1297,7 @@ func TestCreateWorktreeRemovesLegacyCoAuthoredByHook(t *testing.T) {
 	}
 
 	// Seed the bare cache with the exact hook content shipped by the
-	// previous daemon release (no multicaHookMarker line). Keeping a
+	// previous daemon release (no matoHookMarker line). Keeping a
 	// verbatim copy here means the test fails if recognition logic ever
 	// drifts away from what production hosts actually have on disk.
 	const legacyHook = `#!/bin/sh
@@ -1312,7 +1312,7 @@ case "$COMMIT_SOURCE" in
   merge|squash) exit 0 ;;
 esac
 
-TRAILER="Co-authored-by: multica-agent <github@multica.ai>"
+TRAILER="Co-authored-by: mato-agent <github@mato.ai>"
 
 # Don't add if already present.
 if grep -qF "$TRAILER" "$COMMIT_MSG_FILE"; then
@@ -1360,7 +1360,7 @@ git interpret-trailers --in-place --trailer "$TRAILER" "$COMMIT_MSG_FILE"
 	if err != nil {
 		t.Fatalf("git log failed: %v", err)
 	}
-	if commitMsg := string(out); strings.Contains(commitMsg, "Co-authored-by: multica-agent") {
+	if commitMsg := string(out); strings.Contains(commitMsg, "Co-authored-by: mato-agent") {
 		t.Errorf("commit unexpectedly carries the Co-authored-by trailer after legacy hook removal.\ngot:\n%s", commitMsg)
 	}
 }

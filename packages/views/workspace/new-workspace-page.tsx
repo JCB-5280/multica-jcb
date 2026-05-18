@@ -1,8 +1,8 @@
 "use client";
 
 import { ArrowLeft, LogOut } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
-import type { Workspace } from "@multica/core/types";
+import { Button } from "@mato/ui/components/ui/button";
+import type { Workspace } from "@mato/core/types";
 import { useLogout } from "../auth";
 import { DragStrip } from "../platform";
 import { useT } from "../i18n";

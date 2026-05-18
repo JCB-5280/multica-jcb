@@ -1,12 +1,12 @@
 #!/usr/bin/env node
-// Builds the `multica` CLI from server/cmd/multica and copies the binary
+// Builds the `mato` CLI from server/cmd/mato and copies the binary
 // into apps/desktop/resources/bin/ so electron-vite (dev) and electron-
 // builder (prod) pick it up. Running this on every dev/build/package
 // invocation guarantees the bundled CLI always matches the current Go
 // source — no more stale binary surprises. Go's build cache makes the
 // no-op case (nothing changed) effectively free.
 //
-// ldflags mirror `make build` so `multica --version` reports a meaningful
+// ldflags mirror `make build` so `mato --version` reports a meaningful
 // version / commit / date.
 //
 // Graceful: if `go` is not installed (e.g. frontend-only contributor), we
@@ -60,7 +60,7 @@ function normalizeRuntimeArch(arch) {
 }
 
 function binaryNameForPlatform(platform) {
-  return platform === "win32" ? "multica.exe" : "multica";
+  return platform === "win32" ? "mato.exe" : "mato";
 }
 
 const targetPlatform = normalizeRuntimePlatform(
@@ -118,7 +118,7 @@ if (hasGo()) {
       ldflags,
       "-o",
       srcBinary,
-      "./cmd/multica",
+      "./cmd/mato",
     ],
     {
       cwd: serverDir,

@@ -4,7 +4,7 @@ import { i18n } from "@/lib/i18n";
 // Canonical production origin and basePath for the docs app. Used by the
 // sitemap and per-page hreflang metadata — anywhere we need to construct
 // absolute URLs for search engines.
-export const SITE_ORIGIN = "https://www.multica.ai";
+export const SITE_ORIGIN = "https://www.mato.ai";
 export const DOCS_BASE_PATH = "/docs";
 
 /**

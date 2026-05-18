@@ -10,13 +10,13 @@ import {
   HardDrive,
   Trash2,
 } from "lucide-react";
-import type { Attachment } from "@multica/core/types";
-import { api } from "@multica/core/api";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { workspaceFilesOptions, filesKeys } from "@multica/core/files/queries";
-import { Button } from "@multica/ui/components/ui/button";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@multica/ui/components/ui/tooltip";
+import type { Attachment } from "@mato/core/types";
+import { api } from "@mato/core/api";
+import { useWorkspaceId } from "@mato/core/hooks";
+import { workspaceFilesOptions, filesKeys } from "@mato/core/files/queries";
+import { Button } from "@mato/ui/components/ui/button";
+import { Skeleton } from "@mato/ui/components/ui/skeleton";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@mato/ui/components/ui/tooltip";
 import { PageHeader } from "../layout/page-header";
 import { useT } from "../i18n";
 

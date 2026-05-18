@@ -17,10 +17,10 @@
 开源的 Managed Agents 平台。<br/>
 将编码 Agent 变成真正的队友——分配任务、跟踪进度、积累技能。
 
-[![CI](https://github.com/multica-ai/multica/actions/workflows/ci.yml/badge.svg)](https://github.com/multica-ai/multica/actions/workflows/ci.yml)
-[![GitHub stars](https://img.shields.io/github/stars/multica-ai/multica?style=flat)](https://github.com/multica-ai/multica/stargazers)
+[![CI](https://github.com/mato-ai/mato/actions/workflows/ci.yml/badge.svg)](https://github.com/mato-ai/mato/actions/workflows/ci.yml)
+[![GitHub stars](https://img.shields.io/github/stars/mato-ai/mato?style=flat)](https://github.com/mato-ai/mato/stargazers)
 
-[官网](https://multica.ai) · [云服务](https://multica.ai) · [X](https://x.com/MulticaAI) · [自部署指南](SELF_HOSTING.md) · [参与贡献](CONTRIBUTING.md)
+[官网](https://mato.ai) · [云服务](https://mato.ai) · [X](https://x.com/MulticaAI) · [自部署指南](SELF_HOSTING.md) · [参与贡献](CONTRIBUTING.md)
 
 **[English](README.md) | 简体中文**
 
@@ -68,15 +68,15 @@ Multica 管理完整的 Agent 生命周期：从任务分配到执行监控再�
 ### macOS / Linux（推荐 Homebrew）
 
 ```bash
-brew install multica-ai/tap/multica
+brew install mato-ai/tap/mato
 ```
 
-后续可用 `brew upgrade multica-ai/tap/multica` 更新 CLI。
+后续可用 `brew upgrade mato-ai/tap/mato` 更新 CLI。
 
 ### macOS / Linux（安装脚本）
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/mato-ai/mato/main/scripts/install.sh | bash
 ```
 
 如果没有 Homebrew，可以使用安装脚本。脚本会安装 Multica CLI：检测到 `brew` 时通过 Homebrew 安装，否则直接下载二进制。
@@ -84,20 +84,20 @@ curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/ins
 ### Windows (PowerShell)
 
 ```powershell
-irm https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.ps1 | iex
+irm https://raw.githubusercontent.com/mato-ai/mato/main/scripts/install.ps1 | iex
 ```
 
 安装完成后，一条命令完成配置、认证和启动：
 
 ```bash
-multica setup          # 连接 Multica Cloud，登录，启动 daemon
+mato setup          # 连接 Multica Cloud，登录，启动 daemon
 ```
 
 > **自部署？** 加上 `--with-server` 在本地部署完整的 Multica 服务：
 >
 > ```bash
-> curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh | bash -s -- --with-server
-> multica setup self-host
+> curl -fsSL https://raw.githubusercontent.com/mato-ai/mato/main/scripts/install.sh | bash -s -- --with-server
+> mato setup self-host
 > ```
 >
 > 需要 Docker。详见 [自部署指南](SELF_HOSTING.md)。
@@ -106,12 +106,12 @@ multica setup          # 连接 Multica Cloud，登录，启动 daemon
 
 ## 快速上手
 
-安装好 CLI（或注册 [Multica 云服务](https://multica.ai)）后，按以下步骤将第一个任务分配给 Agent：
+安装好 CLI（或注册 [Multica 云服务](https://mato.ai)）后，按以下步骤将第一个任务分配给 Agent：
 
 ### 1. 配置并启动 daemon
 
 ```bash
-multica setup           # 配置、认证、启动 daemon（一条命令搞定）
+mato setup           # 配置、认证、启动 daemon（一条命令搞定）
 ```
 
 daemon 在后台运行，保持你的机器与 Multica 的连接。它会自动检测 PATH 中可用的 Agent CLI（`claude`、`codex`、`copilot`、`openclaw`、`opencode`、`hermes`、`gemini`、`pi`、`cursor-agent`、`kimi`、`kiro-cli`）。
@@ -128,7 +128,7 @@ daemon 在后台运行，保持你的机器与 Multica 的连接。它会自动�
 
 ### 4. 分配你的第一个任务
 
-在看板上创建一个 Issue（或通过 `multica issue create` 命令创建），然后将其分配给你的新 Agent。Agent 会自动接手任务、在你的 Runtime 上执行、并实时汇报进度——就像一个真正的队友一样。
+在看板上创建一个 Issue（或通过 `mato issue create` 命令创建），然后将其分配给你的新 Agent。Agent 会自动接手任务、在你的 Runtime 上执行、并实时汇报进度——就像一个真正的队友一样。
 
 大功告成！你的 Agent 现在是团队的一员了。 🎉
 

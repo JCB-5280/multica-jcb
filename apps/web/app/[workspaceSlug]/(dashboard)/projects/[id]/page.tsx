@@ -1,7 +1,7 @@
 "use client";
 
 import { use } from "react";
-import { ProjectDetail } from "@multica/views/projects/components";
+import { ProjectDetail } from "@mato/views/projects/components";
 
 export default function ProjectDetailPage({
   params,

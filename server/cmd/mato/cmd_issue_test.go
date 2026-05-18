@@ -13,7 +13,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/multica-ai/multica/server/internal/cli"
+	"github.com/mato-ai/mato/server/internal/cli"
 )
 
 // pipeStdin replaces os.Stdin with a pipe seeded by the given body for the
@@ -222,9 +222,9 @@ func TestRunIssueCreateSendsAllowDuplicate(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	t.Setenv("MULTICA_SERVER_URL", srv.URL)
-	t.Setenv("MULTICA_WORKSPACE_ID", "ws-1")
-	t.Setenv("MULTICA_TOKEN", "test-token")
+	t.Setenv("MATO_SERVER_URL", srv.URL)
+	t.Setenv("MATO_WORKSPACE_ID", "ws-1")
+	t.Setenv("MATO_TOKEN", "test-token")
 
 	cmd := newIssueCreateTestCmd()
 	_ = cmd.Flags().Set("title", "Duplicate allowed")
@@ -257,9 +257,9 @@ func TestRunIssueCreateShowsDuplicateMessage(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	t.Setenv("MULTICA_SERVER_URL", srv.URL)
-	t.Setenv("MULTICA_WORKSPACE_ID", "ws-1")
-	t.Setenv("MULTICA_TOKEN", "test-token")
+	t.Setenv("MATO_SERVER_URL", srv.URL)
+	t.Setenv("MATO_WORKSPACE_ID", "ws-1")
+	t.Setenv("MATO_TOKEN", "test-token")
 
 	cmd := newIssueCreateTestCmd()
 	_ = cmd.Flags().Set("title", "SH-PM-SYNTH-01 Synthesize recommendation-to-shortlist planning outputs")
@@ -642,9 +642,9 @@ func TestRunIssueRunMessagesResolvesShortTaskPrefix(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	t.Setenv("MULTICA_SERVER_URL", srv.URL)
-	t.Setenv("MULTICA_WORKSPACE_ID", "ws-1")
-	t.Setenv("MULTICA_TOKEN", "test-token")
+	t.Setenv("MATO_SERVER_URL", srv.URL)
+	t.Setenv("MATO_WORKSPACE_ID", "ws-1")
+	t.Setenv("MATO_TOKEN", "test-token")
 
 	cmd := &cobra.Command{Use: "run-messages"}
 	cmd.Flags().String("output", "json", "")
@@ -884,7 +884,7 @@ func TestResolveAssigneeRespectsKinds(t *testing.T) {
 }
 
 // TestResolveAssigneeExactMatchWins covers the substring-collision scenario from
-// multica-ai/multica#1620: when one name is a substring of another (e.g.
+// mato-ai/mato#1620: when one name is a substring of another (e.g.
 // "reviewer" vs "peer-reviewer"), an exact match on the shorter name must
 // short-circuit substring matching instead of erroring out as ambiguous.
 func TestResolveAssigneeExactMatchWins(t *testing.T) {
@@ -953,7 +953,7 @@ func TestResolveAssigneeExactMatchWins(t *testing.T) {
 }
 
 // TestResolveAssigneeByID covers the ID/ShortID escape hatch from
-// multica-ai/multica#1620: passing a full UUID or its 8-char prefix must
+// mato-ai/mato#1620: passing a full UUID or its 8-char prefix must
 // resolve directly without going through name matching.
 func TestResolveAssigneeByID(t *testing.T) {
 	membersResp := []map[string]any{
@@ -1263,8 +1263,8 @@ func TestPickAssigneeFromFlags(t *testing.T) {
 // memberOrAgentKinds because their target schema rejects squads
 // (subscriber: server/internal/handler/handler.go:414;
 // project: server/migrations/034_projects.up.sql:10). Without this gating,
-// `multica issue subscriber add --user "<SquadName>"` or
-// `multica project create --lead "<SquadName>"` would resolve to
+// `mato issue subscriber add --user "<SquadName>"` or
+// `mato project create --lead "<SquadName>"` would resolve to
 // (squad, ...) and surface as a 500/403 server-side instead of a clean
 // CLI-side resolution error.
 func TestPickAssigneeFromFlagsMemberOrAgentKinds(t *testing.T) {

@@ -60,7 +60,7 @@ The key insight of the product: agents are not a bolt-on. The entire data model,
 │                      Agent Tier (user's machine)                    │
 │                                                                     │
 │   ┌───────────────────────────────────────────────┐                 │
-│   │  multica daemon (Go binary)                   │                 │
+│   │  mato daemon (Go binary)                   │                 │
 │   │                                               │                 │
 │   │  ┌──────────────┐   Spawns subprocess         │                 │
 │   │  │ Task Poller  │──────────────────►  Claude Code CLI           │
@@ -97,7 +97,7 @@ The web app (`apps/web/`) adds only Next.js-specific wiring (cookies, server-sid
 
 ### 3. The Daemon (local agent runtime)
 
-The daemon is a separate Go binary (`multica daemon`) that runs on a developer's local machine (or a CI server). Its job:
+The daemon is a separate Go binary (`mato daemon`) that runs on a developer's local machine (or a CI server). Its job:
 
 1. Connect to the server via WebSocket
 2. Register available agent runtimes (Claude Code, Codex, Cursor, etc.)

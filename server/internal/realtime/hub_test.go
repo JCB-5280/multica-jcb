@@ -14,7 +14,7 @@ import (
 
 	"github.com/golang-jwt/jwt/v5"
 	"github.com/gorilla/websocket"
-	"github.com/multica-ai/multica/server/internal/auth"
+	"github.com/mato-ai/mato/server/internal/auth"
 )
 
 const testWorkspaceID = "test-workspace"
@@ -316,7 +316,7 @@ func TestCheckOrigin(t *testing.T) {
 	prev := allowedWSOrigins.Load().([]string)
 	SetAllowedOrigins([]string{
 		"http://localhost:3000",
-		"https://multica.ai",
+		"https://mato.ai",
 	})
 	t.Cleanup(func() { SetAllowedOrigins(prev) })
 
@@ -326,13 +326,13 @@ func TestCheckOrigin(t *testing.T) {
 		origin string
 		want   bool
 	}{
-		{"empty origin allowed", "api.multica.ai", "", true},
+		{"empty origin allowed", "api.mato.ai", "", true},
 		{"same-origin allowed (native client default)", "localhost:8080", "http://localhost:8080", true},
-		{"same-origin allowed (https)", "api.multica.ai", "https://api.multica.ai", true},
-		{"same-origin allowed (case-insensitive host, RFC 7230)", "API.Multica.AI", "https://api.multica.ai", true},
+		{"same-origin allowed (https)", "api.mato.ai", "https://api.mato.ai", true},
+		{"same-origin allowed (case-insensitive host, RFC 7230)", "API.Multica.AI", "https://api.mato.ai", true},
 		{"whitelisted origin allowed (web cross-origin)", "localhost:8080", "http://localhost:3000", true},
-		{"whitelisted origin allowed (prod web)", "api.multica.ai", "https://multica.ai", true},
-		{"unknown origin rejected (CSWSH defense)", "api.multica.ai", "https://evil.com", false},
+		{"whitelisted origin allowed (prod web)", "api.mato.ai", "https://mato.ai", true},
+		{"unknown origin rejected (CSWSH defense)", "api.mato.ai", "https://evil.com", false},
 		{"different port rejected", "localhost:8080", "http://localhost:9999", false},
 	}
 

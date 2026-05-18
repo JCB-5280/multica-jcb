@@ -34,7 +34,7 @@ func newPatchMeRequest(userID, body string) *http.Request {
 }
 
 func TestUpdateMeAcceptsLanguage(t *testing.T) {
-	userID := newLanguageTestUser(t, "lang-set@multica.ai")
+	userID := newLanguageTestUser(t, "lang-set@mato.ai")
 
 	w := httptest.NewRecorder()
 	req := newPatchMeRequest(userID, `{"language":"zh-Hans"}`)
@@ -64,7 +64,7 @@ func TestUpdateMeAcceptsLanguage(t *testing.T) {
 }
 
 func TestUpdateMeRejectsUnsupportedLanguage(t *testing.T) {
-	userID := newLanguageTestUser(t, "lang-reject@multica.ai")
+	userID := newLanguageTestUser(t, "lang-reject@mato.ai")
 
 	w := httptest.NewRecorder()
 	req := newPatchMeRequest(userID, `{"language":"<script>"}`)
@@ -87,7 +87,7 @@ func TestUpdateMeRejectsUnsupportedLanguage(t *testing.T) {
 
 // COALESCE semantics: omitting language must NOT clear an existing value.
 func TestUpdateMePreservesLanguageWhenNotProvided(t *testing.T) {
-	userID := newLanguageTestUser(t, "lang-preserve@multica.ai")
+	userID := newLanguageTestUser(t, "lang-preserve@mato.ai")
 
 	if _, err := testPool.Exec(context.Background(),
 		`UPDATE "user" SET language = 'en' WHERE id = $1`, userID,

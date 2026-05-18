@@ -17,10 +17,10 @@
 The open-source managed agents platform.<br/>
 Turn coding agents into real teammates — assign tasks, track progress, compound skills.
 
-[![CI](https://github.com/multica-ai/multica/actions/workflows/ci.yml/badge.svg)](https://github.com/multica-ai/multica/actions/workflows/ci.yml)
-[![GitHub stars](https://img.shields.io/github/stars/multica-ai/multica?style=flat)](https://github.com/multica-ai/multica/stargazers)
+[![CI](https://github.com/mato-ai/mato/actions/workflows/ci.yml/badge.svg)](https://github.com/mato-ai/mato/actions/workflows/ci.yml)
+[![GitHub stars](https://img.shields.io/github/stars/mato-ai/mato?style=flat)](https://github.com/mato-ai/mato/stargazers)
 
-[Website](https://multica.ai) · [Cloud](https://multica.ai) · [X](https://x.com/MulticaAI) · [Self-Hosting](SELF_HOSTING.md) · [Contributing](CONTRIBUTING.md)
+[Website](https://mato.ai) · [Cloud](https://mato.ai) · [X](https://x.com/MulticaAI) · [Self-Hosting](SELF_HOSTING.md) · [Contributing](CONTRIBUTING.md)
 
 **English | [简体中文](README.zh-CN.md)**
 
@@ -68,15 +68,15 @@ Multica manages the full agent lifecycle: from task assignment to execution moni
 ### macOS / Linux (Homebrew - recommended)
 
 ```bash
-brew install multica-ai/tap/multica
+brew install mato-ai/tap/mato
 ```
 
-Use `brew upgrade multica-ai/tap/multica` to keep the CLI current.
+Use `brew upgrade mato-ai/tap/mato` to keep the CLI current.
 
 ### macOS / Linux (install script)
 
 ```bash
-curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh | bash
+curl -fsSL https://raw.githubusercontent.com/mato-ai/mato/main/scripts/install.sh | bash
 ```
 
 Use this if Homebrew is not available. The script installs the Multica CLI on macOS and Linux by using Homebrew when it is on `PATH`, otherwise it downloads the binary directly.
@@ -84,20 +84,20 @@ Use this if Homebrew is not available. The script installs the Multica CLI on ma
 ### Windows (PowerShell)
 
 ```powershell
-irm https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.ps1 | iex
+irm https://raw.githubusercontent.com/mato-ai/mato/main/scripts/install.ps1 | iex
 ```
 
 Then configure, authenticate, and start the daemon in one command:
 
 ```bash
-multica setup          # Connect to Multica Cloud, log in, start daemon
+mato setup          # Connect to Multica Cloud, log in, start daemon
 ```
 
 > **Self-hosting?** Add `--with-server` to deploy a full Multica server on your machine:
 >
 > ```bash
-> curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh | bash -s -- --with-server
-> multica setup self-host
+> curl -fsSL https://raw.githubusercontent.com/mato-ai/mato/main/scripts/install.sh | bash -s -- --with-server
+> mato setup self-host
 > ```
 >
 > This pulls the official Multica images from GHCR (latest stable by default). Requires Docker. See the [Self-Hosting Guide](SELF_HOSTING.md) for details.
@@ -110,7 +110,7 @@ multica setup          # Connect to Multica Cloud, log in, start daemon
 ### 1. Set up and start the daemon
 
 ```bash
-multica setup           # Configure, authenticate, and start the daemon
+mato setup           # Configure, authenticate, and start the daemon
 ```
 
 The daemon runs in the background and auto-detects agent CLIs (`claude`, `codex`, `copilot`, `openclaw`, `opencode`, `hermes`, `gemini`, `pi`, `cursor-agent`, `kimi`, `kiro-cli`) on your PATH.
@@ -127,24 +127,24 @@ Go to **Settings → Agents** and click **New Agent**. Pick the runtime you just
 
 ### 4. Assign your first task
 
-Create an issue from the board (or via `multica issue create`), then assign it to your new agent. The agent will automatically pick up the task, execute it on your runtime, and report progress — just like a human teammate.
+Create an issue from the board (or via `mato issue create`), then assign it to your new agent. The agent will automatically pick up the task, execute it on your runtime, and report progress — just like a human teammate.
 
 ---
 
 ## CLI
 
-The `multica` CLI connects your local machine to Multica — authenticate, manage workspaces, and run the agent daemon.
+The `mato` CLI connects your local machine to Multica — authenticate, manage workspaces, and run the agent daemon.
 
 | Command | Description |
 |---------|-------------|
-| `multica login` | Authenticate (opens browser) |
-| `multica daemon start` | Start the local agent runtime |
-| `multica daemon status` | Check daemon status |
-| `multica setup` | One-command setup for Multica Cloud (configure + login + start daemon) |
-| `multica setup self-host` | Same, but for self-hosted deployments |
-| `multica issue list` | List issues in your workspace |
-| `multica issue create` | Create a new issue |
-| `multica update` | Update to the latest version |
+| `mato login` | Authenticate (opens browser) |
+| `mato daemon start` | Start the local agent runtime |
+| `mato daemon status` | Check daemon status |
+| `mato setup` | One-command setup for Multica Cloud (configure + login + start daemon) |
+| `mato setup self-host` | Same, but for self-hosted deployments |
+| `mato issue list` | List issues in your workspace |
+| `mato issue create` | Create a new issue |
+| `mato update` | Update to the latest version |
 
 See the [CLI and Daemon Guide](CLI_AND_DAEMON.md) for the full command reference.
 

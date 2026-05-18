@@ -1,6 +1,6 @@
 import { useEffect, useSyncExternalStore } from "react";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@mato/ui/lib/utils";
 import { useTabHistory } from "@/hooks/use-tab-history";
 import { useActiveTitleSync } from "@/hooks/use-tab-sync";
 import { useTabStore, resolveRouteIcon } from "@/stores/tab-store";
@@ -8,15 +8,15 @@ import {
   SidebarProvider,
   SidebarTrigger,
   useSidebar,
-} from "@multica/ui/components/ui/sidebar";
-import { ModalRegistry } from "@multica/views/modals/registry";
-import { AppSidebar } from "@multica/views/layout";
-import { SearchCommand, SearchTrigger } from "@multica/views/search";
-import { ChatFab, ChatWindow } from "@multica/views/chat";
-import { StarterContentPrompt } from "@multica/views/onboarding";
-import { WorkspaceSlugProvider, paths, useCurrentWorkspace } from "@multica/core/paths";
-import { getCurrentSlug, subscribeToCurrentSlug } from "@multica/core/platform";
-import { useDesktopUnreadBadge } from "@multica/views/platform";
+} from "@mato/ui/components/ui/sidebar";
+import { ModalRegistry } from "@mato/views/modals/registry";
+import { AppSidebar } from "@mato/views/layout";
+import { SearchCommand, SearchTrigger } from "@mato/views/search";
+import { ChatFab, ChatWindow } from "@mato/views/chat";
+import { StarterContentPrompt } from "@mato/views/onboarding";
+import { WorkspaceSlugProvider, paths, useCurrentWorkspace } from "@mato/core/paths";
+import { getCurrentSlug, subscribeToCurrentSlug } from "@mato/core/platform";
+import { useDesktopUnreadBadge } from "@mato/views/platform";
 import { DesktopNavigationProvider } from "@/platform/navigation";
 import { TabBar } from "./tab-bar";
 import { TabContent } from "./tab-content";
@@ -93,8 +93,8 @@ function useInternalLinkHandler() {
       const tabId = store.openTab(path, path, icon);
       store.setActiveTab(tabId);
     };
-    window.addEventListener("multica:navigate", handler);
-    return () => window.removeEventListener("multica:navigate", handler);
+    window.addEventListener("mato:navigate", handler);
+    return () => window.removeEventListener("mato:navigate", handler);
   }, []);
 }
 
@@ -122,7 +122,7 @@ function DesktopInboxBridge() {
       if (!slug) return;
       const inboxPath = `${paths.workspace(slug).inbox()}?issue=${encodeURIComponent(issueKey)}`;
       window.dispatchEvent(
-        new CustomEvent("multica:navigate", { detail: { path: inboxPath } }),
+        new CustomEvent("mato:navigate", { detail: { path: inboxPath } }),
       );
     });
   }, []);

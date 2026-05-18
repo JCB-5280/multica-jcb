@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { MulticaLanding } from "@/features/landing/components/multica-landing";
+import { MulticaLanding } from "@/features/landing/components/mato-landing";
 
 export const metadata: Metadata = {
   title: "Homepage",

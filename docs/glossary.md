@@ -67,7 +67,7 @@ An attack where a malicious site makes authenticated requests on behalf of a log
 ## D
 
 ### Daemon
-A Go binary (`multica daemon`) that runs on a developer's local machine or CI server. It acts as the bridge between the Multica server and the actual agent CLI processes. The daemon:
+A Go binary (`mato daemon`) that runs on a developer's local machine or CI server. It acts as the bridge between the Multica server and the actual agent CLI processes. The daemon:
 1. Detects installed agent CLIs
 2. Registers them as runtimes with the server
 3. Polls for tasks
@@ -327,7 +327,7 @@ The monorepo build orchestration tool. Manages build dependencies, caching, and 
 ## U
 
 ### UpdateStore
-An in-memory (or Redis-backed) store that holds the latest CLI update manifest. The daemon polls this to check if a newer version of the `multica` CLI is available. Populated by the server reading from a known URL.
+An in-memory (or Redis-backed) store that holds the latest CLI update manifest. The daemon polls this to check if a newer version of the `mato` CLI is available. Populated by the server reading from a known URL.
 
 ---
 

@@ -38,11 +38,11 @@ import {
   type MouseEvent as ReactMouseEvent,
 } from "react";
 import { useEditor, EditorContent } from "@tiptap/react";
-import { cn } from "@multica/ui/lib/utils";
-import type { UploadResult } from "@multica/core/hooks/use-file-upload";
-import { useWorkspaceSlug } from "@multica/core/paths";
+import { cn } from "@mato/ui/lib/utils";
+import type { UploadResult } from "@mato/core/hooks/use-file-upload";
+import { useWorkspaceSlug } from "@mato/core/paths";
 import { useQueryClient } from "@tanstack/react-query";
-import type { Attachment } from "@multica/core/types";
+import type { Attachment } from "@mato/core/types";
 import { createEditorExtensions } from "./extensions";
 import { uploadAndInsertFile } from "./extensions/file-upload";
 import { preprocessMarkdown } from "./utils/preprocess";

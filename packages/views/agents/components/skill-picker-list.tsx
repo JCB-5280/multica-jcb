@@ -2,10 +2,10 @@
 
 import { useState } from "react";
 import { FileText, Search } from "lucide-react";
-import type { SkillSummary } from "@multica/core/types";
-import { Checkbox } from "@multica/ui/components/ui/checkbox";
-import { Input } from "@multica/ui/components/ui/input";
-import { cn } from "@multica/ui/lib/utils";
+import type { SkillSummary } from "@mato/core/types";
+import { Checkbox } from "@mato/ui/components/ui/checkbox";
+import { Input } from "@mato/ui/components/ui/input";
+import { cn } from "@mato/ui/lib/utils";
 import { useT } from "../../i18n";
 
 interface SkillPickerListProps {

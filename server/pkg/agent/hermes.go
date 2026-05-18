@@ -196,7 +196,7 @@ func (b *hermesBackend) Execute(ctx context.Context, prompt string, opts ExecOpt
 		_, err := c.request(runCtx, "initialize", map[string]any{
 			"protocolVersion": 1,
 			"clientInfo": map[string]any{
-				"name":    "multica-agent-sdk",
+				"name":    "mato-agent-sdk",
 				"version": "0.2.0",
 			},
 			"clientCapabilities": map[string]any{},
@@ -1408,7 +1408,7 @@ func (s *acpProviderErrorSniffer) messageLocked() string {
 // Without it, runs that exhaust retries against the upstream LLM
 // (HTTP 429, expired token, …) silently report as "completed"
 // because session/prompt still ends with stopReason=end_turn — see
-// GitHub multica#1952.
+// GitHub mato#1952.
 func promoteACPResultOnProviderError(finalStatus, finalError, finalOutput string, sniffer *acpProviderErrorSniffer) (string, string) {
 	if finalStatus != "completed" {
 		return finalStatus, finalError

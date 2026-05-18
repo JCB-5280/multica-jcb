@@ -94,16 +94,16 @@ pnpm test             # TS tests (Vitest, all packages + apps via turbo)
 make server           # Run Go server only (port 8080)
 make daemon           # Run local daemon
 make build            # Build server + CLI binaries to server/bin/
-make cli ARGS="..."   # Run multica CLI (e.g. make cli ARGS="config")
+make cli ARGS="..."   # Run mato CLI (e.g. make cli ARGS="config")
 make test             # Go tests
 make sqlc             # Regenerate sqlc code after editing SQL in server/pkg/db/queries/
 make migrate-up       # Run database migrations
 make migrate-down     # Rollback migrations
 
 # Run a single TS test (works for any package with a test script)
-pnpm --filter @multica/views exec vitest run auth/login-page.test.tsx
-pnpm --filter @multica/core exec vitest run runtimes/version.test.ts
-pnpm --filter @multica/web exec vitest run app/\(auth\)/login/page.test.tsx
+pnpm --filter @mato/views exec vitest run auth/login-page.test.tsx
+pnpm --filter @mato/core exec vitest run runtimes/version.test.ts
+pnpm --filter @mato/web exec vitest run app/\(auth\)/login/page.test.tsx
 
 # Run a single Go test
 cd server && go test ./internal/handler/ -run TestName
@@ -112,8 +112,8 @@ cd server && go test ./internal/handler/ -run TestName
 pnpm exec playwright test e2e/tests/specific-test.spec.ts
 
 # Desktop build & package
-pnpm --filter @multica/desktop build      # Compile TS → JS (reads .env.production)
-pnpm --filter @multica/desktop package    # Package into .app/.dmg/.exe (current platform only)
+pnpm --filter @mato/desktop build      # Compile TS → JS (reads .env.production)
+pnpm --filter @mato/desktop package    # Package into .app/.dmg/.exe (current platform only)
 
 # shadcn — config lives in packages/ui/components.json (Base UI variant, base-nova style)
 pnpm ui:add badge                # Adds component to packages/ui/components/ui/
@@ -184,7 +184,7 @@ When adding a `Queries.Delete*` or `Queries.Update*` call, ask: "Where did this 
 These are hard constraints. Violating them breaks the cross-platform architecture:
 
 - `packages/core/` — zero react-dom, zero localStorage (use StorageAdapter), zero process.env, zero UI libraries. **All shared Zustand stores live here**, even view-related ones (filters, view modes) — stores are pure state, not UI.
-- `packages/ui/` — zero `@multica/core` imports (pure UI, no business logic).
+- `packages/ui/` — zero `@mato/core` imports (pure UI, no business logic).
 - `packages/views/` — zero `next/*` imports, zero `react-router-dom` imports, zero stores. Use `NavigationAdapter` for all routing.
 - `apps/web/platform/` — the only place for Next.js APIs (`next/navigation`).
 - `apps/desktop/src/renderer/src/platform/` — the only place for react-router-dom navigation wiring.
@@ -236,7 +236,7 @@ Every path in the desktop app falls into exactly one category. Choosing the wron
 
 ### Workspace context
 
-`setCurrentWorkspace(slug, uuid)` from `@multica/core/platform` is the single source of truth for the active workspace. `WorkspaceRouteLayout` sets it on mount; unmount does NOT clear it. Code that leaves workspace context (leave/delete workspace, force-navigate to overlay) must call `setCurrentWorkspace(null, null)` explicitly.
+`setCurrentWorkspace(slug, uuid)` from `@mato/core/platform` is the single source of truth for the active workspace. `WorkspaceRouteLayout` sets it on mount; unmount does NOT clear it. Code that leaves workspace context (leave/delete workspace, force-navigate to overlay) must call `setCurrentWorkspace(null, null)` explicitly.
 
 ### Workspace destructive operations
 
@@ -255,7 +255,7 @@ Cross-workspace `push(path)` is detected by the navigation adapter (`platform/na
 
 ### Drag region (macOS)
 
-Every full-window desktop view (anything outside the dashboard shell) must mount `<DragStrip />` from `@multica/views/platform` as the first flex child of the page root, otherwise users can't drag the window. Interactive UI inside the top 48px needs `WebkitAppRegion: "no-drag"` to stay clickable.
+Every full-window desktop view (anything outside the dashboard shell) must mount `<DragStrip />` from `@mato/views/platform` as the first flex child of the page root, otherwise users can't drag the window. Interactive UI inside the top 48px needs `WebkitAppRegion: "no-drag"` to stay clickable.
 
 ## UI/UX Rules
 
@@ -278,7 +278,7 @@ Tests follow the code, not the app. This is the most important testing principle
 | Platform-specific wiring (cookies, redirects, searchParams) | `apps/web/*.test.tsx` or `apps/desktop/` | Needs framework-specific mocks |
 | End-to-end user flows | `e2e/*.spec.ts` | Real browser, real backend |
 
-**Never test shared component behavior in an app's test file.** If a test requires mocking `next/navigation` or `react-router-dom` to test a component from `@multica/views`, the test is in the wrong place — move it to `packages/views/` and mock `@multica/core` instead.
+**Never test shared component behavior in an app's test file.** If a test requires mocking `next/navigation` or `react-router-dom` to test a component from `@mato/views`, the test is in the wrong place — move it to `packages/views/` and mock `@mato/core` instead.
 
 ### Test infrastructure
 
@@ -292,8 +292,8 @@ All test deps are in the pnpm catalog for unified versioning.
 
 ### Mocking conventions
 
-- Mock `@multica/core` stores with `vi.hoisted()` + `Object.assign(selectorFn, { getState })` pattern (Zustand stores are both callable and have `.getState()`).
-- Mock `@multica/core/api` for API calls.
+- Mock `@mato/core` stores with `vi.hoisted()` + `Object.assign(selectorFn, { getState })` pattern (Zustand stores are both callable and have `.getState()`).
+- Mock `@mato/core/api` for API calls.
 - In `packages/views/` tests: never mock `next/*` or `react-router-dom` — those don't exist here.
 - In `apps/web/` tests: mock framework-specific APIs only for platform-specific behavior.
 

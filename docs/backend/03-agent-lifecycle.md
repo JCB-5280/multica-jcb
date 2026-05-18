@@ -30,7 +30,7 @@ An agent without a runtime is configured but idle. An agent with an active runti
 ┌──────────────────────────────────────────────────────────────────────┐
 │  RUNTIME REGISTRATION PHASE (daemon running on user's machine)       │
 │                                                                      │
-│  multica daemon starts on developer's laptop                         │
+│  mato daemon starts on developer's laptop                         │
 │    → detects installed agent CLIs (claude, codex, cursor, etc.)     │
 │    → POST /api/workspaces/{slug}/daemon/register                     │
 │    → receives daemon_token (mdt_...) scoped to this workspace        │

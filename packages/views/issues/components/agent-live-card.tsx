@@ -2,13 +2,13 @@
 
 import { useState, useEffect, useCallback, useRef } from "react";
 import { Bot, Clock, Loader2, Square } from "lucide-react";
-import { api } from "@multica/core/api";
-import { useWSEvent, useWSReconnect } from "@multica/core/realtime";
-import type { TaskMessagePayload } from "@multica/core/types/events";
-import type { AgentTask } from "@multica/core/types/agent";
+import { api } from "@mato/core/api";
+import { useWSEvent, useWSReconnect } from "@mato/core/realtime";
+import type { TaskMessagePayload } from "@mato/core/types/events";
+import type { AgentTask } from "@mato/core/types/agent";
 import { toast } from "sonner";
 import { ActorAvatar } from "../../common/actor-avatar";
-import { useActorName } from "@multica/core/workspace/hooks";
+import { useActorName } from "@mato/core/workspace/hooks";
 import {
   TranscriptButton,
   buildTimeline,

@@ -16,15 +16,15 @@ import {
   Zap,
 } from "lucide-react";
 import { toast } from "sonner";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
-import { Label } from "@multica/ui/components/ui/label";
-import { useScrollFade } from "@multica/ui/hooks/use-scroll-fade";
-import { cn } from "@multica/ui/lib/utils";
-import { useCreateWorkspace } from "@multica/core/workspace/mutations";
-import type { Workspace } from "@multica/core/types";
-import { isImeComposing } from "@multica/core/utils";
-import { DragStrip } from "@multica/views/platform";
+import { Button } from "@mato/ui/components/ui/button";
+import { Input } from "@mato/ui/components/ui/input";
+import { Label } from "@mato/ui/components/ui/label";
+import { useScrollFade } from "@mato/ui/hooks/use-scroll-fade";
+import { cn } from "@mato/ui/lib/utils";
+import { useCreateWorkspace } from "@mato/core/workspace/mutations";
+import type { Workspace } from "@mato/core/types";
+import { isImeComposing } from "@mato/core/utils";
+import { DragStrip } from "@mato/views/platform";
 import { StepHeader } from "../components/step-header";
 import { RadioMark } from "../components/option-card";
 import { WorkspaceAvatar } from "../../workspace/workspace-avatar";
@@ -34,7 +34,7 @@ import {
   isWorkspaceSlugConflict,
   nameToWorkspaceSlug,
 } from "../../workspace/slug";
-import { isReservedSlug } from "@multica/core/paths";
+import { isReservedSlug } from "@mato/core/paths";
 
 /**
  * Step 2 — create your first workspace, or continue with one set up in
@@ -49,7 +49,7 @@ import { isReservedSlug } from "@multica/core/paths";
  * shared form's own button would fight the footer CTA.
  *
  * The create-fields block doubles as a pedagogical preview: the URL is
- * rendered as a `multica.ai/[slug]` pill, and a live `Issues will look
+ * rendered as a `mato.ai/[slug]` pill, and a live `Issues will look
  * like ACME-123` line shows the user what their issue IDs will read
  * like before they've created anything.
  *
@@ -220,7 +220,7 @@ export function StepWorkspace({
         </Label>
         <div className="flex items-center rounded-md border bg-muted transition-colors focus-within:border-foreground">
           <span className="select-none pl-3 font-mono text-sm text-muted-foreground">
-            {"multica.ai/"}
+            {"mato.ai/"}
           </span>
           <Input
             id="ws-slug"
@@ -379,7 +379,7 @@ function ExistingWorkspaceCard({
           {workspace.name}
         </div>
         <div className="truncate font-mono text-xs text-muted-foreground">
-          {`multica.ai/${workspace.slug}`}
+          {`mato.ai/${workspace.slug}`}
         </div>
       </div>
       <RadioMark selected={selected} />
@@ -515,7 +515,7 @@ function WorkspacePreviewCard({
             {name}
           </div>
           <div className="truncate font-mono text-[11.5px] text-muted-foreground">
-            {`multica.ai/${slug}`}
+            {`mato.ai/${slug}`}
           </div>
         </div>
         <Lock

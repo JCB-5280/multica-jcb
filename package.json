@@ -1,13 +1,13 @@
 {
-  "name": "multica",
+  "name": "mato",
   "version": "0.2.0",
   "private": true,
   "type": "module",
   "scripts": {
-    "dev:web": "turbo dev --filter=@multica/web",
-    "dev:docs": "turbo dev --filter=@multica/docs",
-    "dev:desktop": "turbo dev --filter=@multica/desktop",
-    "dev:desktop:staging": "turbo dev:staging --filter=@multica/desktop",
+    "dev:web": "turbo dev --filter=@mato/web",
+    "dev:docs": "turbo dev --filter=@mato/docs",
+    "dev:desktop": "turbo dev --filter=@mato/desktop",
+    "dev:desktop:staging": "turbo dev:staging --filter=@mato/desktop",
     "build": "turbo build",
     "typecheck": "turbo typecheck",
     "test": "turbo test",

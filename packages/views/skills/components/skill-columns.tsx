@@ -14,14 +14,14 @@ import type {
   AgentRuntime,
   MemberWithUser,
   SkillSummary,
-} from "@multica/core/types";
-import { timeAgo } from "@multica/core/utils";
-import { ActorAvatar } from "@multica/ui/components/common/actor-avatar";
+} from "@mato/core/types";
+import { timeAgo } from "@mato/core/utils";
+import { ActorAvatar } from "@mato/ui/components/common/actor-avatar";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@multica/ui/components/ui/tooltip";
+} from "@mato/ui/components/ui/tooltip";
 import { readOrigin, totalFileCount } from "../lib/origin";
 import { useT } from "../../i18n";
 

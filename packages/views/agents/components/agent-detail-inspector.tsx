@@ -12,29 +12,29 @@ import type {
   Agent,
   AgentRuntime,
   MemberWithUser,
-} from "@multica/core/types";
+} from "@mato/core/types";
 import {
   AGENT_DESCRIPTION_MAX_LENGTH,
   type AgentPresenceDetail,
-} from "@multica/core/agents";
-import { api } from "@multica/core/api";
-import { useFileUpload } from "@multica/core/hooks/use-file-upload";
-import { isImeComposing, timeAgo } from "@multica/core/utils";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@mato/core/agents";
+import { api } from "@mato/core/api";
+import { useFileUpload } from "@mato/core/hooks/use-file-upload";
+import { isImeComposing, timeAgo } from "@mato/core/utils";
+import { Button } from "@mato/ui/components/ui/button";
 import { ActorAvatar } from "../../common/actor-avatar";
-import { Input } from "@multica/ui/components/ui/input";
+import { Input } from "@mato/ui/components/ui/input";
 import {
   Dialog,
   DialogContent,
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
+} from "@mato/ui/components/ui/dialog";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@multica/ui/components/ui/popover";
+} from "@mato/ui/components/ui/popover";
 import { PropRow } from "../../common/prop-row";
 import { availabilityConfig } from "../presence";
 import { CharCounter } from "./char-counter";

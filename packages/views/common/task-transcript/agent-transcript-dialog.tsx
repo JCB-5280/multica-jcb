@@ -18,9 +18,9 @@ import {
   Cpu,
   Filter,
 } from "lucide-react";
-import { cn } from "@multica/ui/lib/utils";
-import { Dialog, DialogContent, DialogTitle } from "@multica/ui/components/ui/dialog";
-import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@multica/ui/components/ui/collapsible";
+import { cn } from "@mato/ui/lib/utils";
+import { Dialog, DialogContent, DialogTitle } from "@mato/ui/components/ui/dialog";
+import { Collapsible, CollapsibleContent, CollapsibleTrigger } from "@mato/ui/components/ui/collapsible";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
@@ -28,10 +28,10 @@ import {
   DropdownMenuSeparator,
   DropdownMenuCheckboxItem,
   DropdownMenuItem,
-} from "@multica/ui/components/ui/dropdown-menu";
+} from "@mato/ui/components/ui/dropdown-menu";
 import { ActorAvatar } from "../actor-avatar";
-import { api } from "@multica/core/api";
-import type { AgentTask, Agent, AgentRuntime } from "@multica/core/types/agent";
+import { api } from "@mato/core/api";
+import type { AgentTask, Agent, AgentRuntime } from "@mato/core/types/agent";
 import { redactSecrets } from "./redact";
 import type { TimelineItem } from "./build-timeline";
 import { useT } from "../../i18n";

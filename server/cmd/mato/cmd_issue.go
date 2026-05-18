@@ -15,8 +15,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/multica-ai/multica/server/internal/cli"
-	"github.com/multica-ai/multica/server/internal/util"
+	"github.com/mato-ai/mato/server/internal/cli"
+	"github.com/mato-ai/mato/server/internal/util"
 )
 
 // resolveTextFlag picks between a `--<name>` inline value, a `--<name>-stdin`
@@ -599,14 +599,14 @@ func runIssueCreate(cmd *cobra.Command, _ []string) error {
 		body["assignee_id"] = aID
 	}
 
-	// Quick-create stamp: when the daemon sets MULTICA_QUICK_CREATE_TASK_ID
-	// before invoking the agent, the agent's `multica issue create` call
+	// Quick-create stamp: when the daemon sets MATO_QUICK_CREATE_TASK_ID
+	// before invoking the agent, the agent's `mato issue create` call
 	// inherits the env var and tags the new issue with origin_type=
 	// quick_create + origin_id=<task_id>. The completion handler then
 	// locates the issue deterministically by origin instead of "most
 	// recent issue by this agent", which is racy when max_concurrent_tasks
 	// > 1 and the agent is creating other issues in parallel.
-	if taskID := os.Getenv("MULTICA_QUICK_CREATE_TASK_ID"); taskID != "" {
+	if taskID := os.Getenv("MATO_QUICK_CREATE_TASK_ID"); taskID != "" {
 		body["origin_type"] = "quick_create"
 		body["origin_id"] = taskID
 	}
@@ -1477,7 +1477,7 @@ func (k assigneeKinds) describe() string {
 
 func resolveAssignee(ctx context.Context, client *cli.APIClient, name string, kinds assigneeKinds) (string, string, error) {
 	if client.WorkspaceID == "" {
-		return "", "", fmt.Errorf("workspace ID is required to resolve assignees; use --workspace-id or set MULTICA_WORKSPACE_ID")
+		return "", "", fmt.Errorf("workspace ID is required to resolve assignees; use --workspace-id or set MATO_WORKSPACE_ID")
 	}
 
 	input := normalizeAssigneeLookupInput(name)
@@ -1608,12 +1608,12 @@ func ambiguousAssigneeError(input string, matches []assigneeMatch) error {
 // assignee_id) by looking it up against the workspace's members, agents, and
 // (when allowed) squads. It is the deterministic counterpart to
 // resolveAssignee: callers that already hold a UUID (e.g. agents reading IDs
-// from `multica workspace members --output json`) should use this instead of
+// from `mato workspace members --output json`) should use this instead of
 // round-tripping through name matching, which can be ambiguous in workspaces
 // with overlapping names.
 func resolveAssigneeByID(ctx context.Context, client *cli.APIClient, id string, kinds assigneeKinds) (string, string, error) {
 	if client.WorkspaceID == "" {
-		return "", "", fmt.Errorf("workspace ID is required to resolve assignees; use --workspace-id or set MULTICA_WORKSPACE_ID")
+		return "", "", fmt.Errorf("workspace ID is required to resolve assignees; use --workspace-id or set MATO_WORKSPACE_ID")
 	}
 	input := strings.TrimSpace(id)
 	if !uuidRegexp.MatchString(input) {

@@ -2,20 +2,20 @@
 
 import { useMemo, type ReactNode } from "react";
 import { EyeOff, MoreHorizontal, Plus, UserMinus } from "lucide-react";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@multica/ui/components/ui/tooltip";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@mato/ui/components/ui/tooltip";
 import { useDroppable } from "@dnd-kit/core";
 import { SortableContext, verticalListSortingStrategy } from "@dnd-kit/sortable";
-import type { Issue, IssueAssigneeType, IssueStatus } from "@multica/core/types";
-import { Button } from "@multica/ui/components/ui/button";
+import type { Issue, IssueAssigneeType, IssueStatus } from "@mato/core/types";
+import { Button } from "@mato/ui/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@multica/ui/components/ui/dropdown-menu";
-import { STATUS_CONFIG } from "@multica/core/issues/config";
-import { useModalStore } from "@multica/core/modals";
-import { useViewStoreApi } from "@multica/core/issues/stores/view-store-context";
+} from "@mato/ui/components/ui/dropdown-menu";
+import { STATUS_CONFIG } from "@mato/core/issues/config";
+import { useModalStore } from "@mato/core/modals";
+import { useViewStoreApi } from "@mato/core/issues/stores/view-store-context";
 import { StatusHeading } from "./status-heading";
 import { DraggableBoardCard } from "./board-card";
 import type { ChildProgress } from "./list-row";

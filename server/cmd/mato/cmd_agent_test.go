@@ -14,7 +14,7 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/multica-ai/multica/server/internal/cli"
+	"github.com/mato-ai/mato/server/internal/cli"
 )
 
 // freshAgentUpdateCmd returns a standalone cobra.Command with the three
@@ -31,8 +31,8 @@ func freshAgentUpdateCmd() *cobra.Command {
 
 // TestResolveWorkspaceID_AgentContextSkipsConfig is a regression test for
 // the cross-workspace contamination bug (#1235). Inside a daemon-spawned
-// agent task (MULTICA_AGENT_ID / MULTICA_TASK_ID set), the CLI must NOT
-// silently read the user-global ~/.multica/config.json to recover a missing
+// agent task (MATO_AGENT_ID / MATO_TASK_ID set), the CLI must NOT
+// silently read the user-global ~/.mato/config.json to recover a missing
 // workspace — that fallback is how agent operations leaked into an
 // unrelated workspace when the daemon failed to inject the right value.
 //
@@ -48,9 +48,9 @@ func TestResolveWorkspaceID_AgentContextSkipsConfig(t *testing.T) {
 	}
 
 	t.Run("outside agent context falls back to config", func(t *testing.T) {
-		t.Setenv("MULTICA_AGENT_ID", "")
-		t.Setenv("MULTICA_TASK_ID", "")
-		t.Setenv("MULTICA_WORKSPACE_ID", "")
+		t.Setenv("MATO_AGENT_ID", "")
+		t.Setenv("MATO_TASK_ID", "")
+		t.Setenv("MATO_WORKSPACE_ID", "")
 
 		got := resolveWorkspaceID(testCmd())
 		if got != "config-file-ws" {
@@ -59,9 +59,9 @@ func TestResolveWorkspaceID_AgentContextSkipsConfig(t *testing.T) {
 	})
 
 	t.Run("agent context with explicit env uses env", func(t *testing.T) {
-		t.Setenv("MULTICA_AGENT_ID", "agent-123")
-		t.Setenv("MULTICA_TASK_ID", "task-456")
-		t.Setenv("MULTICA_WORKSPACE_ID", "env-ws")
+		t.Setenv("MATO_AGENT_ID", "agent-123")
+		t.Setenv("MATO_TASK_ID", "task-456")
+		t.Setenv("MATO_WORKSPACE_ID", "env-ws")
 
 		got := resolveWorkspaceID(testCmd())
 		if got != "env-ws" {
@@ -70,9 +70,9 @@ func TestResolveWorkspaceID_AgentContextSkipsConfig(t *testing.T) {
 	})
 
 	t.Run("agent context without env returns empty, never config", func(t *testing.T) {
-		t.Setenv("MULTICA_AGENT_ID", "agent-123")
-		t.Setenv("MULTICA_TASK_ID", "task-456")
-		t.Setenv("MULTICA_WORKSPACE_ID", "")
+		t.Setenv("MATO_AGENT_ID", "agent-123")
+		t.Setenv("MATO_TASK_ID", "task-456")
+		t.Setenv("MATO_WORKSPACE_ID", "")
 
 		got := resolveWorkspaceID(testCmd())
 		if got != "" {
@@ -81,9 +81,9 @@ func TestResolveWorkspaceID_AgentContextSkipsConfig(t *testing.T) {
 	})
 
 	t.Run("task marker alone also counts as agent context", func(t *testing.T) {
-		t.Setenv("MULTICA_AGENT_ID", "")
-		t.Setenv("MULTICA_TASK_ID", "task-456")
-		t.Setenv("MULTICA_WORKSPACE_ID", "")
+		t.Setenv("MATO_AGENT_ID", "")
+		t.Setenv("MATO_TASK_ID", "task-456")
+		t.Setenv("MATO_WORKSPACE_ID", "")
 
 		if got := resolveWorkspaceID(testCmd()); got != "" {
 			t.Fatalf("resolveWorkspaceID() = %q, want empty", got)
@@ -91,9 +91,9 @@ func TestResolveWorkspaceID_AgentContextSkipsConfig(t *testing.T) {
 	})
 
 	t.Run("requireWorkspaceID surfaces agent-context error", func(t *testing.T) {
-		t.Setenv("MULTICA_AGENT_ID", "agent-123")
-		t.Setenv("MULTICA_TASK_ID", "task-456")
-		t.Setenv("MULTICA_WORKSPACE_ID", "")
+		t.Setenv("MATO_AGENT_ID", "agent-123")
+		t.Setenv("MATO_TASK_ID", "task-456")
+		t.Setenv("MATO_WORKSPACE_ID", "")
 
 		_, err := requireWorkspaceID(testCmd())
 		if err == nil {
@@ -193,11 +193,11 @@ func TestParseCustomEnv(t *testing.T) {
 // dropped one of the flag names from the hint.
 func TestAgentUpdateNoFieldsErrorMentionsAllCustomEnvFlags(t *testing.T) {
 	t.Setenv("HOME", t.TempDir())
-	t.Setenv("MULTICA_SERVER_URL", "http://127.0.0.1:0")
-	t.Setenv("MULTICA_WORKSPACE_ID", "test-ws")
-	t.Setenv("MULTICA_TOKEN", "test-token")
-	t.Setenv("MULTICA_AGENT_ID", "")
-	t.Setenv("MULTICA_TASK_ID", "")
+	t.Setenv("MATO_SERVER_URL", "http://127.0.0.1:0")
+	t.Setenv("MATO_WORKSPACE_ID", "test-ws")
+	t.Setenv("MATO_TOKEN", "test-token")
+	t.Setenv("MATO_AGENT_ID", "")
+	t.Setenv("MATO_TASK_ID", "")
 
 	// Build a fresh command with the same flag surface as agentUpdateCmd
 	// but without the package-level state, so cmd.Flags().Changed(...)
@@ -542,9 +542,9 @@ func TestAgentAvatarHappyPath(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	t.Setenv("MULTICA_SERVER_URL", srv.URL)
-	t.Setenv("MULTICA_WORKSPACE_ID", "ws-1")
-	t.Setenv("MULTICA_TOKEN", "test-token")
+	t.Setenv("MATO_SERVER_URL", srv.URL)
+	t.Setenv("MATO_WORKSPACE_ID", "ws-1")
+	t.Setenv("MATO_TOKEN", "test-token")
 
 	cmd := &cobra.Command{Use: "avatar"}
 	cmd.Flags().String("file", "", "")
@@ -565,9 +565,9 @@ func TestAgentAvatarHappyPath(t *testing.T) {
 
 // TestAgentAvatarUnsupportedFormat rejects files with unsupported extensions.
 func TestAgentAvatarUnsupportedFormat(t *testing.T) {
-	t.Setenv("MULTICA_SERVER_URL", "http://127.0.0.1:0")
-	t.Setenv("MULTICA_WORKSPACE_ID", "ws-1")
-	t.Setenv("MULTICA_TOKEN", "test-token")
+	t.Setenv("MATO_SERVER_URL", "http://127.0.0.1:0")
+	t.Setenv("MATO_WORKSPACE_ID", "ws-1")
+	t.Setenv("MATO_TOKEN", "test-token")
 
 	dir := t.TempDir()
 	txtPath := filepath.Join(dir, "avatar.txt")
@@ -594,9 +594,9 @@ func TestAgentAvatarUnsupportedFormat(t *testing.T) {
 
 // TestAgentAvatarOversizedFile rejects files larger than 5MB.
 func TestAgentAvatarOversizedFile(t *testing.T) {
-	t.Setenv("MULTICA_SERVER_URL", "http://127.0.0.1:0")
-	t.Setenv("MULTICA_WORKSPACE_ID", "ws-1")
-	t.Setenv("MULTICA_TOKEN", "test-token")
+	t.Setenv("MATO_SERVER_URL", "http://127.0.0.1:0")
+	t.Setenv("MATO_WORKSPACE_ID", "ws-1")
+	t.Setenv("MATO_TOKEN", "test-token")
 
 	dir := t.TempDir()
 	bigPath := filepath.Join(dir, "big.png")
@@ -640,9 +640,9 @@ func TestAgentAvatarMissingAgent(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	t.Setenv("MULTICA_SERVER_URL", srv.URL)
-	t.Setenv("MULTICA_WORKSPACE_ID", "ws-1")
-	t.Setenv("MULTICA_TOKEN", "test-token")
+	t.Setenv("MATO_SERVER_URL", srv.URL)
+	t.Setenv("MATO_WORKSPACE_ID", "ws-1")
+	t.Setenv("MATO_TOKEN", "test-token")
 
 	cmd := &cobra.Command{Use: "avatar"}
 	cmd.Flags().String("file", "", "")
@@ -682,9 +682,9 @@ func TestAgentAvatarUploadFailure(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	t.Setenv("MULTICA_SERVER_URL", srv.URL)
-	t.Setenv("MULTICA_WORKSPACE_ID", "ws-1")
-	t.Setenv("MULTICA_TOKEN", "test-token")
+	t.Setenv("MATO_SERVER_URL", srv.URL)
+	t.Setenv("MATO_WORKSPACE_ID", "ws-1")
+	t.Setenv("MATO_TOKEN", "test-token")
 
 	cmd := &cobra.Command{Use: "avatar"}
 	cmd.Flags().String("file", "", "")
@@ -731,9 +731,9 @@ func TestAgentAvatarUpdateFailure(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	t.Setenv("MULTICA_SERVER_URL", srv.URL)
-	t.Setenv("MULTICA_WORKSPACE_ID", "ws-1")
-	t.Setenv("MULTICA_TOKEN", "test-token")
+	t.Setenv("MATO_SERVER_URL", srv.URL)
+	t.Setenv("MATO_WORKSPACE_ID", "ws-1")
+	t.Setenv("MATO_TOKEN", "test-token")
 
 	cmd := &cobra.Command{Use: "avatar"}
 	cmd.Flags().String("file", "", "")
@@ -755,9 +755,9 @@ func TestAgentAvatarUpdateFailure(t *testing.T) {
 
 // TestAgentAvatarMissingFileFlag rejects when --file is not provided.
 func TestAgentAvatarMissingFileFlag(t *testing.T) {
-	t.Setenv("MULTICA_SERVER_URL", "http://127.0.0.1:0")
-	t.Setenv("MULTICA_WORKSPACE_ID", "ws-1")
-	t.Setenv("MULTICA_TOKEN", "test-token")
+	t.Setenv("MATO_SERVER_URL", "http://127.0.0.1:0")
+	t.Setenv("MATO_WORKSPACE_ID", "ws-1")
+	t.Setenv("MATO_TOKEN", "test-token")
 
 	cmd := &cobra.Command{Use: "avatar"}
 	cmd.Flags().String("file", "", "")
@@ -775,9 +775,9 @@ func TestAgentAvatarMissingFileFlag(t *testing.T) {
 
 // TestAgentAvatarNonexistentFile rejects when the file path does not exist.
 func TestAgentAvatarNonexistentFile(t *testing.T) {
-	t.Setenv("MULTICA_SERVER_URL", "http://127.0.0.1:0")
-	t.Setenv("MULTICA_WORKSPACE_ID", "ws-1")
-	t.Setenv("MULTICA_TOKEN", "test-token")
+	t.Setenv("MATO_SERVER_URL", "http://127.0.0.1:0")
+	t.Setenv("MATO_WORKSPACE_ID", "ws-1")
+	t.Setenv("MATO_TOKEN", "test-token")
 
 	cmd := &cobra.Command{Use: "avatar"}
 	cmd.Flags().String("file", "", "")
@@ -798,9 +798,9 @@ func TestAgentAvatarNonexistentFile(t *testing.T) {
 
 // TestAgentAvatarSizeBoundary verifies that exactly 5MB passes and 5MB+1 fails.
 func TestAgentAvatarSizeBoundary(t *testing.T) {
-	t.Setenv("MULTICA_SERVER_URL", "http://127.0.0.1:0")
-	t.Setenv("MULTICA_WORKSPACE_ID", "ws-1")
-	t.Setenv("MULTICA_TOKEN", "test-token")
+	t.Setenv("MATO_SERVER_URL", "http://127.0.0.1:0")
+	t.Setenv("MATO_WORKSPACE_ID", "ws-1")
+	t.Setenv("MATO_TOKEN", "test-token")
 
 	t.Run("exactly 5MB passes", func(t *testing.T) {
 		dir := t.TempDir()
@@ -853,9 +853,9 @@ func TestAgentAvatarSizeBoundary(t *testing.T) {
 
 // TestAgentAvatarCaseInsensitiveExtension verifies uppercase extensions are accepted.
 func TestAgentAvatarCaseInsensitiveExtension(t *testing.T) {
-	t.Setenv("MULTICA_SERVER_URL", "http://127.0.0.1:0")
-	t.Setenv("MULTICA_WORKSPACE_ID", "ws-1")
-	t.Setenv("MULTICA_TOKEN", "test-token")
+	t.Setenv("MATO_SERVER_URL", "http://127.0.0.1:0")
+	t.Setenv("MATO_WORKSPACE_ID", "ws-1")
+	t.Setenv("MATO_TOKEN", "test-token")
 
 	for _, ext := range []string{"avatar.PNG", "avatar.JPG", "avatar.JPEG", "avatar.GIF", "avatar.WEBP"} {
 		t.Run(ext, func(t *testing.T) {
@@ -900,9 +900,9 @@ func TestAgentGetTableIncludesAvatarURL(t *testing.T) {
 	}))
 	defer srv.Close()
 
-	t.Setenv("MULTICA_SERVER_URL", srv.URL)
-	t.Setenv("MULTICA_WORKSPACE_ID", "ws-1")
-	t.Setenv("MULTICA_TOKEN", "test-token")
+	t.Setenv("MATO_SERVER_URL", srv.URL)
+	t.Setenv("MATO_WORKSPACE_ID", "ws-1")
+	t.Setenv("MATO_TOKEN", "test-token")
 
 	cmd := &cobra.Command{Use: "get"}
 	cmd.Flags().String("output", "table", "")

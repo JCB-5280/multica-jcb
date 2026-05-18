@@ -2,8 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { Bot, Users } from "lucide-react";
-import { cn } from "@multica/ui/lib/utils";
-import { MulticaIcon } from "./multica-icon";
+import { cn } from "@mato/ui/lib/utils";
+import { MulticaIcon } from "./mato-icon";
 
 interface ActorAvatarProps {
   name: string;

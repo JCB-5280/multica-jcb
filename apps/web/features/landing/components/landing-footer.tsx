@@ -1,10 +1,10 @@
 "use client";
 
 import Link from "next/link";
-import { MulticaIcon } from "@multica/ui/components/common/multica-icon";
-import { cn } from "@multica/ui/lib/utils";
-import { useAuthStore } from "@multica/core/auth";
-import { captureDownloadIntent } from "@multica/core/analytics";
+import { MulticaIcon } from "@mato/ui/components/common/mato-icon";
+import { cn } from "@mato/ui/lib/utils";
+import { useAuthStore } from "@mato/core/auth";
+import { captureDownloadIntent } from "@mato/core/analytics";
 import { XMark, GitHubMark, githubUrl, twitterUrl } from "./shared";
 import { useLocale, locales, localeLabels } from "../i18n";
 
@@ -23,7 +23,7 @@ export function LandingFooter() {
             <Link href="#product" className="flex items-center gap-3">
               <MulticaIcon className="size-5 text-white" noSpin />
               <span className="text-[18px] font-semibold tracking-[0.04em] lowercase">
-                multica
+                mato
               </span>
             </Link>
             <p className="mt-4 max-w-[300px] text-[14px] leading-[1.7] text-white/50 sm:text-[15px]">
@@ -124,7 +124,7 @@ export function LandingFooter() {
               noSpin
             />
             <span className="font-[family-name:var(--font-serif)] text-[clamp(6rem,22vw,16rem)] font-normal leading-[0.82] tracking-[-0.04em] text-white lowercase">
-              multica
+              mato
             </span>
           </div>
         </div>

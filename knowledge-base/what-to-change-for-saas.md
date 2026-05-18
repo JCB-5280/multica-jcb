@@ -65,7 +65,7 @@ The server **runs with a hardcoded default secret** if `JWT_SECRET` is not set:
 secret := os.Getenv("JWT_SECRET")
 if secret == "" {
     slog.Warn("JWT_SECRET not set, using insecure default")
-    secret = "multica-dev-secret-change-in-production"
+    secret = "mato-dev-secret-change-in-production"
 }
 ```
 

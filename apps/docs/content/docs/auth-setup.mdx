@@ -34,7 +34,7 @@ Use this when the deployment can't reach `api.resend.com` or you already have an
 ```bash
 SMTP_HOST=smtp.internal.example.com
 SMTP_PORT=587                  # default 25; use 587 for STARTTLS submission
-SMTP_USERNAME=multica          # leave empty for unauthenticated relay
+SMTP_USERNAME=mato          # leave empty for unauthenticated relay
 SMTP_PASSWORD=...
 SMTP_TLS_INSECURE=false        # set true only for self-signed / private CA
 RESEND_FROM_EMAIL=noreply@yourdomain.com  # reused as the From: header
@@ -51,17 +51,17 @@ STARTTLS is upgraded automatically when the server advertises it. Port 465 (SMTP
 
 The old behavior where non-production instances accepted `888888` by default has been removed. Unless you explicitly configure it, typing `888888` is treated like any other wrong code.
 
-Local development without any email backend configured (no Resend, no SMTP) should use the generated code printed in server logs. If you need deterministic local/private automation, set `MULTICA_DEV_VERIFICATION_CODE` to a 6-digit value such as `888888`, and keep `APP_ENV` non-production:
+Local development without any email backend configured (no Resend, no SMTP) should use the generated code printed in server logs. If you need deterministic local/private automation, set `MATO_DEV_VERIFICATION_CODE` to a 6-digit value such as `888888`, and keep `APP_ENV` non-production:
 
 ```bash
 APP_ENV=development
-MULTICA_DEV_VERIFICATION_CODE=888888
+MATO_DEV_VERIFICATION_CODE=888888
 ```
 
 This shortcut is ignored when `APP_ENV=production`.
 </Callout>
 
-Production deployments should leave `MULTICA_DEV_VERIFICATION_CODE` empty and set `APP_ENV=production`. If you deploy via `make selfhost` / `docker-compose.selfhost.yml`, `APP_ENV` defaults to `production`.
+Production deployments should leave `MATO_DEV_VERIFICATION_CODE` empty and set `APP_ENV=production`. If you deploy via `make selfhost` / `docker-compose.selfhost.yml`, `APP_ENV` defaults to `production`.
 
 ## Google OAuth configuration
 
@@ -71,7 +71,7 @@ Optional. Without it, only email + verification code is available; with it, the 
 2. Set the **Authorized redirect URIs** to your Multica frontend address plus `/auth/callback`, for example:
 
     ```text
-    https://multica.yourdomain.com/auth/callback
+    https://mato.yourdomain.com/auth/callback
     ```
 
 3. Once you have the client ID and client secret, set three environment variables:
@@ -79,7 +79,7 @@ Optional. Without it, only email + verification code is available; with it, the 
     ```bash
     GOOGLE_CLIENT_ID=xxxxx.apps.googleusercontent.com
     GOOGLE_CLIENT_SECRET=GOCSPX-xxxxxxxxxxxxxxx
-    GOOGLE_REDIRECT_URI=https://multica.yourdomain.com/auth/callback
+    GOOGLE_REDIRECT_URI=https://mato.yourdomain.com/auth/callback
     ```
 
 4. Restart the server.

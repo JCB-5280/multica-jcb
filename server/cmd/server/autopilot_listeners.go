@@ -4,10 +4,10 @@ import (
 	"context"
 	"log/slog"
 
-	"github.com/multica-ai/multica/server/internal/events"
-	"github.com/multica-ai/multica/server/internal/handler"
-	"github.com/multica-ai/multica/server/internal/service"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/mato-ai/mato/server/internal/events"
+	"github.com/mato-ai/mato/server/internal/handler"
+	"github.com/mato-ai/mato/server/internal/service"
+	"github.com/mato-ai/mato/server/pkg/protocol"
 )
 
 // registerAutopilotListeners hooks into issue and task events to keep

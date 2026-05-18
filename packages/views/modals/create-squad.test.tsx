@@ -3,8 +3,8 @@
 import type { ReactNode } from "react";
 import { describe, it, expect, vi, beforeEach } from "vitest";
 import { render, screen, fireEvent, waitFor } from "@testing-library/react";
-import { I18nProvider } from "@multica/core/i18n/react";
-import type { Agent, MemberWithUser, Squad } from "@multica/core/types";
+import { I18nProvider } from "@mato/core/i18n/react";
+import type { Agent, MemberWithUser, Squad } from "@mato/core/types";
 import enCommon from "../locales/en/common.json";
 import enModals from "../locales/en/modals.json";
 import enAgents from "../locales/en/agents.json";
@@ -44,35 +44,35 @@ vi.mock("@tanstack/react-query", () => ({
   useQueryClient: () => ({ invalidateQueries: mocks.invalidate }),
 }));
 
-vi.mock("@multica/core/workspace/queries", () => ({
+vi.mock("@mato/core/workspace/queries", () => ({
   agentListOptions: () => ({ queryKey: ["agents"] }),
   memberListOptions: () => ({ queryKey: ["members"] }),
   workspaceKeys: { squads: (id: string) => ["squads", id] },
 }));
 
-vi.mock("@multica/core/api", () => ({
+vi.mock("@mato/core/api", () => ({
   api: {
     createSquad: (...args: unknown[]) => mocks.createSquad(...args),
     addSquadMember: (...args: unknown[]) => mocks.addSquadMember(...args),
   },
 }));
 
-vi.mock("@multica/core/auth", () => ({
+vi.mock("@mato/core/auth", () => ({
   useAuthStore: (selector: (s: { user: { id: string } | null }) => unknown) =>
     selector({ user: { id: ME } }),
 }));
 
-vi.mock("@multica/core/hooks", () => ({
+vi.mock("@mato/core/hooks", () => ({
   useWorkspaceId: () => "ws-1",
 }));
 
-vi.mock("@multica/core/paths", () => ({
+vi.mock("@mato/core/paths", () => ({
   useWorkspacePaths: () => ({
     squadDetail: (id: string) => `/test-ws/squads/${id}`,
   }),
 }));
 
-vi.mock("@multica/core/utils", () => ({
+vi.mock("@mato/core/utils", () => ({
   isImeComposing: () => false,
 }));
 
@@ -116,7 +116,7 @@ vi.mock("../agents/components/char-counter", () => ({
 // Render Popover/PopoverContent inline so the picker rows are queryable
 // without simulating a Base UI portal — we still drive the open prop via
 // PopoverTrigger clicks but the content is always in the DOM.
-vi.mock("@multica/ui/components/ui/popover", () => ({
+vi.mock("@mato/ui/components/ui/popover", () => ({
   Popover: ({ children }: { children: ReactNode }) => <div>{children}</div>,
   PopoverTrigger: ({
     children,
@@ -141,7 +141,7 @@ vi.mock("@multica/ui/components/ui/popover", () => ({
   PopoverContent: ({ children }: { children: ReactNode }) => <div>{children}</div>,
 }));
 
-vi.mock("@multica/ui/components/ui/dialog", () => ({
+vi.mock("@mato/ui/components/ui/dialog", () => ({
   Dialog: ({ children }: { children: ReactNode }) => <div>{children}</div>,
   DialogContent: ({ children }: { children: ReactNode }) => <div>{children}</div>,
   DialogHeader: ({ children }: { children: ReactNode }) => <div>{children}</div>,
@@ -149,7 +149,7 @@ vi.mock("@multica/ui/components/ui/dialog", () => ({
   DialogDescription: ({ children }: { children: ReactNode }) => <p>{children}</p>,
 }));
 
-vi.mock("@multica/ui/components/ui/button", () => ({
+vi.mock("@mato/ui/components/ui/button", () => ({
   Button: ({
     children,
     disabled,
@@ -167,13 +167,13 @@ vi.mock("@multica/ui/components/ui/button", () => ({
   ),
 }));
 
-vi.mock("@multica/ui/components/ui/input", () => ({
+vi.mock("@mato/ui/components/ui/input", () => ({
   Input: (props: React.InputHTMLAttributes<HTMLInputElement>) => (
     <input {...props} />
   ),
 }));
 
-vi.mock("@multica/ui/components/ui/label", () => ({
+vi.mock("@mato/ui/components/ui/label", () => ({
   Label: ({ children, className }: { children: ReactNode; className?: string }) => (
     <label className={className}>{children}</label>
   ),

@@ -13,30 +13,30 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/multica-ai/multica/server/internal/cli"
+	"github.com/mato-ai/mato/server/internal/cli"
 )
 
 var setupCmd = &cobra.Command{
 	Use:   "setup",
 	Short: "Configure the CLI, authenticate, and start the daemon",
-	Long: `Configures the CLI to connect to Multica Cloud (multica.ai), then
+	Long: `Configures the CLI to connect to Multica Cloud (mato.ai), then
 authenticates via browser and starts the agent daemon.
 
 If a configuration already exists, you will be prompted before overwriting.
 
-Use 'multica setup self-host' to connect to a self-hosted server instead.
+Use 'mato setup self-host' to connect to a self-hosted server instead.
 
 Use --profile to create an isolated configuration for a separate environment:
-  multica setup self-host --profile staging --server-url https://api-staging.co`,
+  mato setup self-host --profile staging --server-url https://api-staging.co`,
 	RunE: runSetupCloud,
 }
 
 var setupCloudCmd = &cobra.Command{
 	Use:   "cloud",
-	Short: "Configure the CLI for Multica Cloud (multica.ai)",
-	Long: `Explicitly configures the CLI to connect to Multica Cloud (multica.ai).
+	Short: "Configure the CLI for Multica Cloud (mato.ai)",
+	Long: `Explicitly configures the CLI to connect to Multica Cloud (mato.ai).
 
-This is equivalent to running 'multica setup' without a subcommand.`,
+This is equivalent to running 'mato setup' without a subcommand.`,
 	RunE: runSetupCloud,
 }
 
@@ -53,9 +53,9 @@ If you run this command from a different machine than the server, also pass
 the OAuth login flow can return the token to the CLI.
 
 Examples:
-  multica setup self-host
-  multica setup self-host --server-url https://api.internal.co --app-url https://app.internal.co
-  multica setup self-host --port 9090 --frontend-port 4000`,
+  mato setup self-host
+  mato setup self-host --server-url https://api.internal.co --app-url https://app.internal.co
+  mato setup self-host --port 9090 --frontend-port 4000`,
 	RunE: runSetupSelfHost,
 }
 
@@ -124,14 +124,14 @@ func runSetupCloud(cmd *cobra.Command, args []string) error {
 	}
 
 	cfg := cli.CLIConfig{
-		ServerURL: "https://api.multica.ai",
-		AppURL:    "https://multica.ai",
+		ServerURL: "https://api.mato.ai",
+		AppURL:    "https://mato.ai",
 	}
 	if err := cli.SaveCLIConfigForProfile(cfg, profile); err != nil {
 		return fmt.Errorf("save config: %w", err)
 	}
 
-	fmt.Fprintln(os.Stderr, "Configured for Multica Cloud (https://multica.ai).")
+	fmt.Fprintln(os.Stderr, "Configured for Multica Cloud (https://mato.ai).")
 	fmt.Fprintf(os.Stderr, "  server_url: %s\n", cfg.ServerURL)
 	fmt.Fprintf(os.Stderr, "  app_url:    %s\n", cfg.AppURL)
 	printConfigLocation(profile)
@@ -206,7 +206,7 @@ func runSetupSelfHost(cmd *cobra.Command, args []string) error {
 	// Check if the server is reachable.
 	if !probeServer(serverURL) {
 		fmt.Fprintf(os.Stderr, "\n⚠ Server at %s is not reachable.\n", serverURL)
-		fmt.Fprintln(os.Stderr, "  Make sure the server is running, then run 'multica login'.")
+		fmt.Fprintln(os.Stderr, "  Make sure the server is running, then run 'mato login'.")
 		return nil
 	}
 

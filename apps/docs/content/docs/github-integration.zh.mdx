@@ -87,7 +87,7 @@ Self-Host 需要：建一个 GitHub App、指向你的 server、设两个环境�
 | 字段 | 值 |
 |---|---|
 | **GitHub App name** | 任何能辨识的名字，例如 `Multica` 或 `Multica (staging)` |
-| **Homepage URL** | 你的 Multica 前端，例如 `https://multica.example.com` |
+| **Homepage URL** | 你的 Multica 前端，例如 `https://mato.example.com` |
 | **Callback URL** | 留空——本集成不使用 OAuth 用户身份 |
 | **Setup URL** | `https://<api-host>/api/github/setup`。**勾选 "Redirect on update"** |
 | **Webhook → Active** | 启用 |
@@ -100,7 +100,7 @@ Self-Host 需要：建一个 GitHub App、指向你的 server、设两个环境�
 
 点 **Create GitHub App** 之后，从详情页记下两件事：
 
-- 顶部 **public link** 的尾部即 slug。`https://github.com/apps/multica-acme` → slug = `multica-acme`
+- 顶部 **public link** 的尾部即 slug。`https://github.com/apps/mato-acme` → slug = `mato-acme`
 - 你刚生成的 **webhook secret**（GitHub 之后不会再让你读取这个值——现在就保存好）
 
 <Callout type="warning">
@@ -112,7 +112,7 @@ Self-Host 需要：建一个 GitHub App、指向你的 server、设两个环境�
 API server 上：
 
 ```dotenv
-GITHUB_APP_SLUG=multica-acme
+GITHUB_APP_SLUG=mato-acme
 GITHUB_WEBHOOK_SECRET=<你刚生成的 webhook secret>
 ```
 

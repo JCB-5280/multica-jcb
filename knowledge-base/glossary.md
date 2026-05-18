@@ -172,7 +172,7 @@ A workspace-level setting (e.g., `"MUL"`) that prefixes issue numbers. Generated
 ## J
 
 ### JWT (JSON Web Token)
-A signed, self-contained authentication token. Multica signs JWTs with `JWT_SECRET` and stores them in an HttpOnly cookie (`multica_auth`). The cookie is automatically sent on every request to the same origin. JWT validation checks the signature and expiry time.
+A signed, self-contained authentication token. Multica signs JWTs with `JWT_SECRET` and stores them in an HttpOnly cookie (`mato_auth`). The cookie is automatically sent on every request to the same origin. JWT validation checks the signature and expiry time.
 
 ---
 

@@ -15,7 +15,7 @@ import (
 )
 
 // ClientVersion is the CLI version sent on every request as X-Client-Version.
-// Set by the multica binary at init() so the package doesn't depend on the
+// Set by the mato binary at init() so the package doesn't depend on the
 // concrete cmd package. Defaults to "dev" when running unset (e.g. tests).
 var ClientVersion = "dev"
 

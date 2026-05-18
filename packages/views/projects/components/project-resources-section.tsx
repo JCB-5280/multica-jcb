@@ -8,24 +8,24 @@ import {
   projectResourcesOptions,
   useCreateProjectResource,
   useDeleteProjectResource,
-} from "@multica/core/projects";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useCurrentWorkspace } from "@multica/core/paths";
+} from "@mato/core/projects";
+import { useWorkspaceId } from "@mato/core/hooks";
+import { useCurrentWorkspace } from "@mato/core/paths";
 import type {
   GithubRepoResourceRef,
   ProjectResource,
-} from "@multica/core/types";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@mato/core/types";
+import { Button } from "@mato/ui/components/ui/button";
 import {
   Popover,
   PopoverContent,
   PopoverTrigger,
-} from "@multica/ui/components/ui/popover";
+} from "@mato/ui/components/ui/popover";
 import {
   Tooltip,
   TooltipTrigger,
   TooltipContent,
-} from "@multica/ui/components/ui/tooltip";
+} from "@mato/ui/components/ui/tooltip";
 import { useT } from "../../i18n";
 
 // Project Resources sidebar section.

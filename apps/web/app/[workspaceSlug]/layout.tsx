@@ -3,13 +3,13 @@
 import { use, useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
-import { WorkspaceSlugProvider, paths } from "@multica/core/paths";
-import { workspaceBySlugOptions } from "@multica/core/workspace";
-import { setCurrentWorkspace } from "@multica/core/platform";
-import { useAuthStore } from "@multica/core/auth";
-import { NoAccessPage } from "@multica/views/workspace/no-access-page";
-import { MulticaIcon } from "@multica/ui/components/common/multica-icon";
-import { useWorkspaceSeen } from "@multica/views/workspace/use-workspace-seen";
+import { WorkspaceSlugProvider, paths } from "@mato/core/paths";
+import { workspaceBySlugOptions } from "@mato/core/workspace";
+import { setCurrentWorkspace } from "@mato/core/platform";
+import { useAuthStore } from "@mato/core/auth";
+import { NoAccessPage } from "@mato/views/workspace/no-access-page";
+import { MulticaIcon } from "@mato/ui/components/common/mato-icon";
+import { useWorkspaceSeen } from "@mato/views/workspace/use-workspace-seen";
 
 export default function WorkspaceLayout({
   children,

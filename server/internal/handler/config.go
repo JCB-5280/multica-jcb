@@ -4,7 +4,7 @@ import (
 	"net/http"
 	"os"
 
-	"github.com/multica-ai/multica/server/internal/analytics"
+	"github.com/mato-ai/mato/server/internal/analytics"
 )
 
 type AppConfig struct {

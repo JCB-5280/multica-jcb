@@ -107,11 +107,11 @@ You need to add:
 
 ### JWT Secret Default
 
-**Critical:** The server logs a warning but still starts if `JWT_SECRET` is not set, using `"multica-dev-secret-change-in-production"`:
+**Critical:** The server logs a warning but still starts if `JWT_SECRET` is not set, using `"mato-dev-secret-change-in-production"`:
 
 ```go
 // server/internal/auth/jwt.go
-const defaultJWTSecret = "multica-dev-secret-change-in-production"
+const defaultJWTSecret = "mato-dev-secret-change-in-production"
 ```
 
 For SaaS, this default must not exist. The server should refuse to start if `JWT_SECRET` is missing, and the startup check should be a hard failure, not a warning.

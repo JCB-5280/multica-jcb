@@ -2,8 +2,8 @@
 
 import { useEffect, useRef, useState } from "react";
 import { ArrowLeft, ArrowRight, Loader2 } from "lucide-react";
-import { captureEvent, setPersonProperties } from "@multica/core/analytics";
-import { Button } from "@multica/ui/components/ui/button";
+import { captureEvent, setPersonProperties } from "@mato/core/analytics";
+import { Button } from "@mato/ui/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -11,11 +11,11 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
-import { cn } from "@multica/ui/lib/utils";
-import { useScrollFade } from "@multica/ui/hooks/use-scroll-fade";
-import type { AgentRuntime } from "@multica/core/types";
-import { DragStrip } from "@multica/views/platform";
+} from "@mato/ui/components/ui/dialog";
+import { cn } from "@mato/ui/lib/utils";
+import { useScrollFade } from "@mato/ui/hooks/use-scroll-fade";
+import type { AgentRuntime } from "@mato/core/types";
+import { DragStrip } from "@mato/views/platform";
 import { StepHeader } from "../components/step-header";
 import { RuntimeAsidePanel } from "../components/runtime-aside-panel";
 import { useRuntimePicker } from "../components/use-runtime-picker";

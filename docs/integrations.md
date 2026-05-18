@@ -281,9 +281,9 @@ If neither is configured, the verification code is printed to the server log:
 WARN: no email backend configured — printing verification code to log: 123456
 ```
 
-The `MULTICA_DEV_VERIFICATION_CODE` env var sets a static code (useful for automated tests):
+The `MATO_DEV_VERIFICATION_CODE` env var sets a static code (useful for automated tests):
 ```
-MULTICA_DEV_VERIFICATION_CODE=000000
+MATO_DEV_VERIFICATION_CODE=000000
 ```
 This is rejected if `APP_ENV=production`.
 
@@ -297,7 +297,7 @@ This is rejected if `APP_ENV=production`.
 AWS_REGION=us-east-1
 AWS_ACCESS_KEY_ID=...
 AWS_SECRET_ACCESS_KEY=...
-AWS_S3_BUCKET=multica-uploads
+AWS_S3_BUCKET=mato-uploads
 ```
 
 Files are uploaded to S3. URLs are either direct S3 URLs or CloudFront signed URLs:

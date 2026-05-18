@@ -34,7 +34,7 @@ Multica = **人 + AI agent 在同一个看板上协作的任务管理平台**。
 | P2 | **Agent 本身** | "这个命令怎么用？这个概念是什么？" |
 | ✗ | OSS 贡献者 | 暂不做 —— 用 `CONTRIBUTING.md` 顶着 |
 
-> **关键**：P2 的 agent 不会逛导航，只会被人类用 `Fetch https://docs.multica.ai/...` 指向某一页。所以每一页都要**自包含**。
+> **关键**：P2 的 agent 不会逛导航，只会被人类用 `Fetch https://docs.mato.ai/...` 指向某一页。所以每一页都要**自包含**。
 
 ---
 
@@ -66,8 +66,8 @@ Multica = **人 + AI agent 在同一个看板上协作的任务管理平台**。
 
 | 篇目 | 核心内容 |
 |---|---|
-| **Cloud Quickstart** | 5 分钟：signup → install CLI → `multica setup` → 第一个 agent → 第一个 issue |
-| **Self-Host Quickstart** | 10 分钟：`install.sh --with-server` → `multica setup self-host` |
+| **Cloud Quickstart** | 5 分钟：signup → install CLI → `mato setup` → 第一个 agent → 第一个 issue |
+| **Self-Host Quickstart** | 10 分钟：`install.sh --with-server` → `mato setup self-host` |
 | **Your first task** | 从 issue 创建 → assign 给 agent → 看 agent 流式工作 → review 结果（截图 + GIF） |
 
 ### 板块 3. Concepts（17 篇 —— 灵魂）
@@ -118,7 +118,7 @@ Multica = **人 + AI agent 在同一个看板上协作的任务管理平台**。
 | Overview | 决策树（哪种部署模式适合你） |
 | Docker Compose deployment | `make selfhost` vs `make selfhost-build` |
 | Environment variables reference | 完整 env 表 |
-| Authentication setup | **🚨 固定测试验证码必须显式设置 `MULTICA_DEV_VERIFICATION_CODE`，生产保持为空**；Google OAuth 配置；signup 白名单 |
+| Authentication setup | **🚨 固定测试验证码必须显式设置 `MATO_DEV_VERIFICATION_CODE`，生产保持为空**；Google OAuth 配置；signup 白名单 |
 | Storage | S3 / CloudFront / 本地磁盘 |
 | Email | Resend 配置；**没配会落到 stderr** |
 | Upgrading | 版本升级 + migration 策略 |
@@ -145,7 +145,7 @@ Installation / Authentication / Setup / Daemon / Workspace / Issue / Comment / A
 | 5 | Webhook autopilot trigger 字段建了但没接路由——第一版不文档化 | Autopilots |
 | 6 | custom_env merge 是覆盖而非合并——不能用 custom_env"取消设置"系统 env | Agents |
 | 7 | 旧 assignee 取消分配后不会被取消订阅 | Subscriptions |
-| 8 | 固定本地测试验证码默认关闭；`MULTICA_DEV_VERIFICATION_CODE` 仅用于非 production 私有测试 | Self-Hosting → Auth |
+| 8 | 固定本地测试验证码默认关闭；`MATO_DEV_VERIFICATION_CODE` 仅用于非 production 私有测试 | Self-Hosting → Auth |
 | 9 | Signup 白名单优先级：ALLOWED_EMAILS > ALLOWED_EMAIL_DOMAINS > ALLOW_SIGNUP | Self-Hosting → Auth |
 | 10 | One daemon ↔ many runtimes；one runtime ↔ ONE provider；同 daemon_id 重启复用旧 runtime 行 | Runtimes / Daemon |
 | 11 | Inbox 10 种类型，mention dedup 只在单 event 内生效 | Inbox |
@@ -175,7 +175,7 @@ Installation / Authentication / Setup / Daemon / Workspace / Issue / Comment / A
 
 ### 7.1 视觉基础（Phase 1）
 
-- `apps/docs/app/global.css` 里 `@import "@multica/ui/styles/tokens.css"`，覆盖 Fumadocs 的 `neutral.css`
+- `apps/docs/app/global.css` 里 `@import "@mato/ui/styles/tokens.css"`，覆盖 Fumadocs 的 `neutral.css`
 - 字体：Heading serif（**Fraunces** 或 **Source Serif 4**，`next/font` 加载）+ Body `--font-sans` + Code `--font-mono`
 - 排版：主列 ~720px，段间距 1.2×，h1/h2 serif，代码块深色高对比，链接保留下划线
 
@@ -189,7 +189,7 @@ Fumadocs 原生支持：`content/docs/[lang]/...`。初期只英文，中文后�
 
 ### 7.4 CI（Phase 0）
 
-当前 `.github/workflows/ci.yml:33` 用 `--filter='!@multica/docs'` 排除了 docs build。**在 Phase 0 做一个独立小 PR 把它加回来**——否则 MDX 语法错 CI 不拦，只有 Vercel 部署时才发现。
+当前 `.github/workflows/ci.yml:33` 用 `--filter='!@mato/docs'` 排除了 docs build。**在 Phase 0 做一个独立小 PR 把它加回来**——否则 MDX 语法错 CI 不拦，只有 Vercel 部署时才发现。
 
 ### 7.5 dev:docs 快捷命令（已做）
 

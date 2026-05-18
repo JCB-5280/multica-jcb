@@ -11,7 +11,7 @@ import (
 )
 
 func TestDBCollectorExposesPoolStats(t *testing.T) {
-	pool, err := pgxpool.New(context.Background(), "postgres://multica:multica@127.0.0.1:1/multica?sslmode=disable")
+	pool, err := pgxpool.New(context.Background(), "postgres://mato:mato@127.0.0.1:1/mato?sslmode=disable")
 	if err != nil {
 		t.Fatalf("create pool: %v", err)
 	}
@@ -23,10 +23,10 @@ func TestDBCollectorExposesPoolStats(t *testing.T) {
 	body := rec.Body.String()
 
 	for _, want := range []string{
-		"multica_db_pool_acquired_conns",
-		"multica_db_pool_idle_conns",
-		"multica_db_pool_max_conns",
-		"multica_db_pool_acquire_duration_seconds_total",
+		"mato_db_pool_acquired_conns",
+		"mato_db_pool_idle_conns",
+		"mato_db_pool_max_conns",
+		"mato_db_pool_acquire_duration_seconds_total",
 	} {
 		if !strings.Contains(body, want) {
 			t.Fatalf("metrics body missing %q\n%s", want, body)

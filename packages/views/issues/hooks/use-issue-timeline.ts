@@ -10,7 +10,7 @@ import type {
   Comment,
   TimelineEntry,
   Reaction,
-} from "@multica/core/types";
+} from "@mato/core/types";
 import type {
   CommentCreatedPayload,
   CommentUpdatedPayload,
@@ -20,11 +20,11 @@ import type {
   ActivityCreatedPayload,
   ReactionAddedPayload,
   ReactionRemovedPayload,
-} from "@multica/core/types";
+} from "@mato/core/types";
 import {
   issueTimelineOptions,
   issueKeys,
-} from "@multica/core/issues/queries";
+} from "@mato/core/issues/queries";
 import {
   useCreateComment,
   useUpdateComment,
@@ -32,8 +32,8 @@ import {
   useResolveComment,
   useToggleCommentReaction,
   type ToggleCommentReactionVars,
-} from "@multica/core/issues/mutations";
-import { useWSEvent, useWSReconnect } from "@multica/core/realtime";
+} from "@mato/core/issues/mutations";
+import { useWSEvent, useWSReconnect } from "@mato/core/realtime";
 import { toast } from "sonner";
 import { useT } from "../../i18n";
 

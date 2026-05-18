@@ -23,7 +23,7 @@ test.describe("Authentication", () => {
   test("unauthenticated user is redirected to /login", async ({ page }) => {
     await page.goto("/login");
     await page.evaluate(() => {
-      localStorage.removeItem("multica_token");
+      localStorage.removeItem("mato_token");
     });
 
     // Visit a workspace-scoped route; DashboardGuard should redirect to /login.

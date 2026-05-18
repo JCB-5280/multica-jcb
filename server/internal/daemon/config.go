@@ -30,7 +30,7 @@ const (
 	// where the model streams a single message for many minutes without any
 	// daemon-visible activity — see MUL-2300. 30 min keeps the safety net for
 	// truly stuck runs (dockerd hang) while leaving headroom for long writes.
-	// Set MULTICA_AGENT_IDLE_WATCHDOG=0 to disable.
+	// Set MATO_AGENT_IDLE_WATCHDOG=0 to disable.
 	DefaultAgentIdleWatchdog = 30 * time.Minute
 	DefaultRuntimeName                    = "Local Agent"
 	DefaultWorkspaceSyncInterval          = 30 * time.Second
@@ -48,7 +48,7 @@ const (
 // always cheap to recreate (`pnpm install`, `next build`, `turbo build`). Things
 // like `dist/`, `build/`, `.cache/` or `.venv/` may legitimately hold source or
 // release output in some repos and are NOT included by default — set
-// MULTICA_GC_ARTIFACT_PATTERNS to extend the list per deployment.
+// MATO_GC_ARTIFACT_PATTERNS to extend the list per deployment.
 var DefaultGCArtifactPatterns = []string{"node_modules", ".next", ".turbo"}
 
 // Config holds all daemon configuration.
@@ -58,11 +58,11 @@ type Config struct {
 	LegacyDaemonIDs                []string // historical daemon_ids this machine may have registered under; reported at register time so the server can merge old runtime rows
 	DeviceName                     string
 	RuntimeName                    string
-	CLIVersion                     string                // multica CLI version (e.g. "0.1.13")
+	CLIVersion                     string                // mato CLI version (e.g. "0.1.13")
 	LaunchedBy                     string                // "desktop" when spawned by the Electron app, empty for standalone
 	Profile                        string                // profile name (empty = default)
 	Agents                         map[string]AgentEntry // keyed by provider: claude, codex, copilot, opencode, openclaw, hermes, gemini, pi, cursor, kimi, kiro
-	WorkspacesRoot                 string                // base path for execution envs (default: ~/multica_workspaces)
+	WorkspacesRoot                 string                // base path for execution envs (default: ~/mato_workspaces)
 	KeepEnvAfterTask               bool                  // preserve env after task for debugging
 	HealthPort                     int                   // local HTTP port for health checks (default: 19514)
 	MaxConcurrentTasks             int                   // max tasks running in parallel (default: 20)
@@ -109,7 +109,7 @@ type Overrides struct {
 // and optional CLI flag overrides.
 func LoadConfig(overrides Overrides) (Config, error) {
 	// Server URL: override > env > default
-	rawServerURL := envOrDefault("MULTICA_SERVER_URL", DefaultServerURL)
+	rawServerURL := envOrDefault("MATO_SERVER_URL", DefaultServerURL)
 	if overrides.ServerURL != "" {
 		rawServerURL = overrides.ServerURL
 	}
@@ -129,7 +129,7 @@ func LoadConfig(overrides Overrides) (Config, error) {
 	// resolveAgentsViaLoginShell for the details and constraints.
 	//
 	// Laziness matters: the happy path (every agent on the daemon's PATH or
-	// pinned to an explicit MULTICA_*_PATH) must not pay the cost of
+	// pinned to an explicit MATO_*_PATH) must not pay the cost of
 	// spawning the user's login shell — that touches their rc files and
 	// adds startup latency that scales with whatever they put in there. We
 	// only fork a shell when a bare command name actually missed LookPath.
@@ -152,7 +152,7 @@ func LoadConfig(overrides Overrides) (Config, error) {
 			}, true
 		}
 		// The shell fallback only rescues bare command names. An operator
-		// who pinned MULTICA_*_PATH to an absolute or relative path that
+		// who pinned MATO_*_PATH to an absolute or relative path that
 		// doesn't exist should hard-miss, not silently get a different
 		// binary.
 		if strings.ContainsAny(cmd, "/\\") {
@@ -168,48 +168,48 @@ func LoadConfig(overrides Overrides) (Config, error) {
 	}
 
 	agents := map[string]AgentEntry{}
-	if e, ok := probe("MULTICA_CLAUDE_PATH", "claude", "MULTICA_CLAUDE_MODEL"); ok {
+	if e, ok := probe("MATO_CLAUDE_PATH", "claude", "MATO_CLAUDE_MODEL"); ok {
 		agents["claude"] = e
 	}
-	if e, ok := probe("MULTICA_CODEX_PATH", "codex", "MULTICA_CODEX_MODEL"); ok {
+	if e, ok := probe("MATO_CODEX_PATH", "codex", "MATO_CODEX_MODEL"); ok {
 		agents["codex"] = e
 	}
-	if e, ok := probe("MULTICA_OPENCODE_PATH", "opencode", "MULTICA_OPENCODE_MODEL"); ok {
+	if e, ok := probe("MATO_OPENCODE_PATH", "opencode", "MATO_OPENCODE_MODEL"); ok {
 		agents["opencode"] = e
 	}
-	if e, ok := probe("MULTICA_OPENCLAW_PATH", "openclaw", "MULTICA_OPENCLAW_MODEL"); ok {
+	if e, ok := probe("MATO_OPENCLAW_PATH", "openclaw", "MATO_OPENCLAW_MODEL"); ok {
 		agents["openclaw"] = e
 	}
-	if e, ok := probe("MULTICA_HERMES_PATH", "hermes", "MULTICA_HERMES_MODEL"); ok {
+	if e, ok := probe("MATO_HERMES_PATH", "hermes", "MATO_HERMES_MODEL"); ok {
 		agents["hermes"] = e
 	}
-	if e, ok := probe("MULTICA_GEMINI_PATH", "gemini", "MULTICA_GEMINI_MODEL"); ok {
+	if e, ok := probe("MATO_GEMINI_PATH", "gemini", "MATO_GEMINI_MODEL"); ok {
 		agents["gemini"] = e
 	}
-	if e, ok := probe("MULTICA_PI_PATH", "pi", "MULTICA_PI_MODEL"); ok {
+	if e, ok := probe("MATO_PI_PATH", "pi", "MATO_PI_MODEL"); ok {
 		agents["pi"] = e
 	}
-	if e, ok := probe("MULTICA_CURSOR_PATH", "cursor-agent", "MULTICA_CURSOR_MODEL"); ok {
+	if e, ok := probe("MATO_CURSOR_PATH", "cursor-agent", "MATO_CURSOR_MODEL"); ok {
 		agents["cursor"] = e
 	}
-	if e, ok := probe("MULTICA_COPILOT_PATH", "copilot", "MULTICA_COPILOT_MODEL"); ok {
+	if e, ok := probe("MATO_COPILOT_PATH", "copilot", "MATO_COPILOT_MODEL"); ok {
 		agents["copilot"] = e
 	}
-	if e, ok := probe("MULTICA_KIMI_PATH", "kimi", "MULTICA_KIMI_MODEL"); ok {
+	if e, ok := probe("MATO_KIMI_PATH", "kimi", "MATO_KIMI_MODEL"); ok {
 		agents["kimi"] = e
 	}
-	if e, ok := probe("MULTICA_KIRO_PATH", "kiro-cli", "MULTICA_KIRO_MODEL"); ok {
+	if e, ok := probe("MATO_KIRO_PATH", "kiro-cli", "MATO_KIRO_MODEL"); ok {
 		agents["kiro"] = e
 	}
 	if len(agents) == 0 {
 		return Config{}, fmt.Errorf("no agent CLI found: install claude, codex, copilot, opencode, openclaw, hermes, gemini, pi, cursor-agent, kimi, or kiro-cli and ensure it is on PATH")
 	}
 
-	claudeArgs, err := shellArgsFromEnv("MULTICA_CLAUDE_ARGS")
+	claudeArgs, err := shellArgsFromEnv("MATO_CLAUDE_ARGS")
 	if err != nil {
 		return Config{}, err
 	}
-	codexArgs, err := shellArgsFromEnv("MULTICA_CODEX_ARGS")
+	codexArgs, err := shellArgsFromEnv("MATO_CODEX_ARGS")
 	if err != nil {
 		return Config{}, err
 	}
@@ -221,7 +221,7 @@ func LoadConfig(overrides Overrides) (Config, error) {
 	}
 
 	// Durations: override > env > default
-	pollInterval, err := durationFromEnv("MULTICA_DAEMON_POLL_INTERVAL", DefaultPollInterval)
+	pollInterval, err := durationFromEnv("MATO_DAEMON_POLL_INTERVAL", DefaultPollInterval)
 	if err != nil {
 		return Config{}, err
 	}
@@ -229,7 +229,7 @@ func LoadConfig(overrides Overrides) (Config, error) {
 		pollInterval = overrides.PollInterval
 	}
 
-	heartbeatInterval, err := durationFromEnv("MULTICA_DAEMON_HEARTBEAT_INTERVAL", DefaultHeartbeatInterval)
+	heartbeatInterval, err := durationFromEnv("MATO_DAEMON_HEARTBEAT_INTERVAL", DefaultHeartbeatInterval)
 	if err != nil {
 		return Config{}, err
 	}
@@ -237,7 +237,7 @@ func LoadConfig(overrides Overrides) (Config, error) {
 		heartbeatInterval = overrides.HeartbeatInterval
 	}
 
-	agentTimeout, err := durationFromEnv("MULTICA_AGENT_TIMEOUT", DefaultAgentTimeout)
+	agentTimeout, err := durationFromEnv("MATO_AGENT_TIMEOUT", DefaultAgentTimeout)
 	if err != nil {
 		return Config{}, err
 	}
@@ -245,7 +245,7 @@ func LoadConfig(overrides Overrides) (Config, error) {
 		agentTimeout = overrides.AgentTimeout
 	}
 
-	codexSemanticInactivityTimeout, err := durationFromEnv("MULTICA_CODEX_SEMANTIC_INACTIVITY_TIMEOUT", DefaultCodexSemanticInactivityTimeout)
+	codexSemanticInactivityTimeout, err := durationFromEnv("MATO_CODEX_SEMANTIC_INACTIVITY_TIMEOUT", DefaultCodexSemanticInactivityTimeout)
 	if err != nil {
 		return Config{}, err
 	}
@@ -253,15 +253,15 @@ func LoadConfig(overrides Overrides) (Config, error) {
 		codexSemanticInactivityTimeout = overrides.CodexSemanticInactivityTimeout
 	}
 
-	// MULTICA_AGENT_IDLE_WATCHDOG=0 disables the per-task idle watchdog. We
+	// MATO_AGENT_IDLE_WATCHDOG=0 disables the per-task idle watchdog. We
 	// route 0 through durationFromEnv so the operator can opt out without
 	// patching the binary; any positive duration overrides DefaultAgentIdleWatchdog.
-	agentIdleWatchdog, err := durationFromEnv("MULTICA_AGENT_IDLE_WATCHDOG", DefaultAgentIdleWatchdog)
+	agentIdleWatchdog, err := durationFromEnv("MATO_AGENT_IDLE_WATCHDOG", DefaultAgentIdleWatchdog)
 	if err != nil {
 		return Config{}, err
 	}
 
-	maxConcurrentTasks, err := intFromEnv("MULTICA_DAEMON_MAX_CONCURRENT_TASKS", DefaultMaxConcurrentTasks)
+	maxConcurrentTasks, err := intFromEnv("MATO_DAEMON_MAX_CONCURRENT_TASKS", DefaultMaxConcurrentTasks)
 	if err != nil {
 		return Config{}, err
 	}
@@ -276,9 +276,9 @@ func LoadConfig(overrides Overrides) (Config, error) {
 	// The persistent UUID is written once to `<profile-dir>/daemon.id` and
 	// then reused forever so hostname drift (.local suffix, system rename,
 	// mDNS state, profile switch) no longer mints a new runtime identity.
-	// Callers may still pin a specific id via MULTICA_DAEMON_ID or the
+	// Callers may still pin a specific id via MATO_DAEMON_ID or the
 	// override field (e.g. for tests or embedded environments).
-	daemonID := strings.TrimSpace(os.Getenv("MULTICA_DAEMON_ID"))
+	daemonID := strings.TrimSpace(os.Getenv("MATO_DAEMON_ID"))
 	if overrides.DaemonID != "" {
 		daemonID = overrides.DaemonID
 	}
@@ -295,7 +295,7 @@ func LoadConfig(overrides Overrides) (Config, error) {
 	legacyDaemonIDs := LegacyDaemonIDs(host, profile)
 	// Pre-change (#1220) daemon identity was stored per profile, which means
 	// the same machine could end up with multiple leftover daemon.id files
-	// — e.g. ~/.multica/daemon.id (default) plus ~/.multica/profiles/<x>/
+	// — e.g. ~/.mato/daemon.id (default) plus ~/.mato/profiles/<x>/
 	// daemon.id. Surface those UUIDs so the server can merge their runtime
 	// rows into the canonical machine UUID. Fatal-free: a broken profiles
 	// dir shouldn't block startup.
@@ -303,21 +303,21 @@ func LoadConfig(overrides Overrides) (Config, error) {
 		legacyDaemonIDs = append(legacyDaemonIDs, uuids...)
 	}
 	// Strip anything that collides with the resolved daemon_id (e.g. when
-	// the user explicitly pins MULTICA_DAEMON_ID=<hostname>, or when the
+	// the user explicitly pins MATO_DAEMON_ID=<hostname>, or when the
 	// canonical id was itself promoted from a pre-change profile file).
 	legacyDaemonIDs = filterLegacyIDs(legacyDaemonIDs, daemonID)
 
-	deviceName := envOrDefault("MULTICA_DAEMON_DEVICE_NAME", host)
+	deviceName := envOrDefault("MATO_DAEMON_DEVICE_NAME", host)
 	if overrides.DeviceName != "" {
 		deviceName = overrides.DeviceName
 	}
 
-	runtimeName := envOrDefault("MULTICA_AGENT_RUNTIME_NAME", DefaultRuntimeName)
+	runtimeName := envOrDefault("MATO_AGENT_RUNTIME_NAME", DefaultRuntimeName)
 	if overrides.RuntimeName != "" {
 		runtimeName = overrides.RuntimeName
 	}
 
-	// Workspaces root: override > env > default (~/multica_workspaces or ~/multica_workspaces_<profile>)
+	// Workspaces root: override > env > default (~/mato_workspaces or ~/mato_workspaces_<profile>)
 	workspacesRoot, err := ResolveWorkspacesRoot(profile, overrides.WorkspacesRoot)
 	if err != nil {
 		return Config{}, err
@@ -330,40 +330,40 @@ func LoadConfig(overrides Overrides) (Config, error) {
 	}
 
 	// Keep env after task: env > default (false)
-	keepEnv := os.Getenv("MULTICA_KEEP_ENV_AFTER_TASK") == "true" || os.Getenv("MULTICA_KEEP_ENV_AFTER_TASK") == "1"
+	keepEnv := os.Getenv("MATO_KEEP_ENV_AFTER_TASK") == "true" || os.Getenv("MATO_KEEP_ENV_AFTER_TASK") == "1"
 
 	// GC config: env > defaults
 	gcEnabled := true
-	if v := os.Getenv("MULTICA_GC_ENABLED"); v == "false" || v == "0" {
+	if v := os.Getenv("MATO_GC_ENABLED"); v == "false" || v == "0" {
 		gcEnabled = false
 	}
-	gcInterval, err := durationFromEnv("MULTICA_GC_INTERVAL", DefaultGCInterval)
+	gcInterval, err := durationFromEnv("MATO_GC_INTERVAL", DefaultGCInterval)
 	if err != nil {
 		return Config{}, err
 	}
-	gcTTL, err := durationFromEnv("MULTICA_GC_TTL", DefaultGCTTL)
+	gcTTL, err := durationFromEnv("MATO_GC_TTL", DefaultGCTTL)
 	if err != nil {
 		return Config{}, err
 	}
-	gcOrphanTTL, err := durationFromEnv("MULTICA_GC_ORPHAN_TTL", DefaultGCOrphanTTL)
+	gcOrphanTTL, err := durationFromEnv("MATO_GC_ORPHAN_TTL", DefaultGCOrphanTTL)
 	if err != nil {
 		return Config{}, err
 	}
-	gcArtifactTTL, err := durationFromEnv("MULTICA_GC_ARTIFACT_TTL", DefaultGCArtifactTTL)
+	gcArtifactTTL, err := durationFromEnv("MATO_GC_ARTIFACT_TTL", DefaultGCArtifactTTL)
 	if err != nil {
 		return Config{}, err
 	}
-	gcArtifactPatterns := patternsFromEnv("MULTICA_GC_ARTIFACT_PATTERNS", DefaultGCArtifactPatterns)
+	gcArtifactPatterns := patternsFromEnv("MATO_GC_ARTIFACT_PATTERNS", DefaultGCArtifactPatterns)
 
 	// Auto-update config: env > defaults > CLI override.
 	autoUpdateEnabled := true
-	if v := strings.TrimSpace(os.Getenv("MULTICA_DAEMON_AUTO_UPDATE")); v == "false" || v == "0" {
+	if v := strings.TrimSpace(os.Getenv("MATO_DAEMON_AUTO_UPDATE")); v == "false" || v == "0" {
 		autoUpdateEnabled = false
 	}
 	if overrides.DisableAutoUpdate {
 		autoUpdateEnabled = false
 	}
-	autoUpdateInterval, err := durationFromEnv("MULTICA_DAEMON_AUTO_UPDATE_INTERVAL", DefaultAutoUpdateCheckInterval)
+	autoUpdateInterval, err := durationFromEnv("MATO_DAEMON_AUTO_UPDATE_INTERVAL", DefaultAutoUpdateCheckInterval)
 	if err != nil {
 		return Config{}, err
 	}
@@ -405,7 +405,7 @@ func LoadConfig(overrides Overrides) (Config, error) {
 func NormalizeServerBaseURL(raw string) (string, error) {
 	u, err := url.Parse(strings.TrimSpace(raw))
 	if err != nil {
-		return "", fmt.Errorf("invalid MULTICA_SERVER_URL: %w", err)
+		return "", fmt.Errorf("invalid MATO_SERVER_URL: %w", err)
 	}
 	switch u.Scheme {
 	case "ws":
@@ -414,7 +414,7 @@ func NormalizeServerBaseURL(raw string) (string, error) {
 		u.Scheme = "https"
 	case "http", "https":
 	default:
-		return "", fmt.Errorf("MULTICA_SERVER_URL must use ws, wss, http, or https")
+		return "", fmt.Errorf("MATO_SERVER_URL must use ws, wss, http, or https")
 	}
 	if u.Path == "/ws" {
 		u.Path = ""
@@ -427,24 +427,24 @@ func NormalizeServerBaseURL(raw string) (string, error) {
 
 // ResolveWorkspacesRoot returns the absolute path that the daemon and CLI
 // should treat as the workspaces root. Resolution order: explicit override >
-// MULTICA_WORKSPACES_ROOT env > default ($HOME/multica_workspaces, or
-// $HOME/multica_workspaces_<profile> for a named profile). Read-only callers
-// (e.g. `multica daemon disk-usage`) use this directly so they pick the same
+// MATO_WORKSPACES_ROOT env > default ($HOME/mato_workspaces, or
+// $HOME/mato_workspaces_<profile> for a named profile). Read-only callers
+// (e.g. `mato daemon disk-usage`) use this directly so they pick the same
 // directory the running daemon would have picked.
 func ResolveWorkspacesRoot(profile, override string) (string, error) {
-	root := strings.TrimSpace(os.Getenv("MULTICA_WORKSPACES_ROOT"))
+	root := strings.TrimSpace(os.Getenv("MATO_WORKSPACES_ROOT"))
 	if override != "" {
 		root = override
 	}
 	if root == "" {
 		home, err := os.UserHomeDir()
 		if err != nil {
-			return "", fmt.Errorf("resolve home directory: %w (set MULTICA_WORKSPACES_ROOT to override)", err)
+			return "", fmt.Errorf("resolve home directory: %w (set MATO_WORKSPACES_ROOT to override)", err)
 		}
 		if profile != "" {
-			root = filepath.Join(home, "multica_workspaces_"+profile)
+			root = filepath.Join(home, "mato_workspaces_"+profile)
 		} else {
-			root = filepath.Join(home, "multica_workspaces")
+			root = filepath.Join(home, "mato_workspaces")
 		}
 	}
 	abs, err := filepath.Abs(root)
@@ -459,7 +459,7 @@ func ResolveWorkspacesRoot(profile, override string) (string, error) {
 // disk-usage CLI uses this to make sure the "artifact size" it reports
 // matches what the GC would actually reclaim.
 func ArtifactPatternsFromEnv() []string {
-	return patternsFromEnv("MULTICA_GC_ARTIFACT_PATTERNS", DefaultGCArtifactPatterns)
+	return patternsFromEnv("MATO_GC_ARTIFACT_PATTERNS", DefaultGCArtifactPatterns)
 }
 
 // patternsFromEnv reads a comma-separated list from env. Patterns containing
@@ -498,7 +498,7 @@ func shellArgsFromEnv(name string) ([]string, error) {
 }
 
 // defaultAgentCommandNames lists the command names the agent probe loop tries
-// before any MULTICA_*_PATH override is applied. Kept in sync with the
+// before any MATO_*_PATH override is applied. Kept in sync with the
 // `probe(...)` calls in LoadConfig — the shell-fallback resolver uses this
 // list to pre-fetch canonical paths for every known agent in a single shell
 // invocation, instead of paying the cost-per-miss.
@@ -568,7 +568,7 @@ var supportedLoginShells = map[string]struct{}{
 //     path) and per-shell paths the shell happened not to fully canonicalise.
 //   - Agent names are restricted to the bare set in defaultAgentCommandNames
 //     (`[A-Za-z0-9._-]` only); we inline them into the script unquoted to
-//     keep the script readable. Custom MULTICA_*_PATH values never reach this
+//     keep the script readable. Custom MATO_*_PATH values never reach this
 //     resolver — those go through exec.LookPath directly.
 func resolveAgentsViaLoginShell(names []string) map[string]string {
 	out := map[string]string{}

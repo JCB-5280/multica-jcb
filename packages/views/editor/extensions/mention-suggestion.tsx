@@ -12,25 +12,25 @@ import {
 import { ReactRenderer } from "@tiptap/react";
 import { computePosition, offset, flip, shift } from "@floating-ui/dom";
 import type { QueryClient } from "@tanstack/react-query";
-import { getCurrentWsId } from "@multica/core/platform";
-import { flattenIssueBuckets, issueKeys } from "@multica/core/issues/queries";
-import { workspaceKeys } from "@multica/core/workspace/queries";
-import { useAuthStore } from "@multica/core/auth";
-import { canAssignAgentToIssue } from "@multica/core/permissions";
-import { api } from "@multica/core/api";
-import { isImeComposing } from "@multica/core/utils";
+import { getCurrentWsId } from "@mato/core/platform";
+import { flattenIssueBuckets, issueKeys } from "@mato/core/issues/queries";
+import { workspaceKeys } from "@mato/core/workspace/queries";
+import { useAuthStore } from "@mato/core/auth";
+import { canAssignAgentToIssue } from "@mato/core/permissions";
+import { api } from "@mato/core/api";
+import { isImeComposing } from "@mato/core/utils";
 import type {
   Issue,
   ListIssuesCache,
   MemberWithUser,
   Agent,
   Squad,
-} from "@multica/core/types";
+} from "@mato/core/types";
 import { ActorAvatar } from "../../common/actor-avatar";
 import { StatusIcon } from "../../issues/components/status-icon";
 import { useT } from "../../i18n";
-import { Badge } from "@multica/ui/components/ui/badge";
-import type { IssueStatus } from "@multica/core/types";
+import { Badge } from "@mato/ui/components/ui/badge";
+import type { IssueStatus } from "@mato/core/types";
 import type { SuggestionOptions, SuggestionProps } from "@tiptap/suggestion";
 import {
   getRecencyMap,

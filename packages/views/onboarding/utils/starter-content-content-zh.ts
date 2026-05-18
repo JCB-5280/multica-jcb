@@ -1,5 +1,5 @@
-import type { QuestionnaireAnswers } from "@multica/core/onboarding";
-import type { ImportStarterIssuePayload } from "@multica/core/api";
+import type { QuestionnaireAnswers } from "@mato/core/onboarding";
+import type { ImportStarterIssuePayload } from "@mato/core/api";
 
 // =============================================================================
 // Chinese starter-content body. Mirrors starter-content-content-en.ts in
@@ -33,7 +33,7 @@ export function buildWelcomeIssueText(
     ``,
     `这是你工作区里的第一个 issue。下面你的智能体马上会回复——这就是 Multica 里工作的方式：你写下你想做的事，智能体（或同事）接手并在评论里回复。`,
     ``,
-    `[了解 Multica 是怎么运转的 →](https://multica.ai/docs/zh/how-multica-works)`,
+    `[了解 Multica 是怎么运转的 →](https://mato.ai/docs/zh/how-mato-works)`,
     ``,
     `---`,
     ``,
@@ -129,7 +129,7 @@ export function buildAgentGuidedSubIssues(
         ``,
         `**怎么算成功**：Live card 里出现智能体在思考的状态，Status 自动翻到 **In Progress**。`,
         ``,
-        `[关于把 issue 分配给智能体 →](https://multica.ai/docs/zh/assigning-issues)`,
+        `[关于把 issue 分配给智能体 →](https://mato.ai/docs/zh/assigning-issues)`,
       ].join("\n"),
     },
     {
@@ -152,7 +152,7 @@ export function buildAgentGuidedSubIssues(
         ``,
         `**怎么算成功**：智能体在几秒内通过 chat 面板（或评论里）回复。`,
         ``,
-        `[关于聊天 →](https://multica.ai/docs/zh/chat)`,
+        `[关于聊天 →](https://mato.ai/docs/zh/chat)`,
       ].join("\n"),
     },
     {
@@ -181,7 +181,7 @@ export function buildAgentGuidedSubIssues(
         ``,
         `**怎么算成功**：你下次分给智能体一个 task，它会自动用上 context 里的信息，不需要你再解释一遍。`,
         ``,
-        `[关于工作区 →](https://multica.ai/docs/zh/workspaces)`,
+        `[关于工作区 →](https://mato.ai/docs/zh/workspaces)`,
       ].join("\n"),
     },
   ];
@@ -206,7 +206,7 @@ export function buildAgentGuidedSubIssues(
         ``,
         `他们会收到一封带加入链接的邮件。已发出的邀请会出现在成员列表下方"Pending Invitations"折叠区，从那里可以撤销。`,
         ``,
-        `[关于成员与角色 →](https://multica.ai/docs/zh/members-roles)`,
+        `[关于成员与角色 →](https://mato.ai/docs/zh/members-roles)`,
       ].join("\n"),
     });
   }
@@ -256,7 +256,7 @@ export function buildAgentGuidedSubIssues(
       ``,
       `**怎么算成功**：新智能体出现在任意 issue 的 Assignee 下拉里，也出现在 Agents 页的左侧列表。`,
       ``,
-      `[关于创建智能体 →](https://multica.ai/docs/zh/agents-create)`,
+      `[关于创建智能体 →](https://mato.ai/docs/zh/agents-create)`,
     ].join("\n"),
   });
 
@@ -303,7 +303,7 @@ export function buildAgentGuidedSubIssues(
         ``,
         `**下次分配 task 时试一下**：保持 issue 打开，观察 Live card 在描述下方出现。`,
         ``,
-        `[关于执行任务 →](https://multica.ai/docs/zh/tasks)`,
+        `[关于执行任务 →](https://mato.ai/docs/zh/tasks)`,
       ].join("\n"),
     },
     {
@@ -324,7 +324,7 @@ export function buildAgentGuidedSubIssues(
         ``,
         `**小技巧**："Archive completed" 是清掉已经完成 issue 噪音最快的方式。`,
         ``,
-        `[关于收件箱 →](https://multica.ai/docs/zh/inbox)`,
+        `[关于收件箱 →](https://mato.ai/docs/zh/inbox)`,
       ].join("\n"),
     },
     {
@@ -343,7 +343,7 @@ export function buildAgentGuidedSubIssues(
         ``,
         `**第一个 autopilot 可以试什么**：每日 GitHub 活动摘要、每周"哪些 issue 被卡住"巡检、每周一早上整理还停在 Backlog 的 issue。`,
         ``,
-        `[关于自动化 →](https://multica.ai/docs/zh/autopilots)`,
+        `[关于自动化 →](https://mato.ai/docs/zh/autopilots)`,
       ].join("\n"),
     },
   ];
@@ -366,24 +366,24 @@ export function buildSelfServeSubIssues(
         `**运行时**是守护进程（一个跑在你机器上的小后台进程）和一款 AI 编程工具——Claude Code、Codex 等等——的组合。装了多款工具就会出现多个运行时。运行时是真正执行智能体接到的 task 的那一层。`,
         ``,
         `**方案 A —— 桌面应用（macOS，Mac 推荐）**：`,
-        `1. 去 [github.com/multica-ai/multica/releases/latest](https://github.com/multica-ai/multica/releases/latest) 下载 macOS 的 \`.dmg\``,
+        `1. 去 [github.com/mato-ai/mato/releases/latest](https://github.com/mato-ai/mato/releases/latest) 下载 macOS 的 \`.dmg\``,
         `2. 安装并打开`,
         `3. 用同一个账号登录 —— 守护进程内置，到此结束`,
         ``,
         `**方案 B —— CLI（macOS、Linux 或 Windows + WSL）**：`,
         `1. 在终端装 CLI：`,
         `   \`\`\``,
-        `   curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh | bash`,
+        `   curl -fsSL https://raw.githubusercontent.com/mato-ai/mato/main/scripts/install.sh | bash`,
         `   \`\`\``,
         `2. 跑 setup（登录并启动后台守护进程）：`,
         `   \`\`\``,
-        `   multica setup`,
+        `   mato setup`,
         `   \`\`\``,
         `   守护进程会在终端关闭后继续运行 —— 不需要保留终端窗口。`,
         ``,
         `**验证**：侧边栏 → 底部 **Configure** 区 → **Runtimes** → 应该至少看到一个已连接的运行时。`,
         ``,
-        `[关于守护进程与运行时 →](https://multica.ai/docs/zh/daemon-runtimes)`,
+        `[关于守护进程与运行时 →](https://mato.ai/docs/zh/daemon-runtimes)`,
       ].join("\n"),
     },
     {
@@ -408,7 +408,7 @@ export function buildSelfServeSubIssues(
         ``,
         `**怎么算成功**：新智能体出现在任意 issue 的 Assignee 下拉里。`,
         ``,
-        `[关于创建智能体 →](https://multica.ai/docs/zh/agents-create)`,
+        `[关于创建智能体 →](https://mato.ai/docs/zh/agents-create)`,
       ].join("\n"),
     },
   ];
@@ -436,7 +436,7 @@ export function buildSelfServeSubIssues(
         ``,
         `**⚠️ 容易踩**：新 issue 默认是 **Backlog**。必须翻到 **Todo** 才会触发智能体。`,
         ``,
-        `[关于把 issue 分配给智能体 →](https://multica.ai/docs/zh/assigning-issues)`,
+        `[关于把 issue 分配给智能体 →](https://mato.ai/docs/zh/assigning-issues)`,
       ].join("\n"),
     },
     {
@@ -462,7 +462,7 @@ export function buildSelfServeSubIssues(
         ``,
         `**怎么算成功**：你下次分给智能体一个 task，它会自动用上 context 里的信息，不需要你再解释一遍。`,
         ``,
-        `[关于工作区 →](https://multica.ai/docs/zh/workspaces)`,
+        `[关于工作区 →](https://mato.ai/docs/zh/workspaces)`,
       ].join("\n"),
     },
   ];
@@ -487,7 +487,7 @@ export function buildSelfServeSubIssues(
         ``,
         `**附赠技巧**：在任意 issue 的评论框里输入 \`@\` 可以提及智能体或成员。`,
         ``,
-        `[关于聊天 →](https://multica.ai/docs/zh/chat)`,
+        `[关于聊天 →](https://mato.ai/docs/zh/chat)`,
       ].join("\n"),
     },
   ];
@@ -525,7 +525,7 @@ export function buildSelfServeSubIssues(
         `2. 左侧 tab 列表 → **Members**（人形图标）`,
         `3. 点 **Add member** → 填邮箱 → 选角色 → **Send invite**`,
         ``,
-        `[关于成员与角色 →](https://multica.ai/docs/zh/members-roles)`,
+        `[关于成员与角色 →](https://mato.ai/docs/zh/members-roles)`,
       ].join("\n"),
     });
   }
@@ -562,7 +562,7 @@ export function buildSelfServeSubIssues(
         ``,
         `Live card 实时展示智能体正在调用哪个工具、流式思考、当前状态。执行结束后，下方的 **Task Run History** 列出每一次运行 —— 点 **View transcript** 可以打开完整时间线。`,
         ``,
-        `[关于执行任务 →](https://multica.ai/docs/zh/tasks)`,
+        `[关于执行任务 →](https://mato.ai/docs/zh/tasks)`,
       ].join("\n"),
     },
     {
@@ -580,7 +580,7 @@ export function buildSelfServeSubIssues(
         `2. 选一个模板，或者点 **+ New autopilot** 从空白开始`,
         `3. 填：**Name** / **Prompt** / **Agent** / **Schedule**（频率 + 时间 + 时区）→ **Create**`,
         ``,
-        `[关于自动化 →](https://multica.ai/docs/zh/autopilots)`,
+        `[关于自动化 →](https://mato.ai/docs/zh/autopilots)`,
       ].join("\n"),
     },
   );

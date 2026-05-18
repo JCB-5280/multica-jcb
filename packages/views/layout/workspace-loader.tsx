@@ -1,6 +1,6 @@
 "use client";
 
-import { MulticaIcon } from "@multica/ui/components/common/multica-icon";
+import { MulticaIcon } from "@mato/ui/components/common/mato-icon";
 import { useT } from "../i18n";
 
 /**

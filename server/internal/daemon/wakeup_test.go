@@ -27,9 +27,9 @@ func TestTaskWakeupURL(t *testing.T) {
 		},
 		{
 			name:       "base path",
-			baseURL:    "https://api.example.com/multica",
+			baseURL:    "https://api.example.com/mato",
 			runtimeIDs: []string{"runtime-1"},
-			want:       "wss://api.example.com/multica/api/daemon/ws?runtime_ids=runtime-1",
+			want:       "wss://api.example.com/mato/api/daemon/ws?runtime_ids=runtime-1",
 		},
 	}
 

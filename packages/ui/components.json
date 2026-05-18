@@ -12,10 +12,10 @@
   },
   "iconLibrary": "lucide",
   "aliases": {
-    "components": "@multica/ui/components",
-    "ui": "@multica/ui/components/ui",
-    "hooks": "@multica/ui/hooks",
-    "lib": "@multica/ui/lib",
-    "utils": "@multica/ui/lib/utils"
+    "components": "@mato/ui/components",
+    "ui": "@mato/ui/components/ui",
+    "hooks": "@mato/ui/hooks",
+    "lib": "@mato/ui/lib",
+    "utils": "@mato/ui/lib/utils"
   }
 }

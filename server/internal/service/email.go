@@ -36,7 +36,7 @@ func NewEmailService() *EmailService {
 	apiKey := os.Getenv("RESEND_API_KEY")
 	from := strings.TrimSpace(os.Getenv("RESEND_FROM_EMAIL"))
 	if from == "" {
-		from = "noreply@multica.ai"
+		from = "noreply@mato.ai"
 	}
 
 	smtpHost := strings.TrimSpace(os.Getenv("SMTP_HOST"))
@@ -59,7 +59,7 @@ func NewEmailService() *EmailService {
 	case client != nil:
 		fmt.Printf("EmailService: Resend API from=%s\n", from)
 	default:
-		fmt.Println("EmailService: DEV mode — codes printed to stdout (set MULTICA_DEV_VERIFICATION_CODE in .env for a fixed local code)")
+		fmt.Println("EmailService: DEV mode — codes printed to stdout (set MATO_DEV_VERIFICATION_CODE in .env for a fixed local code)")
 	}
 
 	return &EmailService{
@@ -199,7 +199,7 @@ func (s *EmailService) SendVerificationCode(to, code string) error {
 func (s *EmailService) SendInvitationEmail(to, inviterName, workspaceName, invitationID string) error {
 	appURL := strings.TrimSpace(os.Getenv("FRONTEND_ORIGIN"))
 	if appURL == "" {
-		appURL = "https://app.multica.ai"
+		appURL = "https://app.mato.ai"
 	}
 	inviteURL := fmt.Sprintf("%s/invite/%s", appURL, invitationID)
 

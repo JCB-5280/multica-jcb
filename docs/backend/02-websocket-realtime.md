@@ -30,7 +30,7 @@ Server: gorilla/websocket upgrades the connection
       Waits for auth message (or reads JWT from cookie)
         { type: "auth", payload: { token: "JWT..." } }
         — OR —
-        Cookie: multica_auth=... (cookie-based sessions)
+        Cookie: mato_auth=... (cookie-based sessions)
       ↓
       Validates JWT → extracts user_id
       ↓

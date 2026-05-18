@@ -1,5 +1,5 @@
 {
-  "name": "@multica/core",
+  "name": "@mato/core",
   "version": "0.0.0",
   "private": true,
   "type": "module",
@@ -108,7 +108,7 @@
     "react": "catalog:"
   },
   "devDependencies": {
-    "@multica/tsconfig": "workspace:*",
+    "@mato/tsconfig": "workspace:*",
     "@testing-library/react": "catalog:",
     "@types/react": "catalog:",
     "jsdom": "catalog:",

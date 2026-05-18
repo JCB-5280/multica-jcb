@@ -4,9 +4,9 @@ import (
 	"context"
 
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/multica-ai/multica/server/internal/realtime"
-	"github.com/multica-ai/multica/server/internal/util"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
+	"github.com/mato-ai/mato/server/internal/realtime"
+	"github.com/mato-ai/mato/server/internal/util"
+	db "github.com/mato-ai/mato/server/pkg/db/generated"
 )
 
 // scopeAuthQuerier is the narrow subset of db.Queries used by the scope

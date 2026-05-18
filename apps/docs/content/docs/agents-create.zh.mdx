@@ -14,7 +14,7 @@ import { Callout } from "fumadocs-ui/components/callout";
 满足之后，在工作区的**智能体**页点 **+ 新建**，或者用命令行：
 
 ```bash
-multica agent create
+mato agent create
 ```
 
 表单里只有两项必填：**名字**（工作区内唯一）和 **运行时**（= 选一款 AI 编程工具）。其他字段下面一节一节讲。
@@ -61,7 +61,7 @@ ANTHROPIC_API_KEY = sk-...
 ANTHROPIC_BASE_URL = https://my-proxy.example.com
 ```
 
-系统关键变量不能被覆盖：`PATH`、`HOME`、`USER`、`SHELL`、`TERM`、`CODEX_HOME`，以及任何 `MULTICA_*` 开头的 key 都会被守护进程静默忽略（日志里有 warn，不会报错）。
+系统关键变量不能被覆盖：`PATH`、`HOME`、`USER`、`SHELL`、`TERM`、`CODEX_HOME`，以及任何 `MATO_*` 开头的 key 都会被守护进程静默忽略（日志里有 warn，不会报错）。
 
 <Callout type="warning">
 **`custom_env` 的值在 Multica 服务器的数据库里是明文存储的。** 非智能体创建者 / 非 workspace admin 看不到值（API 返回 `****`），但数据库备份、DB 审计里仍然能看到。

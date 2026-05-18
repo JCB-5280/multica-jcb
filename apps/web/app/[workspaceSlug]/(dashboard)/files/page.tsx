@@ -1,1 +1,1 @@
-export { FilesPage as default } from "@multica/views/files";
+export { FilesPage as default } from "@mato/views/files";

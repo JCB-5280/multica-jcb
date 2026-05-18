@@ -3,20 +3,20 @@
 import React, { useCallback, useEffect, useMemo, useState } from "react";
 import { Plus, Search, Server } from "lucide-react";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { runtimeListOptions, runtimeKeys } from "@multica/core/runtimes/queries";
-import { useUpdatableRuntimeIds } from "@multica/core/runtimes/hooks";
-import { deriveRuntimeHealth } from "@multica/core/runtimes";
-import { useWSEvent } from "@multica/core/realtime";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
+import { useAuthStore } from "@mato/core/auth";
+import { useWorkspaceId } from "@mato/core/hooks";
+import { runtimeListOptions, runtimeKeys } from "@mato/core/runtimes/queries";
+import { useUpdatableRuntimeIds } from "@mato/core/runtimes/hooks";
+import { deriveRuntimeHealth } from "@mato/core/runtimes";
+import { useWSEvent } from "@mato/core/realtime";
+import { Button } from "@mato/ui/components/ui/button";
+import { Input } from "@mato/ui/components/ui/input";
+import { Skeleton } from "@mato/ui/components/ui/skeleton";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@multica/ui/components/ui/tooltip";
+} from "@mato/ui/components/ui/tooltip";
 import { PageHeader } from "../../layout/page-header";
 import { ConnectRemoteDialog } from "./connect-remote-dialog";
 import { RuntimeList } from "./runtime-list";
@@ -206,7 +206,7 @@ function PageHeaderBar({
         <p className="ml-2 hidden text-xs text-muted-foreground md:block">
           {t(($) => $.page.tagline)}{" "}
           <a
-            href="https://multica.ai/docs/daemon-runtimes"
+            href="https://mato.ai/docs/daemon-runtimes"
             target="_blank"
             rel="noopener noreferrer"
             className="underline decoration-muted-foreground/30 underline-offset-4 transition-colors hover:text-foreground"

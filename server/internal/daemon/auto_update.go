@@ -4,7 +4,7 @@ import (
 	"context"
 	"time"
 
-	"github.com/multica-ai/multica/server/internal/cli"
+	"github.com/mato-ai/mato/server/internal/cli"
 )
 
 // Indirections over the real release / version helpers so tests can run the
@@ -31,7 +31,7 @@ var autoUpdateInitialDelay = 2 * time.Minute
 // graceful restart into the new binary.
 //
 // Disabled when:
-//   - the operator opted out via --no-auto-update / MULTICA_DAEMON_AUTO_UPDATE=false;
+//   - the operator opted out via --no-auto-update / MATO_DAEMON_AUTO_UPDATE=false;
 //   - the daemon was spawned by Desktop (the Electron app owns the binary);
 //   - the running version doesn't look like a tagged release (dev builds).
 //

@@ -66,7 +66,7 @@ func (b *openclawBackend) Execute(ctx context.Context, prompt string, opts ExecO
 
 	sessionID := opts.ResumeSessionID
 	if sessionID == "" {
-		sessionID = fmt.Sprintf("multica-%d", time.Now().UnixNano())
+		sessionID = fmt.Sprintf("mato-%d", time.Now().UnixNano())
 	}
 	args := buildOpenclawArgs(prompt, sessionID, opts, b.cfg.Logger)
 

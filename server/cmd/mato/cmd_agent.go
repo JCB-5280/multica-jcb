@@ -13,8 +13,8 @@ import (
 
 	"github.com/spf13/cobra"
 
-	"github.com/multica-ai/multica/server/internal/cli"
-	"github.com/multica-ai/multica/server/internal/daemon"
+	"github.com/mato-ai/mato/server/internal/cli"
+	"github.com/mato-ai/mato/server/internal/daemon"
 )
 
 var agentCmd = &cobra.Command{
@@ -188,22 +188,22 @@ func newAPIClient(cmd *cobra.Command) (*cli.APIClient, error) {
 	token := resolveToken(cmd)
 
 	if serverURL == "" {
-		return nil, fmt.Errorf("server URL not set: use --server-url flag, MULTICA_SERVER_URL env, or 'multica config set server_url <url>'")
+		return nil, fmt.Errorf("server URL not set: use --server-url flag, MATO_SERVER_URL env, or 'mato config set server_url <url>'")
 	}
 
 	client := cli.NewAPIClient(serverURL, workspaceID, token)
 	// When running inside a daemon task, attribute actions to the agent.
-	if agentID := os.Getenv("MULTICA_AGENT_ID"); agentID != "" {
+	if agentID := os.Getenv("MATO_AGENT_ID"); agentID != "" {
 		client.AgentID = agentID
 	}
-	if taskID := os.Getenv("MULTICA_TASK_ID"); taskID != "" {
+	if taskID := os.Getenv("MATO_TASK_ID"); taskID != "" {
 		client.TaskID = taskID
 	}
 	return client, nil
 }
 
 func resolveServerURL(cmd *cobra.Command) string {
-	val := cli.FlagOrEnv(cmd, "server-url", "MULTICA_SERVER_URL", "")
+	val := cli.FlagOrEnv(cmd, "server-url", "MATO_SERVER_URL", "")
 	if val != "" {
 		return normalizeAPIBaseURL(val)
 	}
@@ -212,7 +212,7 @@ func resolveServerURL(cmd *cobra.Command) string {
 	if err == nil && cfg.ServerURL != "" {
 		return normalizeAPIBaseURL(cfg.ServerURL)
 	}
-	fmt.Fprintln(os.Stderr, "No server configured. Run 'multica setup' first.")
+	fmt.Fprintln(os.Stderr, "No server configured. Run 'mato setup' first.")
 	os.Exit(1)
 	return "" // unreachable
 }
@@ -226,18 +226,18 @@ func normalizeAPIBaseURL(raw string) string {
 }
 
 // inAgentExecutionContext reports whether the CLI is being invoked from
-// inside a daemon-managed agent task (daemon sets MULTICA_AGENT_ID and
-// MULTICA_TASK_ID in the agent env). In that context the workspace must be
+// inside a daemon-managed agent task (daemon sets MATO_AGENT_ID and
+// MATO_TASK_ID in the agent env). In that context the workspace must be
 // provided explicitly by the daemon — falling back to user-global
-// ~/.multica/config.json would let the agent act on whatever workspace the
+// ~/.mato/config.json would let the agent act on whatever workspace the
 // user last configured, which is how cross-workspace contamination happens
 // when multiple workspaces share a host.
 func inAgentExecutionContext() bool {
-	return os.Getenv("MULTICA_AGENT_ID") != "" || os.Getenv("MULTICA_TASK_ID") != ""
+	return os.Getenv("MATO_AGENT_ID") != "" || os.Getenv("MATO_TASK_ID") != ""
 }
 
 func resolveWorkspaceID(cmd *cobra.Command) string {
-	val := cli.FlagOrEnv(cmd, "workspace-id", "MULTICA_WORKSPACE_ID", "")
+	val := cli.FlagOrEnv(cmd, "workspace-id", "MATO_WORKSPACE_ID", "")
 	if val != "" {
 		return val
 	}
@@ -258,9 +258,9 @@ func requireWorkspaceID(cmd *cobra.Command) (string, error) {
 	id := resolveWorkspaceID(cmd)
 	if id == "" {
 		if inAgentExecutionContext() {
-			return "", fmt.Errorf("workspace_id is required: MULTICA_WORKSPACE_ID must be set by the daemon in agent execution context (no fallback to user config)")
+			return "", fmt.Errorf("workspace_id is required: MATO_WORKSPACE_ID must be set by the daemon in agent execution context (no fallback to user config)")
 		}
-		return "", fmt.Errorf("workspace_id is required: use --workspace-id flag, set MULTICA_WORKSPACE_ID env, or run 'multica config set workspace_id <id>'")
+		return "", fmt.Errorf("workspace_id is required: use --workspace-id flag, set MATO_WORKSPACE_ID env, or run 'mato config set workspace_id <id>'")
 	}
 	return id, nil
 }
@@ -463,7 +463,7 @@ func runAgentCreateFromTemplate(cmd *cobra.Command, client *cli.APIClient, name,
 	}
 
 	// 60s ceiling: templates fan out N HTTP fetches to GitHub, each ~200-500ms.
-	// Matches the timeout used by `multica skill import` (cmd_skill.go).
+	// Matches the timeout used by `mato skill import` (cmd_skill.go).
 	ctx, cancel := context.WithTimeout(context.Background(), 60*time.Second)
 	defer cancel()
 

@@ -1,18 +1,18 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { ActorAvatar as ActorAvatarBase } from "@multica/ui/components/common/actor-avatar";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useWorkspacePaths } from "@multica/core/paths";
-import { agentListOptions } from "@multica/core/workspace/queries";
+import { ActorAvatar as ActorAvatarBase } from "@mato/ui/components/common/actor-avatar";
+import { Skeleton } from "@mato/ui/components/ui/skeleton";
+import { useWorkspaceId } from "@mato/core/hooks";
+import { useWorkspacePaths } from "@mato/core/paths";
+import { agentListOptions } from "@mato/core/workspace/queries";
 import {
   agentTaskSnapshotOptions,
   useAgentPresenceDetail,
-} from "@multica/core/agents";
-import { issueDetailOptions } from "@multica/core/issues";
-import { timeAgo } from "@multica/core/utils";
-import type { AgentTask } from "@multica/core/types";
+} from "@mato/core/agents";
+import { issueDetailOptions } from "@mato/core/issues";
+import { timeAgo } from "@mato/core/utils";
+import type { AgentTask } from "@mato/core/types";
 import { AlertTriangle } from "lucide-react";
 import { AppLink } from "../../navigation";
 import { useT } from "../../i18n";

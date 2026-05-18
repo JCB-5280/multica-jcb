@@ -94,7 +94,7 @@ sequenceDiagram
 
 ## Phase 3: Daemon Claims and Dispatches
 
-**On the daemon side** (multica daemon running locally):
+**On the daemon side** (mato daemon running locally):
 
 ```mermaid
 sequenceDiagram
