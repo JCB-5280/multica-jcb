@@ -2137,7 +2137,9 @@ func (d *Daemon) uploadOutputFiles(ctx context.Context, task Task, workDir strin
 		return
 	}
 	for _, entry := range entries {
-		if entry.IsDir() {
+		// Skip directories and symlinks — symlinks could point outside the
+		// work directory and allow an agent to exfiltrate arbitrary files.
+		if entry.IsDir() || entry.Type()&os.ModeSymlink != 0 {
 			continue
 		}
 		filePath := filepath.Join(outputDir, entry.Name())

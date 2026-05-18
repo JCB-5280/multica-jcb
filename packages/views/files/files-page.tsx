@@ -10,6 +10,7 @@ import {
   HardDrive,
   Trash2,
 } from "lucide-react";
+import { toast } from "sonner";
 import type { Attachment } from "@multica/core/types";
 import { api } from "@multica/core/api";
 import { useWorkspaceId } from "@multica/core/hooks";
@@ -47,15 +48,15 @@ function FileIcon({ contentType, filename }: { contentType: string; filename: st
   if (contentType.startsWith("image/")) {
     return <FileImage className="size-5 shrink-0 text-muted-foreground" />;
   }
+  if (["xlsx", "xls"].includes(ext)) {
+    return <FileSpreadsheet className="size-5 shrink-0 text-muted-foreground" />;
+  }
   if (
     contentType === "application/json" ||
     contentType.startsWith("text/") ||
     ["md", "txt", "log", "csv", "json", "yml", "yaml", "toml", "sh", "py", "go", "ts", "js", "tsx", "jsx"].includes(ext)
   ) {
     return <FileText className="size-5 shrink-0 text-muted-foreground" />;
-  }
-  if (["csv", "xlsx", "xls"].includes(ext)) {
-    return <FileSpreadsheet className="size-5 shrink-0 text-muted-foreground" />;
   }
   return <File className="size-5 shrink-0 text-muted-foreground" />;
 }
@@ -136,7 +137,21 @@ export function FilesPage() {
 
   const deleteMutation = useMutation({
     mutationFn: (id: string) => api.deleteWorkspaceFile(id),
-    onSuccess: () => {
+    onMutate: async (id: string) => {
+      await queryClient.cancelQueries({ queryKey: filesKeys.list(wsId) });
+      const previous = queryClient.getQueryData<Attachment[]>(filesKeys.list(wsId));
+      queryClient.setQueryData<Attachment[]>(filesKeys.list(wsId), (old) =>
+        old ? old.filter((f) => f.id !== id) : old,
+      );
+      return { previous };
+    },
+    onError: (_err, _id, context) => {
+      if (context?.previous) {
+        queryClient.setQueryData(filesKeys.list(wsId), context.previous);
+      }
+      toast.error(t(($) => $.page.delete_error));
+    },
+    onSettled: () => {
       queryClient.invalidateQueries({ queryKey: filesKeys.list(wsId) });
     },
   });
@@ -180,6 +195,11 @@ export function FilesPage() {
                 onDelete={(id) => deleteMutation.mutate(id)}
               />
             ))}
+            {files.length >= 200 && (
+              <p className="pt-2 text-center text-xs text-muted-foreground">
+                {t(($) => $.page.limit_notice)}
+              </p>
+            )}
           </div>
         )}
       </div>

@@ -105,6 +105,7 @@ import { parseWithFallback } from "./schema";
 import {
   AgentTemplateSchema,
   AgentTemplateSummaryListSchema,
+  AttachmentListSchema,
   AttachmentResponseSchema,
   ChildIssuesResponseSchema,
   CommentsListSchema,
@@ -1330,7 +1331,10 @@ export class ApiClient {
 
   async listWorkspaceFiles(_wsId: string): Promise<Attachment[]> {
     // workspace is resolved server-side from the X-Workspace-Slug header
-    return this.fetch("/api/files");
+    const raw = await this.fetch<unknown>("/api/files");
+    return parseWithFallback(raw, AttachmentListSchema, [], {
+      endpoint: "GET /api/files",
+    });
   }
 
   async deleteWorkspaceFile(id: string): Promise<void> {

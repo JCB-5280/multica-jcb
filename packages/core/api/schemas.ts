@@ -68,6 +68,8 @@ export const AttachmentResponseSchema = z.object({
   chat_message_id: z.string().nullable().optional(),
 }).loose();
 
+export const AttachmentListSchema = z.array(AttachmentResponseSchema);
+
 export const EMPTY_ATTACHMENT: Attachment = {
   id: "",
   workspace_id: "",
