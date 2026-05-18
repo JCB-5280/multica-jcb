@@ -4,7 +4,7 @@ import { DocsLayout } from "fumadocs-ui/layouts/docs";
 import { Inter, Geist_Mono, Source_Serif_4 } from "next/font/google";
 import type { ReactNode } from "react";
 import type { Metadata } from "next";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@mato/ui/lib/utils";
 import { baseOptions } from "@/app/layout.config";
 import { source } from "@/lib/source";
 import { i18n, type Lang } from "@/lib/i18n";
@@ -51,11 +51,11 @@ const sourceSerif = Source_Serif_4({
 
 export const metadata: Metadata = {
   title: {
-    template: "%s | Multica Docs",
-    default: "Multica Docs",
+    template: "%s | MATO Docs",
+    default: "MATO Docs",
   },
   description:
-    "Documentation for Multica — the open-source managed agents platform.",
+    "Documentation for MATO — the open-source managed agents platform.",
 };
 
 export function generateStaticParams() {

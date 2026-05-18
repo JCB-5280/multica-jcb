@@ -6,7 +6,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@multica/ui/components/ui/select";
+} from "@mato/ui/components/ui/select";
 
 // Common IANA zones surfaced as quick picks. Used as the fallback option set
 // when Intl.supportedValuesOf is not available, and promoted to the top of

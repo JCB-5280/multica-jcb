@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/go-chi/chi/v5"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	db "github.com/mato-ai/mato/server/pkg/db/generated"
+	"github.com/mato-ai/mato/server/pkg/protocol"
 )
 
 // SubscriberResponse is the JSON shape returned for each issue subscriber.

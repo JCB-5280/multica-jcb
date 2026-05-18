@@ -156,7 +156,7 @@ func TestPrepareWithProjectResources(t *testing.T) {
 			{
 				ID:           "33333333-4444-5555-6666-777777777777",
 				ResourceType: "github_repo",
-				ResourceRef:  json.RawMessage(`{"url":"https://github.com/multica-ai/multica","default_branch_hint":"main"}`),
+				ResourceRef:  json.RawMessage(`{"url":"https://github.com/mato-ai/mato","default_branch_hint":"main"}`),
 			},
 		},
 	}
@@ -174,7 +174,7 @@ func TestPrepareWithProjectResources(t *testing.T) {
 	defer env.Cleanup(true)
 
 	// resources.json should exist and decode back to what we wrote.
-	resourcesPath := filepath.Join(env.WorkDir, ".multica", "project", "resources.json")
+	resourcesPath := filepath.Join(env.WorkDir, ".mato", "project", "resources.json")
 	raw, err := os.ReadFile(resourcesPath)
 	if err != nil {
 		t.Fatalf("failed to read resources.json: %v", err)
@@ -214,9 +214,9 @@ func TestPrepareWithProjectResources(t *testing.T) {
 		"## Project Context",
 		"Agent UX 2026",
 		"GitHub repo",
-		"https://github.com/multica-ai/multica",
+		"https://github.com/mato-ai/mato",
 		"default branch: `main`",
-		".multica/project/resources.json",
+		".mato/project/resources.json",
 	} {
 		if !strings.Contains(s, want) {
 			t.Errorf("CLAUDE.md missing %q", want)
@@ -272,7 +272,7 @@ func TestWriteProjectResourcesSkippedWhenNone(t *testing.T) {
 	if err := writeProjectResources(dir, TaskContextForEnv{}); err != nil {
 		t.Fatalf("writeProjectResources: %v", err)
 	}
-	if _, err := os.Stat(filepath.Join(dir, ".multica", "project", "resources.json")); !os.IsNotExist(err) {
+	if _, err := os.Stat(filepath.Join(dir, ".mato", "project", "resources.json")); !os.IsNotExist(err) {
 		t.Errorf("expected no resources.json to be written when project context is empty")
 	}
 }
@@ -325,7 +325,7 @@ func TestPrepareWithRepoContext(t *testing.T) {
 	}
 	s := string(content)
 	for _, want := range []string{
-		"multica repo checkout",
+		"mato repo checkout",
 		"https://github.com/org/backend",
 		"https://github.com/org/frontend",
 	} {
@@ -450,14 +450,14 @@ func TestWriteContextFilesAutopilotRunOnly(t *testing.T) {
 		"run-1",
 		"autopilot-1",
 		"Check dependencies and report outdated packages.",
-		"multica autopilot get autopilot-1 --output json",
+		"mato autopilot get autopilot-1 --output json",
 		"no assigned issue",
 	} {
 		if !strings.Contains(s, want) {
 			t.Errorf("autopilot context missing %q\n---\n%s", want, s)
 		}
 	}
-	if strings.Contains(s, "Run `multica issue get") {
+	if strings.Contains(s, "Run `mato issue get") {
 		t.Errorf("autopilot context should not contain issue get workflow\n---\n%s", s)
 	}
 }
@@ -572,9 +572,9 @@ func TestInjectRuntimeConfigClaude(t *testing.T) {
 
 	s := string(content)
 	for _, want := range []string{
-		"Multica Agent Runtime",
-		"multica issue get",
-		"multica issue comment list",
+		"MATO Agent Runtime",
+		"mato issue get",
+		"mato issue comment list",
 		"Go Conventions",
 		"PR Review",
 		"discovered automatically",
@@ -603,8 +603,8 @@ func TestInjectRuntimeConfigAutopilotAdvertisesBothModes(t *testing.T) {
 
 	s := string(content)
 	for _, want := range []string{
-		"multica autopilot create --title \"...\" --agent <name> --mode create_issue|run_only",
-		"multica autopilot update <id>",
+		"mato autopilot create --title \"...\" --agent <name> --mode create_issue|run_only",
+		"mato autopilot update <id>",
 		"[--mode create_issue|run_only]",
 	} {
 		if !strings.Contains(s, want) {
@@ -633,8 +633,8 @@ func TestInjectRuntimeConfigGemini(t *testing.T) {
 
 	s := string(content)
 	for _, want := range []string{
-		"Multica Agent Runtime",
-		"multica issue get",
+		"MATO Agent Runtime",
+		"mato issue get",
 		"Writing",
 	} {
 		if !strings.Contains(s, want) {
@@ -670,7 +670,7 @@ func TestInjectRuntimeConfigCodex(t *testing.T) {
 	}
 
 	s := string(content)
-	if !strings.Contains(s, "Multica Agent Runtime") {
+	if !strings.Contains(s, "MATO Agent Runtime") {
 		t.Error("AGENTS.md missing meta skill header")
 	}
 	if !strings.Contains(s, "Coding") {
@@ -694,8 +694,8 @@ func TestInjectRuntimeConfigNoSkills(t *testing.T) {
 	}
 
 	s := string(content)
-	if !strings.Contains(s, "multica issue get") {
-		t.Error("should reference multica CLI even without skills")
+	if !strings.Contains(s, "mato issue get") {
+		t.Error("should reference mato CLI even without skills")
 	}
 	if strings.Contains(s, "## Skills") {
 		t.Error("should not have Skills section when there are no skills")
@@ -901,7 +901,7 @@ func TestInjectRuntimeConfigOpencode(t *testing.T) {
 	}
 
 	s := string(content)
-	if !strings.Contains(s, "Multica Agent Runtime") {
+	if !strings.Contains(s, "MATO Agent Runtime") {
 		t.Error("AGENTS.md missing meta skill header")
 	}
 	if !strings.Contains(s, "Coding") {
@@ -936,7 +936,7 @@ func TestInjectRuntimeConfigKiro(t *testing.T) {
 	}
 
 	s := string(content)
-	if !strings.Contains(s, "Multica Agent Runtime") {
+	if !strings.Contains(s, "MATO Agent Runtime") {
 		t.Error("AGENTS.md missing meta skill header")
 	}
 	if !strings.Contains(s, "Coding") {
@@ -993,7 +993,7 @@ func TestPrepareWithRepoContextOpencode(t *testing.T) {
 	}
 	s := string(content)
 	for _, want := range []string{
-		"multica repo checkout",
+		"mato repo checkout",
 		"https://github.com/org/backend",
 	} {
 		if !strings.Contains(s, want) {
@@ -1035,10 +1035,10 @@ func TestInjectRuntimeConfigRequiresExplicitCommentPost(t *testing.T) {
 			}
 			s := string(data)
 
-			// The workflow must contain an explicit `multica issue comment add`
+			// The workflow must contain an explicit `mato issue comment add`
 			// invocation for this issue — not just a prose mention of posting.
 			mustContain := []string{
-				"multica issue comment add issue-1",
+				"mato issue comment add issue-1",
 				"mandatory",
 			}
 			for _, want := range mustContain {
@@ -1051,7 +1051,7 @@ func TestInjectRuntimeConfigRequiresExplicitCommentPost(t *testing.T) {
 			// output is not user-visible. This is the second line of defense
 			// in case the agent skips past the workflow steps.
 			for _, want := range []string{
-				"Final results MUST be delivered via `multica issue comment add`",
+				"Final results MUST be delivered via `mato issue comment add`",
 				"does NOT see your terminal output",
 			} {
 				if !strings.Contains(s, want) {
@@ -1176,7 +1176,7 @@ func TestInjectRuntimeConfigCodexLinuxEmphasizesStdin(t *testing.T) {
 // the Codex-Specific section directs the agent at `--content-file` instead
 // of `--content-stdin`. PowerShell 5.1 / cmd.exe re-encode piped HEREDOC
 // bytes through the active console codepage and silently drop non-ASCII
-// as `?` before reaching `multica.exe` (#2198 / #2236 / #2376).
+// as `?` before reaching `mato.exe` (#2198 / #2236 / #2376).
 //
 // Not parallel: mutates the package-level runtimeGOOS.
 func TestInjectRuntimeConfigCodexWindowsUsesContentFile(t *testing.T) {
@@ -1270,7 +1270,7 @@ func TestInjectRuntimeConfigAutopilotRunOnlyNoIssueWorkflow(t *testing.T) {
 		"Autopilot in run-only mode",
 		"Autopilot run ID: `run-1`",
 		"Check dependencies and report outdated packages.",
-		"multica autopilot get autopilot-1 --output json",
+		"mato autopilot get autopilot-1 --output json",
 		"Your final assistant output is captured automatically as the autopilot run result",
 	} {
 		if !strings.Contains(s, want) {
@@ -1279,8 +1279,8 @@ func TestInjectRuntimeConfigAutopilotRunOnlyNoIssueWorkflow(t *testing.T) {
 	}
 
 	for _, absent := range []string{
-		"Run `multica issue get",
-		"Final results MUST be delivered via `multica issue comment add`",
+		"Run `mato issue get",
+		"Final results MUST be delivered via `mato issue comment add`",
 	} {
 		if strings.Contains(s, absent) {
 			t.Errorf("autopilot runtime config should not contain %q\n---\n%s", absent, s)
@@ -1324,7 +1324,7 @@ func TestInjectRuntimeConfigHermes(t *testing.T) {
 	}
 
 	s := string(content)
-	if !strings.Contains(s, "Multica Agent Runtime") {
+	if !strings.Contains(s, "MATO Agent Runtime") {
 		t.Error("AGENTS.md missing meta skill header")
 	}
 	if !strings.Contains(s, "Coding") {
@@ -1641,7 +1641,7 @@ func TestEnsureCodexSandboxConfigCreatesDefaultLinux(t *testing.T) {
 		t.Fatalf("failed to read config.toml: %v", err)
 	}
 	s := string(data)
-	if !strings.Contains(s, multicaManagedBeginMarker) || !strings.Contains(s, multicaManagedEndMarker) {
+	if !strings.Contains(s, matoManagedBeginMarker) || !strings.Contains(s, matoManagedEndMarker) {
 		t.Errorf("missing managed block markers, got:\n%s", s)
 	}
 	if !strings.Contains(s, `sandbox_mode = "workspace-write"`) {
@@ -1649,7 +1649,7 @@ func TestEnsureCodexSandboxConfigCreatesDefaultLinux(t *testing.T) {
 	}
 	// The managed block uses TOML dotted-key form rather than a
 	// `[sandbox_workspace_write]` section header so it cannot leak into or
-	// inherit from any surrounding table scope. See upsertMulticaManagedBlock
+	// inherit from any surrounding table scope. See upsertMATOManagedBlock
 	// for why.
 	if strings.Contains(s, "[sandbox_workspace_write]") {
 		t.Errorf("managed block must not open a [sandbox_workspace_write] table header, got:\n%s", s)
@@ -1691,7 +1691,7 @@ func TestEnsureCodexSandboxConfigIsIdempotent(t *testing.T) {
 	}
 	data, _ := os.ReadFile(configPath)
 	// The managed block should appear exactly once.
-	if n := strings.Count(string(data), multicaManagedBeginMarker); n != 1 {
+	if n := strings.Count(string(data), matoManagedBeginMarker); n != 1 {
 		t.Errorf("expected exactly 1 managed block, got %d in:\n%s", n, data)
 	}
 }
@@ -1770,12 +1770,12 @@ func TestEnsureCodexSandboxConfigHoistsAboveUserTables(t *testing.T) {
 
 	// User config that ends inside a table. If the managed block were
 	// appended at EOF, `sandbox_mode = "..."` would be parsed as
-	// permissions.multica.sandbox_mode and Codex would never see it — see
+	// permissions.mato.sandbox_mode and Codex would never see it — see
 	// review of MUL-963 PR #1246. The block must be hoisted above any
 	// user-defined table headers so it lives at the TOML root.
 	existing := `model = "o3"
 
-[permissions.multica]
+[permissions.mato]
 trust = "always"
 `
 	os.WriteFile(configPath, []byte(existing), 0o644)
@@ -1788,9 +1788,9 @@ trust = "always"
 	data, _ := os.ReadFile(configPath)
 	s := string(data)
 
-	beginIdx := strings.Index(s, multicaManagedBeginMarker)
-	endIdx := strings.Index(s, multicaManagedEndMarker)
-	tableIdx := strings.Index(s, "[permissions.multica]")
+	beginIdx := strings.Index(s, matoManagedBeginMarker)
+	endIdx := strings.Index(s, matoManagedEndMarker)
+	tableIdx := strings.Index(s, "[permissions.mato]")
 	if beginIdx < 0 || endIdx < 0 || tableIdx < 0 {
 		t.Fatalf("expected managed block and user table to both be present, got:\n%s", s)
 	}
@@ -1798,14 +1798,14 @@ trust = "always"
 	// that sandbox_mode and sandbox_workspace_write.network_access are
 	// parsed at the TOML root.
 	if !(beginIdx < endIdx && endIdx < tableIdx) {
-		t.Errorf("managed block must be hoisted above [permissions.multica]; got begin=%d end=%d table=%d:\n%s", beginIdx, endIdx, tableIdx, s)
+		t.Errorf("managed block must be hoisted above [permissions.mato]; got begin=%d end=%d table=%d:\n%s", beginIdx, endIdx, tableIdx, s)
 	}
 	// User content must be preserved verbatim.
 	if !strings.Contains(s, `model = "o3"`) {
 		t.Error("lost user top-level key")
 	}
 	if !strings.Contains(s, `trust = "always"`) {
-		t.Error("lost user permissions.multica content")
+		t.Error("lost user permissions.mato content")
 	}
 
 	// Running again must be idempotent even when the preceding content ends
@@ -1817,7 +1817,7 @@ trust = "always"
 	if string(data2) != s {
 		t.Errorf("second pass should be idempotent:\n--- first ---\n%s\n--- second ---\n%s", s, data2)
 	}
-	if n := strings.Count(string(data2), multicaManagedBeginMarker); n != 1 {
+	if n := strings.Count(string(data2), matoManagedBeginMarker); n != 1 {
 		t.Errorf("expected exactly one managed block after idempotent rewrite, got %d", n)
 	}
 }
@@ -1833,15 +1833,15 @@ func TestEnsureCodexSandboxConfigMovesLegacyTrailingBlockToTop(t *testing.T) {
 	// top; otherwise sandbox_mode remains trapped inside the preceding table.
 	legacy := `model = "o3"
 
-[permissions.multica]
+[permissions.mato]
 trust = "always"
 
-` + multicaManagedBeginMarker + `
+` + matoManagedBeginMarker + `
 sandbox_mode = "workspace-write"
 
 [sandbox_workspace_write]
 network_access = true
-` + multicaManagedEndMarker + `
+` + matoManagedEndMarker + `
 `
 	os.WriteFile(configPath, []byte(legacy), 0o644)
 
@@ -1852,12 +1852,12 @@ network_access = true
 	data, _ := os.ReadFile(configPath)
 	s := string(data)
 
-	beginIdx := strings.Index(s, multicaManagedBeginMarker)
-	tableIdx := strings.Index(s, "[permissions.multica]")
+	beginIdx := strings.Index(s, matoManagedBeginMarker)
+	tableIdx := strings.Index(s, "[permissions.mato]")
 	if beginIdx < 0 || tableIdx < 0 || beginIdx > tableIdx {
-		t.Errorf("expected managed block to be hoisted above [permissions.multica], got:\n%s", s)
+		t.Errorf("expected managed block to be hoisted above [permissions.mato], got:\n%s", s)
 	}
-	if strings.Count(s, multicaManagedBeginMarker) != 1 {
+	if strings.Count(s, matoManagedBeginMarker) != 1 {
 		t.Errorf("expected exactly one managed block, got:\n%s", s)
 	}
 	// The old inline `[sandbox_workspace_write]` header must be gone — the
@@ -1965,8 +1965,8 @@ func TestReuseRestoresCodexHome(t *testing.T) {
 	if err != nil {
 		t.Fatalf("config.toml not found in reused CodexHome: %v", err)
 	}
-	if !strings.Contains(string(data), multicaManagedBeginMarker) {
-		t.Error("reused config.toml missing multica-managed block")
+	if !strings.Contains(string(data), matoManagedBeginMarker) {
+		t.Error("reused config.toml missing mato-managed block")
 	}
 }
 
@@ -2130,7 +2130,7 @@ func TestReuseUpdatesCodexWorkspaceSkills(t *testing.T) {
 
 // TestPrepareCodexSeedsUserSkills covers the fix for #1922: skills the user
 // installs under ~/.codex/skills/ must be discoverable by the codex CLI
-// inside a Multica task, despite the daemon redirecting CODEX_HOME to a
+// inside a MATO task, despite the daemon redirecting CODEX_HOME to a
 // per-task directory.
 func TestPrepareCodexSeedsUserSkills(t *testing.T) {
 	// Cannot use t.Parallel() with t.Setenv.
@@ -2741,7 +2741,7 @@ func TestInjectRuntimeConfigSquadLeaderCommentTriggeredNoAction(t *testing.T) {
 	for _, want := range []string{
 		"Squad leader rule",
 		"DO NOT post any comment",
-		"multica squad activity",
+		"mato squad activity",
 	} {
 		if !strings.Contains(s, want) {
 			t.Errorf("squad leader comment-triggered CLAUDE.md missing %q", want)

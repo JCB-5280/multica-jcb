@@ -9,7 +9,7 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v5/pgtype"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
+	db "github.com/mato-ai/mato/server/pkg/db/generated"
 )
 
 func TestRuntimeHandlersRejectMalformedRuntimeID(t *testing.T) {
@@ -308,10 +308,10 @@ func TestUpdateAgentRuntimeTimezoneValidatesPermissionAndValue(t *testing.T) {
 	}
 
 	var otherUserID string
-	testPool.Exec(ctx, `DELETE FROM "user" WHERE email = 'runtime-tz-member@multica.ai'`)
+	testPool.Exec(ctx, `DELETE FROM "user" WHERE email = 'runtime-tz-member@mato.ai'`)
 	if err := testPool.QueryRow(ctx, `
 		INSERT INTO "user" (name, email)
-		VALUES ('Runtime TZ Member', 'runtime-tz-member@multica.ai')
+		VALUES ('Runtime TZ Member', 'runtime-tz-member@mato.ai')
 		RETURNING id
 	`).Scan(&otherUserID); err != nil {
 		t.Fatalf("create member user: %v", err)

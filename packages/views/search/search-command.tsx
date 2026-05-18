@@ -29,33 +29,33 @@ import type {
   MemberWithUser,
   SearchIssueResult,
   SearchProjectResult,
-} from "@multica/core/types";
-import { api } from "@multica/core/api";
+} from "@mato/core/types";
+import { api } from "@mato/core/api";
 import {
   openCreateIssueWithPreference,
   selectRecentIssues,
   useRecentIssuesStore,
-} from "@multica/core/issues/stores";
-import { issueDetailOptions } from "@multica/core/issues/queries";
-import { useWorkspaceId } from "@multica/core";
-import { useWorkspacePaths } from "@multica/core/paths";
-import type { WorkspacePaths } from "@multica/core/paths";
-import { useModalStore } from "@multica/core/modals";
-import { memberListOptions } from "@multica/core/workspace/queries";
+} from "@mato/core/issues/stores";
+import { issueDetailOptions } from "@mato/core/issues/queries";
+import { useWorkspaceId } from "@mato/core";
+import { useWorkspacePaths } from "@mato/core/paths";
+import type { WorkspacePaths } from "@mato/core/paths";
+import { useModalStore } from "@mato/core/modals";
+import { memberListOptions } from "@mato/core/workspace/queries";
 import { StatusIcon } from "../issues/components";
 import { ProjectIcon } from "../projects/components/project-icon";
-import { STATUS_CONFIG } from "@multica/core/issues/config";
-import { PROJECT_STATUS_CONFIG } from "@multica/core/projects/config";
-import type { ProjectStatus } from "@multica/core/types";
-import { ActorAvatar as ActorAvatarBase } from "@multica/ui/components/common/actor-avatar";
+import { STATUS_CONFIG } from "@mato/core/issues/config";
+import { PROJECT_STATUS_CONFIG } from "@mato/core/projects/config";
+import type { ProjectStatus } from "@mato/core/types";
+import { ActorAvatar as ActorAvatarBase } from "@mato/ui/components/common/actor-avatar";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogDescription,
-} from "@multica/ui/components/ui/dialog";
-import { useTheme } from "@multica/ui/components/common/theme-provider";
+} from "@mato/ui/components/ui/dialog";
+import { useTheme } from "@mato/ui/components/common/theme-provider";
 import { useNavigation } from "../navigation";
 import { useT } from "../i18n";
 import { matchesPinyin } from "../editor/extensions/pinyin-match";

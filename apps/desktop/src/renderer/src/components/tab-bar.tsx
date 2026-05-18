@@ -28,9 +28,9 @@ import {
   restrictToParentElement,
 } from "@dnd-kit/modifiers";
 import { CSS } from "@dnd-kit/utilities";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@mato/ui/lib/utils";
 import { useTabStore, useActiveGroup, resolveRouteIcon, type Tab } from "@/stores/tab-store";
-import { paths } from "@multica/core/paths";
+import { paths } from "@mato/core/paths";
 
 const TAB_ICONS: Record<string, LucideIcon> = {
   Inbox,

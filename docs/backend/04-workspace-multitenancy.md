@@ -2,7 +2,7 @@
 
 ## Current Architecture: Logical Multi-Tenancy
 
-Multica uses **logical multi-tenancy** — all workspaces share the same database, and isolation is enforced at the application layer via `workspace_id` column filters on every query.
+MATO uses **logical multi-tenancy** — all workspaces share the same database, and isolation is enforced at the application layer via `workspace_id` column filters on every query.
 
 This is the standard approach for many SaaS products (it's how Linear, Notion, and others work), but it requires strict discipline: every query that touches workspace data must include `workspace_id` in its WHERE clause.
 
@@ -93,7 +93,7 @@ Reserved slugs protect system routes. Examples: `login`, `logout`, `api`, `admin
 
 ### Issue Prefixes
 
-Each workspace gets an `issue_prefix` (e.g., "MUL" for a workspace named "Multica"). Issues are then addressable as `MUL-1`, `MUL-2`, etc. The prefix is stored on the workspace row. If a workspace predates the issue_prefix feature, the prefix is generated from the workspace name on the fly.
+Each workspace gets an `issue_prefix` (e.g., "MUL" for a workspace named "MATO"). Issues are then addressable as `MUL-1`, `MUL-2`, etc. The prefix is stored on the workspace row. If a workspace predates the issue_prefix feature, the prefix is generated from the workspace name on the fly.
 
 The `loadIssueForUser()` function in handler.go accepts both UUID format and `PREFIX-N` format for the issue ID parameter. This is how agents can reference issues by human-readable identifier in their prompts.
 

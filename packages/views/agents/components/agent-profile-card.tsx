@@ -1,18 +1,18 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import type { Agent, AgentRuntime } from "@multica/core/types";
-import { useAgentPresenceDetail } from "@multica/core/agents";
-import { useWorkspaceId } from "@multica/core/hooks";
+import type { Agent, AgentRuntime } from "@mato/core/types";
+import { useAgentPresenceDetail } from "@mato/core/agents";
+import { useWorkspaceId } from "@mato/core/hooks";
 import {
   deriveRuntimeHealth,
   type RuntimeHealth,
-} from "@multica/core/runtimes";
-import { agentListOptions, memberListOptions } from "@multica/core/workspace/queries";
-import { runtimeListOptions } from "@multica/core/runtimes/queries";
-import { useWorkspacePaths } from "@multica/core/paths";
-import { ActorAvatar as ActorAvatarBase } from "@multica/ui/components/common/actor-avatar";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
+} from "@mato/core/runtimes";
+import { agentListOptions, memberListOptions } from "@mato/core/workspace/queries";
+import { runtimeListOptions } from "@mato/core/runtimes/queries";
+import { useWorkspacePaths } from "@mato/core/paths";
+import { ActorAvatar as ActorAvatarBase } from "@mato/ui/components/common/actor-avatar";
+import { Skeleton } from "@mato/ui/components/ui/skeleton";
 import { AppLink } from "../../navigation";
 import { HealthIcon } from "../../runtimes/components/shared";
 import { availabilityConfig } from "../presence";

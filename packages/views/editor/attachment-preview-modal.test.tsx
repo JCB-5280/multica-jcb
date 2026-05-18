@@ -2,7 +2,7 @@ import { afterEach, beforeEach, describe, expect, it, vi } from "vitest";
 import { act, fireEvent, render as rtlRender, screen, waitFor } from "@testing-library/react";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import type { ReactElement } from "react";
-import type { Attachment } from "@multica/core/types";
+import type { Attachment } from "@mato/core/types";
 
 const openExternalMock = vi.hoisted(() => vi.fn());
 
@@ -40,7 +40,7 @@ const {
   };
 });
 
-vi.mock("@multica/core/api", () => ({
+vi.mock("@mato/core/api", () => ({
   api: { getAttachmentTextContent: getAttachmentTextContentMock },
   PreviewTooLargeError: FakePreviewTooLargeError,
   PreviewUnsupportedError: FakePreviewUnsupportedError,

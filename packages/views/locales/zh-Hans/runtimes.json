@@ -99,7 +99,7 @@
   "queued_other": "{{count}} 个排队中",
   "connect": {
     "title": "连接远程机器",
-    "description": "在远程机器（例如 AWS EC2）上运行这些命令，安装 Multica CLI 并注册为运行时。",
+    "description": "在远程机器（例如 AWS EC2）上运行这些命令，安装 MATO CLI 并注册为运行时。",
     "step1": "1. 安装 CLI",
     "step2": "2. 配置",
     "step3": "3. 用个人访问令牌登录",
@@ -132,7 +132,7 @@
     "cli_version_label": "CLI 版本：",
     "version_unknown": "未知",
     "managed_by_desktop": "由桌面端管理",
-    "managed_by_desktop_title": "CLI 二进制由 Multica 桌面端管理 —— 升级桌面端即可升级 CLI。",
+    "managed_by_desktop_title": "CLI 二进制由 MATO 桌面端管理 —— 升级桌面端即可升级 CLI。",
     "latest": "最新",
     "available": "可用",
     "action": "更新",

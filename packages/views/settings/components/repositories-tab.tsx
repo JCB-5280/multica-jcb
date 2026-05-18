@@ -2,17 +2,17 @@
 
 import { useEffect, useState } from "react";
 import { Save, Plus, Trash2, Pencil, X } from "lucide-react";
-import { Input } from "@multica/ui/components/ui/input";
-import { Button } from "@multica/ui/components/ui/button";
-import { Card, CardContent } from "@multica/ui/components/ui/card";
+import { Input } from "@mato/ui/components/ui/input";
+import { Button } from "@mato/ui/components/ui/button";
+import { Card, CardContent } from "@mato/ui/components/ui/card";
 import { toast } from "sonner";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { useCurrentWorkspace } from "@multica/core/paths";
-import { memberListOptions, workspaceKeys } from "@multica/core/workspace/queries";
-import { api } from "@multica/core/api";
-import type { Workspace, WorkspaceRepo } from "@multica/core/types";
+import { useAuthStore } from "@mato/core/auth";
+import { useWorkspaceId } from "@mato/core/hooks";
+import { useCurrentWorkspace } from "@mato/core/paths";
+import { memberListOptions, workspaceKeys } from "@mato/core/workspace/queries";
+import { api } from "@mato/core/api";
+import type { Workspace, WorkspaceRepo } from "@mato/core/types";
 import { useT } from "../../i18n";
 
 function dropAndShiftIndex(set: Set<number>, removed: number): Set<number> {

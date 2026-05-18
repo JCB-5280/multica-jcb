@@ -5,11 +5,11 @@ import (
 	"encoding/json"
 	"log/slog"
 
-	"github.com/multica-ai/multica/server/internal/events"
-	"github.com/multica-ai/multica/server/internal/handler"
-	"github.com/multica-ai/multica/server/internal/util"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/mato-ai/mato/server/internal/events"
+	"github.com/mato-ai/mato/server/internal/handler"
+	"github.com/mato-ai/mato/server/internal/util"
+	db "github.com/mato-ai/mato/server/pkg/db/generated"
+	"github.com/mato-ai/mato/server/pkg/protocol"
 )
 
 // registerActivityListeners wires up event bus listeners that record activity

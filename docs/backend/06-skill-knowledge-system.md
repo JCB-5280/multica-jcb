@@ -2,7 +2,7 @@
 
 ## What Skills Are
 
-In Multica, a "skill" is a named unit of knowledge — essentially a markdown document — that can be attached to an agent and injected into the agent's working environment when it executes a task.
+In MATO, a "skill" is a named unit of knowledge — essentially a markdown document — that can be attached to an agent and injected into the agent's working environment when it executes a task.
 
 Think of it like giving an employee a reference manual before sending them to do a job. The agent reads the skill document as part of its context.
 

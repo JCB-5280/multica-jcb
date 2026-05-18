@@ -36,7 +36,7 @@ layer: backend
 ## Agent vs. Runtime: Two Different Things
 
 > [!NOTE] Common Point of Confusion
-> "Agent" has two related meanings in Multica:
+> "Agent" has two related meanings in MATO:
 > - **The agent record** (`agent` table) — a named configuration (instructions, model, skills). The *job description*.
 > - **The agent runtime** (`agent_runtime` table) — a concrete execution environment on some machine. The *actual employee showing up to work*.
 >
@@ -79,7 +79,7 @@ User attaches skills → POST /api/agents/{id}/skills/{skillId}
 ## Phase 2: Runtime Registration
 
 ```
-multica daemon starts on developer's machine
+mato daemon starts on developer's machine
   → detects installed CLIs (claude, codex, cursor, gemini…)
   → POST /api/workspaces/{slug}/daemon/register
   → receives daemon_token (mdt_...) scoped to workspace

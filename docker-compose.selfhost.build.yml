@@ -3,13 +3,13 @@
 
 services:
   backend:
-    image: multica-backend:dev
+    image: mato-backend:dev
     build:
       context: .
       dockerfile: Dockerfile
 
   frontend:
-    image: multica-web:dev
+    image: mato-web:dev
     build:
       context: .
       dockerfile: Dockerfile.web

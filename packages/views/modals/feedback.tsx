@@ -7,22 +7,22 @@ import {
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
-import { Button } from "@multica/ui/components/ui/button";
-import { FileUploadButton } from "@multica/ui/components/common/file-upload-button";
+} from "@mato/ui/components/ui/dialog";
+import { Button } from "@mato/ui/components/ui/button";
+import { FileUploadButton } from "@mato/ui/components/common/file-upload-button";
 import {
   ContentEditor,
   type ContentEditorRef,
   useFileDropZone,
   FileDropOverlay,
 } from "../editor";
-import { useCreateFeedback, useFeedbackDraftStore } from "@multica/core/feedback";
-import { useCurrentWorkspace } from "@multica/core/paths";
-import { useFileUpload } from "@multica/core/hooks/use-file-upload";
-import { api } from "@multica/core/api";
-import { captureFeedbackOpened } from "@multica/core/analytics";
+import { useCreateFeedback, useFeedbackDraftStore } from "@mato/core/feedback";
+import { useCurrentWorkspace } from "@mato/core/paths";
+import { useFileUpload } from "@mato/core/hooks/use-file-upload";
+import { api } from "@mato/core/api";
+import { captureFeedbackOpened } from "@mato/core/analytics";
 import { useT } from "../i18n";
-import { formatShortcut, modKey, enterKey } from "@multica/core/platform";
+import { formatShortcut, modKey, enterKey } from "@mato/core/platform";
 
 const MAX_MESSAGE_LEN = 10000;
 
@@ -96,7 +96,7 @@ export function FeedbackModal({ onClose }: { onClose: () => void }) {
           <p className="mt-1 text-xs text-muted-foreground">
             {t(($) => $.feedback.github_hint_prefix)}
             <a
-              href="https://github.com/multica-ai/multica/issues"
+              href="https://github.com/mato.ai/mato/issues"
               target="_blank"
               rel="noopener noreferrer"
               className="text-brand underline decoration-brand/40 underline-offset-2 hover:decoration-brand"

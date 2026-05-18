@@ -4,19 +4,19 @@ import { useState } from "react";
 import { Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { api } from "@multica/core/api";
-import { useAuthStore } from "@multica/core/auth";
-import { useNavigation } from "@multica/views/navigation";
-import { useCurrentWorkspace, paths } from "@multica/core/paths";
-import type { QuestionnaireAnswers } from "@multica/core/onboarding";
-import { pinKeys } from "@multica/core/pins";
-import { projectKeys } from "@multica/core/projects";
-import { issueKeys } from "@multica/core/issues/queries";
+import { api } from "@mato/core/api";
+import { useAuthStore } from "@mato/core/auth";
+import { useNavigation } from "@mato/views/navigation";
+import { useCurrentWorkspace, paths } from "@mato/core/paths";
+import type { QuestionnaireAnswers } from "@mato/core/onboarding";
+import { pinKeys } from "@mato/core/pins";
+import { projectKeys } from "@mato/core/projects";
+import { issueKeys } from "@mato/core/issues/queries";
 import {
   memberListOptions,
   workspaceKeys,
-} from "@multica/core/workspace/queries";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@mato/core/workspace/queries";
+import { Button } from "@mato/ui/components/ui/button";
 import {
   Dialog,
   DialogContent,
@@ -24,7 +24,7 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
+} from "@mato/ui/components/ui/dialog";
 import {
   buildImportPayload,
   type StarterContentLocale,

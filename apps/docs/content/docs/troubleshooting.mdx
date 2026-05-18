@@ -1,40 +1,40 @@
 ---
 title: Troubleshooting
-description: The top 7 common issues when self-hosting Multica — symptoms, causes, how to diagnose, how to fix.
+description: The top 7 common issues when self-hosting MATO — symptoms, causes, how to diagnose, how to fix.
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 
-Look up issues by symptom. Each entry gives you **symptom / likely causes / how to diagnose / how to fix**. If your situation isn't listed, open an issue on [GitHub](https://github.com/multica-ai/multica/issues).
+Look up issues by symptom. Each entry gives you **symptom / likely causes / how to diagnose / how to fix**. If your situation isn't listed, open an issue on [GitHub](https://github.com/mato-ai/mato/issues).
 
 ## Daemon can't connect to the server
 
-**Symptom**: [`multica daemon`](/cli)'s `status` command shows `offline` or `connection refused`; the server logs show no `/api/daemon/register` or `/api/daemon/heartbeat` requests. For how the daemon mechanism works, see [Daemon and runtimes](/daemon-runtimes).
+**Symptom**: [`mato daemon`](/cli)'s `status` command shows `offline` or `connection refused`; the server logs show no `/api/daemon/register` or `/api/daemon/heartbeat` requests. For how the daemon mechanism works, see [Daemon and runtimes](/daemon-runtimes).
 
 **Likely causes**:
 
-1. **`MULTICA_SERVER_URL` points at the wrong address** — default is `ws://localhost:8080/ws`; self-host must change it to your server address
+1. **`MATO_SERVER_URL` points at the wrong address** — default is `ws://localhost:8080/ws`; self-host must change it to your server address
 2. **Network / firewall blocking** — the daemon and server aren't on the same network, or outbound traffic is blocked
-3. **Token expired or invalid** — you never ran `multica login`, or the PAT was revoked
+3. **Token expired or invalid** — you never ran `mato login`, or the PAT was revoked
 4. **Server rejected registration** — the account you signed in with isn't in the target workspace (register returns 403)
 5. **DNS resolution failure** — the hostname doesn't resolve on the daemon machine
 
 **How to diagnose**:
 
 ```bash
-multica daemon logs --lines 100    # look for daemon-side errors
-echo $MULTICA_SERVER_URL          # confirm the address is set
+mato daemon logs --lines 100    # look for daemon-side errors
+echo $MATO_SERVER_URL          # confirm the address is set
 curl -i http://<server-host>:8080/health   # hit the server directly
 curl -i http://<server-host>:8080/readyz  # include DB + migration readiness
-cat ~/.multica/config.json        # verify api_token exists
-multica workspace list            # confirm you're a member of the target workspace
+cat ~/.mato/config.json        # verify api_token exists
+mato workspace list            # confirm you're a member of the target workspace
 ```
 
-**How to fix**: address each cause above. The two most common fixes are **changing `MULTICA_SERVER_URL` and restarting the daemon** (`multica daemon restart`) and **signing in again** (`multica logout && multica login`).
+**How to fix**: address each cause above. The two most common fixes are **changing `MATO_SERVER_URL` and restarting the daemon** (`mato daemon restart`) and **signing in again** (`mato logout && mato login`).
 
 ## Tasks stuck in `queued`
 
-**Symptom**: after assigning an issue to an agent, the issue status flips to `in_progress` immediately, but a long time passes with no sign of agent execution on the page; `multica daemon status` shows the daemon `online`.
+**Symptom**: after assigning an issue to an agent, the issue status flips to `in_progress` immediately, but a long time passes with no sign of agent execution on the page; `mato daemon status` shows the daemon `online`.
 
 **Likely causes** (ordered by frequency):
 
@@ -47,19 +47,19 @@ multica workspace list            # confirm you're a member of the target worksp
 **How to diagnose**:
 
 ```bash
-multica daemon status --output json       # runtime list + last_seen_at
-multica agent list                         # check agent archived state
-multica issue show <issue-id>             # inspect task history
+mato daemon status --output json       # runtime list + last_seen_at
+mato agent list                         # check agent archived state
+mato issue show <issue-id>             # inspect task history
 ```
 
 On the server side (self-host), grep for `"no_tasks"` / `"no_capacity"` to see the claim outcome.
 
 **How to fix**:
 
-- Concurrency full → wait for running tasks to finish, or `multica agent update <id> --max-concurrent-tasks 10` to raise the ceiling
+- Concurrency full → wait for running tasks to finish, or `mato agent update <id> --max-concurrent-tasks 10` to raise the ceiling
 - Same-issue serialization → wait for the previous task to finish, or reassign to a different agent
-- Agent archived → `multica agent restore <id>`
-- Runtime not registered → `multica daemon restart`, and the daemon will re-register
+- Agent archived → `mato agent restore <id>`
+- Runtime not registered → `mato daemon restart`, and the daemon will re-register
 
 ## WebSocket can't connect
 
@@ -80,7 +80,7 @@ On the server side (self-host), grep for `"no_tasks"` / `"no_capacity"` to see t
 
 **How to fix**:
 
-- Wrong origin → set `FRONTEND_ORIGIN=https://multica.yourdomain.com` in the server's `.env` (or comma-separated `CORS_ALLOWED_ORIGINS`) and restart the server
+- Wrong origin → set `FRONTEND_ORIGIN=https://mato.yourdomain.com` in the server's `.env` (or comma-separated `CORS_ALLOWED_ORIGINS`) and restart the server
 - Protocol mismatch → make sure `FRONTEND_ORIGIN`'s protocol matches the frontend's
 - Reverse proxy → in Nginx, add `proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade";`
 - Cookie expired → refresh the page and sign in again
@@ -114,27 +114,27 @@ On the server side (self-host), grep for `"no_tasks"` / `"no_capacity"` to see t
 
 **Likely causes** (mutually exclusive):
 
-1. **`MULTICA_DEV_VERIFICATION_CODE` is empty** — fixed codes are disabled by default
+1. **`MATO_DEV_VERIFICATION_CODE` is empty** — fixed codes are disabled by default
 2. **`APP_ENV=production`** — this is the **correct** production configuration; fixed local test codes are ignored in production
 3. **The configured code is not 6 digits** — the shortcut only accepts a 6-digit value
 
 **How to diagnose**:
 
 ```bash
-cat .env | grep -E 'APP_ENV|MULTICA_DEV_VERIFICATION_CODE'
-docker exec <container> env | grep -E 'APP_ENV|MULTICA_DEV_VERIFICATION_CODE'
+cat .env | grep -E 'APP_ENV|MATO_DEV_VERIFICATION_CODE'
+docker exec <container> env | grep -E 'APP_ENV|MATO_DEV_VERIFICATION_CODE'
 ```
 
 Check your inbox (including spam) for the real verification code.
 
 **How to fix**:
 
-- In production, leave `MULTICA_DEV_VERIFICATION_CODE` empty — configure Resend and use real codes
-- For local development or internal testing, either copy the generated code from server logs or set `APP_ENV=development` plus `MULTICA_DEV_VERIFICATION_CODE=888888` — never enable a fixed code on a public instance (see [Sign-in and signup configuration → Fixed local testing codes](/auth-setup#fixed-local-testing-codes))
+- In production, leave `MATO_DEV_VERIFICATION_CODE` empty — configure Resend and use real codes
+- For local development or internal testing, either copy the generated code from server logs or set `APP_ENV=development` plus `MATO_DEV_VERIFICATION_CODE=888888` — never enable a fixed code on a public instance (see [Sign-in and signup configuration → Fixed local testing codes](/auth-setup#fixed-local-testing-codes))
 
 ## Port conflicts
 
-**Symptom**: `multica server` or `multica daemon start` fails with `address already in use`.
+**Symptom**: `mato server` or `mato daemon start` fails with `address already in use`.
 
 **Likely causes**:
 
@@ -159,10 +159,10 @@ netstat -ano | findstr :8080    # Windows
 
 | Component | Location | Command |
 |---|---|---|
-| **Daemon** | `~/.multica/daemon.log` (background mode) or foreground stdout | `multica daemon logs -f --lines 100` |
+| **Daemon** | `~/.mato/daemon.log` (background mode) or foreground stdout | `mato daemon logs -f --lines 100` |
 | **Server (Docker)** | Container stdout | `docker logs -f <container>` |
-| **Server (systemd)** | journal | `journalctl -u multica-server -f` |
+| **Server (systemd)** | journal | `journalctl -u mato-server -f` |
 | **Frontend (dev)** | Terminal running `pnpm dev` | Read directly |
 | **Frontend (browser)** | DevTools → Console | Press `F12` |
 
-For more detailed daemon logs, move it from background to foreground: `multica daemon stop && multica daemon start --foreground`.
+For more detailed daemon logs, move it from background to foreground: `mato daemon stop && mato daemon start --foreground`.

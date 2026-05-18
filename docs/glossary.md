@@ -1,6 +1,6 @@
 # Glossary
 
-Plain-English definitions of every key term, concept, and pattern used in the Multica codebase.
+Plain-English definitions of every key term, concept, and pattern used in the MATO codebase.
 
 ---
 
@@ -19,7 +19,7 @@ The concrete execution environment where an agent actually runs. Separate from t
 The work queue for AI agents. When an issue is assigned to an agent, a row is created in `agent_task_queue`. The daemon polls this queue to claim tasks. Each row tracks the full lifecycle from `queued` → `dispatched` → `running` → `completed` or `failed`.
 
 ### Autopilot
-A scheduled or triggered automation that creates issues and assigns them to agents automatically. Defined by a cron schedule (or webhook/API trigger), a title template, a target agent, and a concurrency policy. Think of it as a recurring job definition that Multica executes on a schedule.
+A scheduled or triggered automation that creates issues and assigns them to agents automatically. Defined by a cron schedule (or webhook/API trigger), a title template, a target agent, and a concurrency policy. Think of it as a recurring job definition that MATO executes on a schedule.
 
 ### Autopilot Run
 A single execution of an autopilot. One run = one issue created (or one task executed in `run_only` mode). Tracked in `autopilot_run` with its own status lifecycle.
@@ -45,7 +45,7 @@ An in-process publish/subscribe system (`internal/events/bus.go`). Handlers publ
 A persistent conversation between a user and an agent. Unlike issue-based tasks, chat sessions don't require an issue to exist. Each chat message that requires an AI response spawns a task in `agent_task_queue` (with `chat_session_id` set instead of `issue_id`).
 
 ### Chi Router
-The Go HTTP router used by Multica (`github.com/go-chi/chi/v5`). Provides middleware composition, URL parameter parsing, and clean route grouping. All HTTP endpoints are registered in `server/cmd/server/router.go`.
+The Go HTTP router used by MATO (`github.com/go-chi/chi/v5`). Provides middleware composition, URL parameter parsing, and clean route grouping. All HTTP endpoints are registered in `server/cmd/server/router.go`.
 
 ### Concurrency Policy (Autopilot)
 How an autopilot handles multiple scheduled runs overlapping in time. Three options:
@@ -60,14 +60,14 @@ A JSONB field on issues that stores links to external context (URLs, document re
 A browser security mechanism that restricts which origins can make API calls. Configured via `ALLOWED_ORIGINS` or `FRONTEND_ORIGIN` env vars. The WebSocket hub has its own origin check separate from the HTTP CORS middleware.
 
 ### CSRF (Cross-Site Request Forgery)
-An attack where a malicious site makes authenticated requests on behalf of a logged-in user. Multica protects against this by requiring a CSRF token for state-changing requests that use cookie auth. Bearer token auth bypasses CSRF (the token itself proves intent).
+An attack where a malicious site makes authenticated requests on behalf of a logged-in user. MATO protects against this by requiring a CSRF token for state-changing requests that use cookie auth. Bearer token auth bypasses CSRF (the token itself proves intent).
 
 ---
 
 ## D
 
 ### Daemon
-A Go binary (`multica daemon`) that runs on a developer's local machine or CI server. It acts as the bridge between the Multica server and the actual agent CLI processes. The daemon:
+A Go binary (`mato daemon`) that runs on a developer's local machine or CI server. It acts as the bridge between the MATO server and the actual agent CLI processes. The daemon:
 1. Detects installed agent CLIs
 2. Registers them as runtimes with the server
 3. Polls for tasks
@@ -98,7 +98,7 @@ The configuration passed to an agent CLI when executing a task: working director
 ## F
 
 ### Fan-Out
-The process of delivering a single event to multiple recipients. In Multica's notification system, when a task completes, the fan-out creates an `inbox_item` for every subscriber of that issue.
+The process of delivering a single event to multiple recipients. In MATO's notification system, when a task completes, the fan-out creates an `inbox_item` for every subscriber of that issue.
 
 ---
 
@@ -112,7 +112,7 @@ The Go library used for WebSocket connections (`github.com/gorilla/websocket`). 
 ## H
 
 ### Handler
-A Go function that handles a specific HTTP endpoint. In Multica, all handlers are methods on the `Handler` struct and live in `server/internal/handler/`. The pattern is: validate → read DB → write DB → publish event → return JSON.
+A Go function that handles a specific HTTP endpoint. In MATO, all handlers are methods on the `Handler` struct and live in `server/internal/handler/`. The pattern is: validate → read DB → write DB → publish event → return JSON.
 
 ### Heartbeat
 A periodic signal from the daemon to the server confirming that a runtime is still alive. Stored as `last_seen_at` on `agent_runtime`. The Runtime Sweeper marks runtimes as offline if heartbeats stop for more than 75 seconds.
@@ -131,7 +131,7 @@ The in-app notification center. Each user (and each agent) has an inbox. Inbox i
 A single notification in the inbox. Has a severity level (action_required, attention, info), a title, a body, and read/archived flags.
 
 ### Internal Packages Pattern
-Multica's approach to building shared frontend packages. All shared packages (`core/`, `views/`, `ui/`) export raw TypeScript/TSX files and are compiled by the consuming app's bundler. No pre-compilation step. This gives instant HMR (hot module replacement) and zero-config go-to-definition in IDEs.
+MATO's approach to building shared frontend packages. All shared packages (`core/`, `views/`, `ui/`) export raw TypeScript/TSX files and are compiled by the consuming app's bundler. No pre-compilation step. This gives instant HMR (hot module replacement) and zero-config go-to-definition in IDEs.
 
 ### Issue
 The primary work item, analogous to a ticket in Jira or Linear. Issues can be created by humans, agents, or autopilots. They have a status (`backlog` → `todo` → `in_progress` → `in_review` → `done`), a priority, and an optional assignee (human or agent or squad). Issues can have parent-child relationships.
@@ -147,7 +147,7 @@ A short string attached to a workspace used to create human-readable issue IDs. 
 ## J
 
 ### JSONB
-PostgreSQL's binary JSON column type. Used extensively in Multica for schemaless data: agent configuration, skill metadata, task results, workspace settings, etc. JSONB supports efficient indexing and querying via PostgreSQL's JSON operators.
+PostgreSQL's binary JSON column type. Used extensively in MATO for schemaless data: agent configuration, skill metadata, task results, workspace settings, etc. JSONB supports efficient indexing and querying via PostgreSQL's JSON operators.
 
 ### JWT (JSON Web Token)
 The primary session token format. After email verification, the server issues a JWT signed with `JWT_SECRET`. The JWT is stored in an HttpOnly cookie and/or the response body. It contains the user's ID and email as claims.
@@ -163,14 +163,14 @@ A colored tag that can be applied to issues. Labels are workspace-scoped and man
 When a squad is assigned an issue, the squad's leader agent runs first. This leader task is flagged with `is_leader_task = true` in `agent_task_queue`. The leader agent's job is to assess the issue and coordinate work among squad members.
 
 ### Local Skill
-A skill document that exists on the developer's local machine but hasn't been imported into the Multica workspace yet. The daemon scans for local skills and reports them to the server. Users can then import them into the workspace with one click.
+A skill document that exists on the developer's local machine but hasn't been imported into the MATO workspace yet. The daemon scans for local skills and reports them to the server. Users can then import them into the workspace with one click.
 
 ---
 
 ## M
 
 ### MCP (Model Context Protocol)
-Anthropic's open standard for giving AI models access to external tools and data sources. An MCP server exposes tools that the AI can call (e.g., fetch a web page, query a database, read a file). Agents in Multica can be configured with an `mcp_config` that the daemon passes to the agent CLI when spawning it.
+Anthropic's open standard for giving AI models access to external tools and data sources. An MCP server exposes tools that the AI can call (e.g., fetch a web page, query a database, read a file). Agents in MATO can be configured with an `mcp_config` that the daemon passes to the agent CLI when spawning it.
 
 ### Member
 A human user's membership in a workspace. The `member` table joins users to workspaces with a role (owner, admin, member). The word "member" in the codebase often refers to the `db.Member` struct, not a general person.
@@ -179,7 +179,7 @@ A human user's membership in a workspace. The `member` table joins users to work
 The `@username` or `@agent-name` feature in comments and issue descriptions. The `server/internal/mention/` package handles parsing mentions and converting them to structured references. Mentions trigger inbox notifications.
 
 ### Migration
-A SQL file that modifies the database schema. Multica has 92 migration files (numbered 001–092+) in `server/migrations/`. Each migration has an `.up.sql` (apply the change) and `.down.sql` (revert it). Migrations are run by `server/cmd/migrate/`.
+A SQL file that modifies the database schema. MATO has 92 migration files (numbered 001–092+) in `server/migrations/`. Each migration has an `.up.sql` (apply the change) and `.down.sql` (revert it). Migrations are run by `server/cmd/migrate/`.
 
 ---
 
@@ -206,16 +206,16 @@ A process where the daemon, upon restart, discovers tasks that the previous daem
 ## P
 
 ### PAT (Personal Access Token)
-A long-lived API token (`mul_...` prefix) for programmatic access to the Multica API. Used by the CLI and by external integrations. Stored as a SHA-256 hash in the database. The plaintext token is shown once at creation.
+A long-lived API token (`mul_...` prefix) for programmatic access to the MATO API. Used by the CLI and by external integrations. Stored as a SHA-256 hash in the database. The plaintext token is shown once at creation.
 
 ### pgcrypto
-A PostgreSQL extension that provides cryptographic functions. Used in Multica for `gen_random_uuid()` — the function that generates UUID primary keys.
+A PostgreSQL extension that provides cryptographic functions. Used in MATO for `gen_random_uuid()` — the function that generates UUID primary keys.
 
 ### pg_cron
-A PostgreSQL extension that runs scheduled jobs inside the database. Used in Multica for the token usage rollup jobs that aggregate `task_usage` into `task_usage_daily` and `task_usage_dashboard_daily`.
+A PostgreSQL extension that runs scheduled jobs inside the database. Used in MATO for the token usage rollup jobs that aggregate `task_usage` into `task_usage_daily` and `task_usage_dashboard_daily`.
 
 ### pgvector
-A PostgreSQL extension for storing and querying vector embeddings. Installed but not currently used for semantic search in Multica. The `skill` table has no vector column; skill retrieval is by name or full list scan.
+A PostgreSQL extension for storing and querying vector embeddings. Installed but not currently used for semantic search in MATO. The `skill` table has no vector column; skill retrieval is by name or full list scan.
 
 ### Pin
 A workspace item that a user has pinned for quick access. Stored in `pinned_item`. Can be an issue or project. Ordered by a `position` float.
@@ -224,7 +224,7 @@ A workspace item that a user has pinned for quick access. Stored in `pinned_item
 `packages/core/platform/` — the module that initializes shared state (API client, auth store, WebSocket connection, QueryClient) for each app. Each app wraps its root with `<CoreProvider>` and provides its own `NavigationAdapter`.
 
 ### Position (Float Ordering)
-Multica uses floating-point numbers (not integers) for ordering items within a list. This allows inserting an item between two others without renumbering: if item A is at position 1.0 and item B is at position 2.0, a new item between them gets position 1.5. This avoids bulk UPDATE statements on reorder.
+MATO uses floating-point numbers (not integers) for ordering items within a list. This allows inserting an item between two others without renumbering: if item A is at position 1.0 and item B is at position 2.0, a new item between them gets position 1.5. This avoids bulk UPDATE statements on reorder.
 
 ### Private Agent
 An agent with `visibility = 'private'`. Only the agent's `owner_id` and workspace admins can assign issues to this agent or start chat sessions with it. Workspace members cannot see or use private agents.
@@ -256,7 +256,7 @@ The Redis data structure used by the sharded realtime relay. Each workspace's ev
 A workspace slug that cannot be used because it conflicts with a system route (e.g., "login", "api", "settings"). The definitive list is in `server/internal/handler/reserved_slugs.json`. A TypeScript mirror is auto-generated for frontend validation.
 
 ### Role-Based Access Control (RBAC)
-Multica's permission system within a workspace. Three roles: `owner`, `admin`, `member`. Owners can do everything including deleting the workspace. Admins can invite/remove members. Members can only do workspace-scoped work. Checked in handlers via `requireWorkspaceRole()`.
+MATO's permission system within a workspace. Three roles: `owner`, `admin`, `member`. Owners can do everything including deleting the workspace. Admins can invite/remove members. Members can only do workspace-scoped work. Checked in handlers via `requireWorkspaceRole()`.
 
 ### Runtime (see Agent Runtime)
 
@@ -283,7 +283,7 @@ A named markdown document (SKILL.md) that can be attached to an agent and inject
 A supporting file for a skill (beyond the main SKILL.md). Stored in `skill_file` at a specific path relative to the skill directory. Materialized into the agent's working directory alongside the SKILL.md.
 
 ### sqlc
-A code generation tool that takes SQL query files and generates type-safe Go code. Multica uses sqlc to generate all database access code in `server/pkg/db/generated/`. The SQL queries live in `server/pkg/db/queries/`. Developers write SQL; sqlc generates Go.
+A code generation tool that takes SQL query files and generates type-safe Go code. MATO uses sqlc to generate all database access code in `server/pkg/db/generated/`. The SQL queries live in `server/pkg/db/queries/`. Developers write SQL; sqlc generates Go.
 
 ### Squad
 A named group of agents (and optionally human members) that can be assigned issues as a unit. Squads have a leader agent that receives the initial briefing and coordinates work among squad members. Issues can be assigned to a squad just like they can be assigned to an individual agent.
@@ -327,7 +327,7 @@ The monorepo build orchestration tool. Manages build dependencies, caching, and 
 ## U
 
 ### UpdateStore
-An in-memory (or Redis-backed) store that holds the latest CLI update manifest. The daemon polls this to check if a newer version of the `multica` CLI is available. Populated by the server reading from a known URL.
+An in-memory (or Redis-backed) store that holds the latest CLI update manifest. The daemon polls this to check if a newer version of the `mato` CLI is available. Populated by the server reading from a known URL.
 
 ---
 

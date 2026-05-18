@@ -2,7 +2,7 @@
 
 ## Overview
 
-Multica uses PostgreSQL 17 with the `pgvector`, `pgcrypto`, and `pg_cron` extensions. The schema has evolved through 92 migration files (numbered roughly 001–092, with some gaps for parallel development). All migrations are in `server/migrations/`.
+MATO uses PostgreSQL 17 with the `pgvector`, `pgcrypto`, and `pg_cron` extensions. The schema has evolved through 92 migration files (numbered roughly 001–092, with some gaps for parallel development). All migrations are in `server/migrations/`.
 
 The database is managed with a custom migration runner (`server/cmd/migrate/`) and sqlc generates type-safe Go query stubs from SQL files in `server/pkg/db/queries/`.
 

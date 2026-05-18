@@ -5,8 +5,8 @@ import {
   Markdown as MarkdownBase,
   type MarkdownProps as MarkdownBaseProps,
   type RenderMode,
-} from "@multica/ui/markdown";
-import { useConfigStore } from "@multica/core/config";
+} from "@mato/ui/markdown";
+import { useConfigStore } from "@mato/core/config";
 import { IssueMentionCard } from "../issues/components/issue-mention-card";
 
 export type { RenderMode };

@@ -11,7 +11,7 @@ import {
   Trash2,
 } from "lucide-react";
 import { toast } from "sonner";
-import { cn } from "@multica/ui/lib/utils";
+import { cn } from "@mato/ui/lib/utils";
 import { useT } from "../../i18n";
 import { useAttachmentDownloadResolver } from "../attachment-download-context";
 

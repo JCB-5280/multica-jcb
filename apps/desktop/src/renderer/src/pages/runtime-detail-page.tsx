@@ -1,8 +1,8 @@
 import { useParams } from "react-router-dom";
 import { useQuery } from "@tanstack/react-query";
-import { RuntimeDetailPage as SharedRuntimeDetailPage } from "@multica/views/runtimes";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { runtimeListOptions } from "@multica/core/runtimes/queries";
+import { RuntimeDetailPage as SharedRuntimeDetailPage } from "@mato/views/runtimes";
+import { useWorkspaceId } from "@mato/core/hooks";
+import { runtimeListOptions } from "@mato/core/runtimes/queries";
 import { useDocumentTitle } from "@/hooks/use-document-title";
 
 export function RuntimeDetailPage() {

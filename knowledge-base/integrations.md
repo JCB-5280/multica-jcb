@@ -7,7 +7,7 @@ aliases:
   - Email Providers
   - MCP Integration
   - Adding a New Agent
-description: Every external system Multica connects to — the 11 agent CLI providers, GitHub App integration, email providers, file storage, and MCP. Includes the contract for adding a new agent provider.
+description: Every external system MATO connects to — the 11 agent CLI providers, GitHub App integration, email providers, file storage, and MCP. Includes the contract for adding a new agent provider.
 tags:
   - integrations
   - agents
@@ -37,7 +37,7 @@ layer: backend
 
 ```mermaid
 graph LR
-    subgraph Multica Server
+    subgraph MATO Server
         Go["Go Backend"]
     end
     
@@ -78,7 +78,7 @@ graph LR
 
 ### Overview
 
-Multica supports **11 agent CLI providers**. All are implemented in `server/pkg/agent/` and conform to a single Go interface. The daemon spawns the appropriate CLI as a subprocess, streams its output, and reports results back to the server.
+MATO supports **11 agent CLI providers**. All are implemented in `server/pkg/agent/` and conform to a single Go interface. The daemon spawns the appropriate CLI as a subprocess, streams its output, and reports results back to the server.
 
 | Provider | File | CLI Binary | Notes |
 |----------|------|-----------|-------|
@@ -368,7 +368,7 @@ Attachments (uploaded files on issues/comments) require external object storage.
 
 MCP servers extend what an agent can do — they provide additional tools the agent can call during task execution (database access, API calls, file operations, etc.).
 
-Multica integrates MCP at the **per-agent level**, not at the system level:
+MATO integrates MCP at the **per-agent level**, not at the system level:
 
 1. A workspace admin configures an MCP config JSON blob for a specific agent
 2. The JSON is stored in `agent.mcp_config`

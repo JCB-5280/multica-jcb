@@ -11,18 +11,18 @@ import {
 } from "lucide-react";
 import { toast } from "sonner";
 import { useQuery } from "@tanstack/react-query";
-import type { AgentRuntime, Agent, MemberWithUser } from "@multica/core/types";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { memberListOptions, agentListOptions } from "@multica/core/workspace/queries";
-import { useDeleteRuntime, useUpdateRuntime } from "@multica/core/runtimes/mutations";
-import { deriveRuntimeHealth } from "@multica/core/runtimes";
+import type { AgentRuntime, Agent, MemberWithUser } from "@mato/core/types";
+import { useAuthStore } from "@mato/core/auth";
+import { useWorkspaceId } from "@mato/core/hooks";
+import { memberListOptions, agentListOptions } from "@mato/core/workspace/queries";
+import { useDeleteRuntime, useUpdateRuntime } from "@mato/core/runtimes/mutations";
+import { deriveRuntimeHealth } from "@mato/core/runtimes";
 import {
   type AgentPresenceDetail,
   useWorkspacePresenceMap,
-} from "@multica/core/agents";
-import { useWorkspacePaths } from "@multica/core/paths";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@mato/core/agents";
+import { useWorkspacePaths } from "@mato/core/paths";
+import { Button } from "@mato/ui/components/ui/button";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -32,12 +32,12 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@multica/ui/components/ui/alert-dialog";
+} from "@mato/ui/components/ui/alert-dialog";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@multica/ui/components/ui/tooltip";
+} from "@mato/ui/components/ui/tooltip";
 import { ActorAvatar } from "../../common/actor-avatar";
 import { TimezoneSelect } from "../../common/timezone-select";
 import { AppLink } from "../../navigation";
@@ -348,7 +348,7 @@ function HeroCard({
         </Fact>
       </dl>
 
-      {/* Diagnostic IDs — multica CLI git hash + truncated daemon UUID.
+      {/* Diagnostic IDs — mato CLI git hash + truncated daemon UUID.
           Only useful when filing an issue or reading logs; folded by
           default so they don't compete with the user-visible facts above. */}
       {hasTechDetails && (

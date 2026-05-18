@@ -8,15 +8,15 @@ import {
   PenLine,
   Sparkles,
 } from "lucide-react";
-import { Button } from "@multica/ui/components/ui/button";
-import { useScrollFade } from "@multica/ui/hooks/use-scroll-fade";
+import { Button } from "@mato/ui/components/ui/button";
+import { useScrollFade } from "@mato/ui/hooks/use-scroll-fade";
 import type {
   QuestionnaireAnswers,
   Role,
   TeamSize,
   UseCase,
-} from "@multica/core/onboarding";
-import { DragStrip } from "@multica/views/platform";
+} from "@mato/core/onboarding";
+import { DragStrip } from "@mato/views/platform";
 import { StepHeader } from "../components/step-header";
 import { OptionCard, OtherOptionCard } from "../components/option-card";
 import { useT } from "../../i18n";
@@ -333,7 +333,7 @@ function WhyWeAsk() {
       </section>
 
       <a
-        href="https://multica.ai/docs/agents"
+        href="https://mato.ai/docs/agents"
         target="_blank"
         rel="noopener noreferrer"
         className="self-start text-[13px] text-muted-foreground underline underline-offset-4 transition-colors hover:text-foreground"

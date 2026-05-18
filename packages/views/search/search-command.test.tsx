@@ -2,7 +2,7 @@ import { act, type ReactNode } from "react";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { beforeEach, describe, expect, it, vi } from "vitest";
-import { I18nProvider } from "@multica/core/i18n/react";
+import { I18nProvider } from "@mato/core/i18n/react";
 import { SearchCommand } from "./search-command";
 import { useSearchStore } from "./search-store";
 import enCommon from "../locales/en/common.json";
@@ -47,7 +47,7 @@ const {
   mockSetTheme: vi.fn(),
   mockTheme: { current: "system" as "light" | "dark" | "system" },
   mockPathname: { current: "/ws-test/issues" as string },
-  mockGetShareableUrl: vi.fn((p: string) => `https://app.multica/${p}`),
+  mockGetShareableUrl: vi.fn((p: string) => `https://app.mato/${p}`),
   mockMembers: {
     current: [] as Array<{
       id: string;
@@ -65,14 +65,14 @@ const {
   mockClipboardWrite: vi.fn(() => Promise.resolve()),
 }));
 
-vi.mock("@multica/core/api", () => ({
+vi.mock("@mato/core/api", () => ({
   api: {
     searchIssues: mockSearchIssues,
     searchProjects: mockSearchProjects,
   },
 }));
 
-vi.mock("@multica/core/issues/stores", () => {
+vi.mock("@mato/core/issues/stores", () => {
   const EMPTY: Array<{ id: string; visitedAt: number }> = [];
   return {
     useRecentIssuesStore: (
@@ -92,11 +92,11 @@ vi.mock("@multica/core/issues/stores", () => {
   };
 });
 
-vi.mock("@multica/core", () => ({
+vi.mock("@mato/core", () => ({
   useWorkspaceId: () => "ws-test",
 }));
 
-vi.mock("@multica/core/paths", () => ({
+vi.mock("@mato/core/paths", () => ({
   useWorkspacePaths: () => ({
     inbox: () => "/ws-test/inbox",
     myIssues: () => "/ws-test/my-issues",
@@ -112,17 +112,17 @@ vi.mock("@multica/core/paths", () => ({
   }),
 }));
 
-vi.mock("@multica/core/issues/queries", () => ({
+vi.mock("@mato/core/issues/queries", () => ({
   issueDetailOptions: (_wsId: string, id: string) => ({
     queryKey: ["issues", "ws-test", "detail", id],
   }),
 }));
 
-vi.mock("@multica/core/workspace/queries", () => ({
+vi.mock("@mato/core/workspace/queries", () => ({
   memberListOptions: () => ({ queryKey: ["workspaces", "ws-test", "members"] }),
 }));
 
-vi.mock("@multica/core/modals", () => ({
+vi.mock("@mato/core/modals", () => ({
   useModalStore: Object.assign(vi.fn(), {
     getState: () => ({ open: mockOpenModal }),
   }),
@@ -158,7 +158,7 @@ vi.mock("../navigation", () => ({
   }),
 }));
 
-vi.mock("@multica/ui/components/common/theme-provider", () => ({
+vi.mock("@mato/ui/components/common/theme-provider", () => ({
   useTheme: () => ({ theme: mockTheme.current, setTheme: mockSetTheme }),
 }));
 
@@ -176,7 +176,7 @@ describe("SearchCommand", () => {
     mockSetTheme.mockReset();
     mockTheme.current = "system";
     mockPathname.current = "/ws-test/issues";
-    mockGetShareableUrl.mockReset().mockImplementation((p: string) => `https://app.multica/${p}`);
+    mockGetShareableUrl.mockReset().mockImplementation((p: string) => `https://app.mato/${p}`);
     mockMembers.current = [];
     mockOpenModal.mockReset();
     mockToastSuccess.mockReset();
@@ -380,7 +380,7 @@ describe("SearchCommand", () => {
     await user.click(linkItem);
 
     expect(mockGetShareableUrl).toHaveBeenCalledWith("/ws-test/issues/issue-1");
-    expect(mockClipboardWrite).toHaveBeenCalledWith("https://app.multica//ws-test/issues/issue-1");
+    expect(mockClipboardWrite).toHaveBeenCalledWith("https://app.mato//ws-test/issues/issue-1");
     expect(mockToastSuccess).toHaveBeenCalledWith("Link copied");
 
     // Reopen palette and test identifier copy

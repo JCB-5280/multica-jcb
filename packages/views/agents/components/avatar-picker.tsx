@@ -3,9 +3,9 @@
 import { useRef, useState } from "react";
 import { Camera, ImagePlus, Loader2, X } from "lucide-react";
 import { toast } from "sonner";
-import { api } from "@multica/core/api";
-import { useFileUpload } from "@multica/core/hooks/use-file-upload";
-import { cn } from "@multica/ui/lib/utils";
+import { api } from "@mato/core/api";
+import { useFileUpload } from "@mato/core/hooks/use-file-upload";
+import { cn } from "@mato/ui/lib/utils";
 import { useT } from "../../i18n";
 
 interface AvatarPickerProps {

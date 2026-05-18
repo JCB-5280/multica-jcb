@@ -15,7 +15,7 @@ A project is no longer just a label. It is a small **resource container**:
 - A resource has a `resource_type` (e.g. `github_repo`) and a `resource_ref` (a JSON payload typed by `resource_type`).
 - New resource types add a string + a handler. **No schema migration. No frontend rewrite.**
 
-This shape is intentional — it's the same pattern Multica already uses for agent providers: a `type` discriminator and a typed payload. It keeps the schema stable so adding "Notion page", "Google Doc", "uploaded file", or "external URL" later is a small, additive change.
+This shape is intentional — it's the same pattern MATO already uses for agent providers: a `type` discriminator and a typed payload. It keeps the schema stable so adding "Notion page", "Google Doc", "uploaded file", or "external URL" later is a small, additive change.
 
 ## Today: `github_repo`
 
@@ -43,18 +43,18 @@ From the **CLI**:
 # Create + attach in one shot. The server attaches resources in the same
 # transaction as the project create — invalid resources roll back the whole
 # operation, so you never end up with a project that has half its resources.
-multica project create \
+mato project create \
   --title "Agent UX 2026" \
-  --repo https://github.com/multica-ai/multica
+  --repo https://github.com/mato-ai/mato
 
 # Manage resources later
-multica project resource list <project-id>
-multica project resource add  <project-id> --type github_repo --url <url>
-multica project resource remove <project-id> <resource-id>
+mato project resource list <project-id>
+mato project resource add  <project-id> --type github_repo --url <url>
+mato project resource remove <project-id> <resource-id>
 
 # Generic escape hatch for any resource_type the server understands —
 # no CLI change needed when a new type ships:
-multica project resource add <project-id> \
+mato project resource add <project-id> \
   --type notion_page \
   --ref '{"page_id":"…","title":"…"}'
 ```
@@ -65,7 +65,7 @@ multica project resource add <project-id> \
 
 When the daemon spawns an agent for an issue inside a project, two things happen:
 
-### 1. `.multica/project/resources.json`
+### 1. `.mato/project/resources.json`
 
 A structured pass-through of the API response, written into the agent's working directory:
 
@@ -78,7 +78,7 @@ A structured pass-through of the API response, written into the agent's working 
       "id": "…",
       "resource_type": "github_repo",
       "resource_ref": {
-        "url": "https://github.com/multica-ai/multica",
+        "url": "https://github.com/mato-ai/mato",
         "default_branch_hint": "main"
       }
     }
@@ -97,12 +97,12 @@ The agent's `CLAUDE.md` / `AGENTS.md` (depending on provider) now includes a hum
 
 This issue belongs to **Agent UX 2026**.
 
-Project resources (also written to `.multica/project/resources.json`):
+Project resources (also written to `.mato/project/resources.json`):
 
-- **GitHub repo**: https://github.com/multica-ai/multica (default branch: `main`)
+- **GitHub repo**: https://github.com/mato-ai/mato (default branch: `main`)
 
 Resources are pointers — open them only when relevant to the task. For
-`github_repo` resources, use `multica repo checkout <url>` to fetch the code.
+`github_repo` resources, use `mato repo checkout <url>` to fetch the code.
 ```
 
 The text is intentionally minimal. The full payload is on disk; the prompt only orients the agent so it knows the project exists and what's attached.
@@ -131,14 +131,14 @@ The repo list shown to the agent (`## Repositories` block in `CLAUDE.md` / `AGEN
 - **Project has at least one `github_repo` resource** → only those repos are surfaced to the agent. Workspace-bound repos are intentionally hidden so the agent doesn't have to guess which one belongs to this issue.
 - **Project has no `github_repo` resources (or the issue isn't in a project)** → fall back to the workspace's repo list as before.
 
-This keeps the agent's working set tight: when a project is explicit about its repos, that's the authoritative answer. The structured resource list at `.multica/project/resources.json` always carries the full set, so a skill that wants to inspect everything still can.
+This keeps the agent's working set tight: when a project is explicit about its repos, that's the authoritative answer. The structured resource list at `.mato/project/resources.json` always carries the full set, so a skill that wants to inspect everything still can.
 
-The daemon mirrors this on the checkout side: when a task arrives with project-scoped `github_repo` URLs, those URLs are merged into the per-workspace allowlist *and* synced into the local repo cache before the agent spawns. So a project repo URL that isn't bound at the workspace level is still a valid argument to `multica repo checkout` — the daemon won't reject it as "not configured." The allowlist split is internal: workspace-bound URLs and task-scoped URLs are tracked separately, so a workspace-repos refresh doesn't accidentally revoke a project URL mid-run.
+The daemon mirrors this on the checkout side: when a task arrives with project-scoped `github_repo` URLs, those URLs are merged into the per-workspace allowlist *and* synced into the local repo cache before the agent spawns. So a project repo URL that isn't bound at the workspace level is still a valid argument to `mato repo checkout` — the daemon won't reject it as "not configured." The allowlist split is internal: workspace-bound URLs and task-scoped URLs are tracked separately, so a workspace-repos refresh doesn't accidentally revoke a project URL mid-run.
 
 ## What's intentionally **not** in scope here
 
 - **Cross-project sharing.** Each resource lives on exactly one project today.
 - **Per-skill resource scoping.** All resources are visible to every skill on the agent's run; type-aware filtering is a follow-up.
-- **Caching / sync.** `github_repo` is just metadata — checkout still happens via `multica repo checkout` on demand. Cached document text for Notion / Google Docs will arrive with those types.
+- **Caching / sync.** `github_repo` is just metadata — checkout still happens via `mato repo checkout` on demand. Cached document text for Notion / Google Docs will arrive with those types.
 
 These are deliberate omissions — the goal of the first cut is to validate the abstraction with the smallest set of moving parts.

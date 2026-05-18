@@ -38,7 +38,7 @@ security_critical: true
 
 | Method | Token Format | Used By | Lifetime |
 |--------|-------------|---------|---------|
-| Email magic-link + JWT | HttpOnly cookie `multica_auth` | Web browser sessions | Hours (configurable) |
+| Email magic-link + JWT | HttpOnly cookie `mato_auth` | Web browser sessions | Hours (configurable) |
 | Personal Access Token | `mul_` prefix (40 hex chars) | CLI, API integrations | Until revoked |
 | Daemon Token | `mdt_` prefix (40 hex chars) | Local agent daemon | Short-lived, workspace-scoped |
 
@@ -67,15 +67,15 @@ sequenceDiagram
     S->>DB: INSERT OR IGNORE user (first-time login creates account)
     S->>S: Sign JWT with JWT_SECRET
     S->>DB: DELETE verification_code
-    S-->>U: Set HttpOnly cookie multica_auth + return JWT in body
+    S-->>U: Set HttpOnly cookie mato_auth + return JWT in body
 ```
 
-**Development bypass:** `MULTICA_DEV_VERIFICATION_CODE` env var sets a static code. Rejected in `APP_ENV=production`.
+**Development bypass:** `MATO_DEV_VERIFICATION_CODE` env var sets a static code. Rejected in `APP_ENV=production`.
 
 **Email backend fallback:** If neither `RESEND_API_KEY` nor `SMTP_HOST` is configured, the code is printed to the server log (development only).
 
 > [!CAUTION] JWT_SECRET Default
-> The server logs a warning but **continues to run** if `JWT_SECRET` is not set, using the hardcoded default `"multica-dev-secret-change-in-production"`. For production SaaS, change this to a hard failure (`os.Exit(1)`) in `server/cmd/server/main.go`. See [[what-to-change-for-saas]].
+> The server logs a warning but **continues to run** if `JWT_SECRET` is not set, using the hardcoded default `"mato-dev-secret-change-in-production"`. For production SaaS, change this to a hard failure (`os.Exit(1)`) in `server/cmd/server/main.go`. See [[what-to-change-for-saas]].
 
 ---
 
@@ -134,7 +134,7 @@ flowchart TD
     A["Request arrives"] --> B{"Authorization: Bearer header?"}
     B -- "yes, mul_ prefix" --> C["PAT path"]
     B -- "yes, JWT" --> D["JWT path"]
-    B -- "no" --> E{"multica_auth cookie?"}
+    B -- "no" --> E{"mato_auth cookie?"}
     E -- "yes" --> F["Cookie JWT path"]
     E -- "no" --> G["401 Unauthorized"]
     
@@ -206,7 +206,7 @@ Browsers cannot set custom headers on WebSocket upgrades, so auth uses a differe
 
 **Cookie mode (web browser):**
 1. Browser connects to `GET /api/ws?workspace_slug=...`
-2. `multica_auth` cookie is sent automatically with the upgrade request
+2. `mato_auth` cookie is sent automatically with the upgrade request
 3. Server validates cookie → responds with `auth_ack` immediately
 
 **Token mode (non-cookie clients):**

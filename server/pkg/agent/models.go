@@ -170,7 +170,7 @@ func codexStaticModels() []Model {
 // alongside a few explicit version pins. Aliases track whatever the
 // installed CLI considers current (see `resolveModel` in the CLI's
 // packages/core/src/config/models.ts), so new Gemini releases light
-// up without a Multica redeploy. Default is `auto` to match Google's
+// up without a MATO redeploy. Default is `auto` to match Google's
 // recommendation — the CLI picks Pro vs Flash per task and falls back
 // when quota is exhausted.
 func geminiStaticModels() []Model {
@@ -423,9 +423,9 @@ func parsePiModels(output string) []Model {
 func discoverHermesModels(ctx context.Context, executablePath string) ([]Model, error) {
 	return discoverACPModels(ctx, executablePath, acpDiscoveryProvider{
 		defaultBin:   "hermes",
-		clientName:   "multica-model-discovery",
+		clientName:   "mato-model-discovery",
 		extraEnv:     []string{"HERMES_YOLO_MODE=1"},
-		tmpdirPrefix: "multica-hermes-discovery-",
+		tmpdirPrefix: "mato-hermes-discovery-",
 	})
 }
 
@@ -440,8 +440,8 @@ func discoverHermesModels(ctx context.Context, executablePath string) ([]Model, 
 func discoverKimiModels(ctx context.Context, executablePath string) ([]Model, error) {
 	return discoverACPModels(ctx, executablePath, acpDiscoveryProvider{
 		defaultBin:   "kimi",
-		clientName:   "multica-model-discovery",
-		tmpdirPrefix: "multica-kimi-discovery-",
+		clientName:   "mato-model-discovery",
+		tmpdirPrefix: "mato-kimi-discovery-",
 	})
 }
 
@@ -450,8 +450,8 @@ func discoverKimiModels(ctx context.Context, executablePath string) ([]Model, er
 func discoverKiroModels(ctx context.Context, executablePath string) ([]Model, error) {
 	return discoverACPModels(ctx, executablePath, acpDiscoveryProvider{
 		defaultBin:   "kiro-cli",
-		clientName:   "multica-model-discovery",
-		tmpdirPrefix: "multica-kiro-discovery-",
+		clientName:   "mato-model-discovery",
+		tmpdirPrefix: "mato-kiro-discovery-",
 	})
 }
 
@@ -477,8 +477,8 @@ func discoverKiroModels(ctx context.Context, executablePath string) ([]Model, er
 func discoverCopilotModels(ctx context.Context, executablePath string) ([]Model, error) {
 	models, err := discoverACPModels(ctx, executablePath, acpDiscoveryProvider{
 		defaultBin:   "copilot",
-		clientName:   "multica-model-discovery",
-		tmpdirPrefix: "multica-copilot-discovery-",
+		clientName:   "mato-model-discovery",
+		tmpdirPrefix: "mato-copilot-discovery-",
 		acpArgs:      []string{"--acp"},
 	})
 	if err != nil || len(models) == 0 {

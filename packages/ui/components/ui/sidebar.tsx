@@ -6,24 +6,24 @@ import { useRender } from "@base-ui/react/use-render"
 import { cva, type VariantProps } from "class-variance-authority"
 import { useTranslation } from "react-i18next"
 
-import { useIsMobile } from "@multica/ui/hooks/use-mobile"
-import { cn } from "@multica/ui/lib/utils"
-import { Button } from "@multica/ui/components/ui/button"
-import { Input } from "@multica/ui/components/ui/input"
-import { Separator } from "@multica/ui/components/ui/separator"
+import { useIsMobile } from "@mato/ui/hooks/use-mobile"
+import { cn } from "@mato/ui/lib/utils"
+import { Button } from "@mato/ui/components/ui/button"
+import { Input } from "@mato/ui/components/ui/input"
+import { Separator } from "@mato/ui/components/ui/separator"
 import {
   Sheet,
   SheetContent,
   SheetDescription,
   SheetHeader,
   SheetTitle,
-} from "@multica/ui/components/ui/sheet"
-import { Skeleton } from "@multica/ui/components/ui/skeleton"
+} from "@mato/ui/components/ui/sheet"
+import { Skeleton } from "@mato/ui/components/ui/skeleton"
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@multica/ui/components/ui/tooltip"
+} from "@mato/ui/components/ui/tooltip"
 import { PanelLeftIcon } from "lucide-react"
 
 const SIDEBAR_COOKIE_NAME = "sidebar_state"

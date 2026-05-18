@@ -2,9 +2,9 @@
 title: Architecture Overview
 aliases:
   - System Architecture
-  - How Multica Works
+  - How MATO Works
   - Technical Overview
-description: Plain-English explanation of the entire Multica system — how the major pieces fit together, and the full journey from user login to agent task completion.
+description: Plain-English explanation of the entire MATO system — how the major pieces fit together, and the full journey from user login to agent task completion.
 tags:
   - architecture
   - overview
@@ -31,9 +31,9 @@ layer: system
 
 # Architecture Overview
 
-## What Is Multica?
+## What Is MATO?
 
-Multica is an AI-native project management platform — think Linear or Jira, but with AI coding agents as first-class team members. Agents can be assigned issues (tasks), execute them autonomously using real coding tools, comment on issues, change statuses, and report progress — all within the same interface that human team members use.
+MATO is an AI-native project management platform — think Linear or Jira, but with AI coding agents as first-class team members. Agents can be assigned issues (tasks), execute them autonomously using real coding tools, comment on issues, change statuses, and report progress — all within the same interface that human team members use.
 
 The key insight of the product: **agents are not a bolt-on**. The entire data model, permission system, real-time event layer, and CLI tooling are built to treat an AI agent and a human developer as equivalent actors.
 
@@ -68,7 +68,7 @@ graph TB
     end
 
     subgraph Agent["Agent Tier (user's machine)"]
-        Daemon["multica daemon\n(Go binary)"]
+        Daemon["mato daemon\n(Go binary)"]
         CLI["Agent CLI subprocess\n(Claude Code, Codex, Cursor…)"]
         Daemon --> CLI
     end
@@ -108,7 +108,7 @@ The web app (`apps/web/`) adds only Next.js-specific wiring. The desktop app (`a
 
 ### 3. The Daemon (local agent runtime)
 
-The daemon is a separate Go binary (`multica daemon`) that runs on a developer's local machine (or a CI server). Its job:
+The daemon is a separate Go binary (`mato daemon`) that runs on a developer's local machine (or a CI server). Its job:
 
 1. Connect to the server via WebSocket
 2. Register available agent runtimes (Claude Code, Codex, Cursor, etc.)

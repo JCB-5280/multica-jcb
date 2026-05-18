@@ -1,5 +1,5 @@
-import type { QuestionnaireAnswers } from "@multica/core/onboarding";
-import type { ImportStarterIssuePayload } from "@multica/core/api";
+import type { QuestionnaireAnswers } from "@mato/core/onboarding";
+import type { ImportStarterIssuePayload } from "@mato/core/api";
 
 // =============================================================================
 // English starter-content body. Long-form markdown lives here (TypeScript,
@@ -11,7 +11,7 @@ import type { ImportStarterIssuePayload } from "@multica/core/api";
 export const PROJECT = {
   title: "Getting Started",
   description:
-    "A few things to try in Multica. Work through them at your own pace.",
+    "A few things to try in MATO. Work through them at your own pace.",
 };
 
 interface WelcomeIssueText {
@@ -26,11 +26,11 @@ export function buildWelcomeIssueText(
   const name = userName.trim() || "there";
 
   const header = [
-    `Welcome to Multica! 👋`,
+    `Welcome to MATO! 👋`,
     ``,
     `This is your workspace's first issue. Below, your agent will reply in a moment — that's how work happens here: you write what you want, your agent (or a teammate) picks it up and replies in the comments.`,
     ``,
-    `[Learn how Multica works →](https://multica.ai/docs/how-multica-works)`,
+    `[Learn how MATO works →](https://mato.ai/docs/how-mato-works)`,
     ``,
     `---`,
     ``,
@@ -40,7 +40,7 @@ export function buildWelcomeIssueText(
     `In your first reply, please:`,
     ``,
     `1. **Introduce yourself briefly** — your name, your role, what you're good at.`,
-    `2. **Explain how we work together in Multica**:`,
+    `2. **Explain how we work together in MATO**:`,
     `   - Assigning an issue to you **and** setting its status to **Todo** is what triggers you to start (Backlog pauses you)`,
     `   - @mentioning you inside a comment is for quick questions`,
     `   - **Workspace Context** (in Settings → General) is shared background every agent here sees`,
@@ -53,7 +53,7 @@ export function buildWelcomeIssueText(
     `In your first reply, please:`,
     ``,
     `1. **Introduce yourself briefly** — your name, your role, what you're good at.`,
-    `2. **Explain how we work together in Multica**:`,
+    `2. **Explain how we work together in MATO**:`,
     `   - Assigning an issue to you **and** setting its status to **Todo** triggers you to start (Backlog pauses you)`,
     `   - @mentioning you inside a comment is for quick questions`,
     `   - **Workspace Context** (in Settings → General) is shared background every agent here sees`,
@@ -65,23 +65,23 @@ export function buildWelcomeIssueText(
   switch (q.use_case) {
     case "coding":
       return {
-        title: "👋 Welcome to Multica — let's work together",
-        description: `${header}Hi agent, this is ${name}'s first time using Multica. They plan to use you mostly for **coding work**.\n\n${sharedInstructions}`,
+        title: "👋 Welcome to MATO — let's work together",
+        description: `${header}Hi agent, this is ${name}'s first time using MATO. They plan to use you mostly for **coding work**.\n\n${sharedInstructions}`,
       };
     case "planning":
       return {
-        title: "👋 Welcome to Multica — let's work together",
-        description: `${header}Hi agent, this is ${name}'s first time using Multica. They want your help with **planning and breaking down work**.\n\n${sharedInstructions}`,
+        title: "👋 Welcome to MATO — let's work together",
+        description: `${header}Hi agent, this is ${name}'s first time using MATO. They want your help with **planning and breaking down work**.\n\n${sharedInstructions}`,
       };
     case "writing_research":
       return {
-        title: "👋 Welcome to Multica — let's work together",
-        description: `${header}Hi agent, this is ${name}'s first time using Multica. They'll use you for **research and writing** — drafting, summarizing, analysis.\n\n${sharedInstructions}`,
+        title: "👋 Welcome to MATO — let's work together",
+        description: `${header}Hi agent, this is ${name}'s first time using MATO. They'll use you for **research and writing** — drafting, summarizing, analysis.\n\n${sharedInstructions}`,
       };
     case "explore":
       return {
-        title: "👋 Welcome to Multica — let's work together",
-        description: `${header}Hi agent, this is ${name}'s first time using Multica. They're **exploring** what Multica can do — no specific goal yet.\n\n${exploreInstructions}`,
+        title: "👋 Welcome to MATO — let's work together",
+        description: `${header}Hi agent, this is ${name}'s first time using MATO. They're **exploring** what MATO can do — no specific goal yet.\n\n${exploreInstructions}`,
       };
     case "other": {
       const customUseCase = (q.use_case_other ?? "").trim();
@@ -89,14 +89,14 @@ export function buildWelcomeIssueText(
         ? `They told us they want to use you for: "${customUseCase}".`
         : `They haven't narrowed down their use case yet.`;
       return {
-        title: "👋 Welcome to Multica — let's work together",
-        description: `${header}Hi agent, this is ${name}'s first time using Multica. ${contextLine}\n\n${sharedInstructions}`,
+        title: "👋 Welcome to MATO — let's work together",
+        description: `${header}Hi agent, this is ${name}'s first time using MATO. ${contextLine}\n\n${sharedInstructions}`,
       };
     }
     default:
       return {
-        title: "👋 Welcome to Multica — let's work together",
-        description: `${header}Hi agent, this is ${name}'s first time using Multica.\n\n${sharedInstructions}`,
+        title: "👋 Welcome to MATO — let's work together",
+        description: `${header}Hi agent, this is ${name}'s first time using MATO.\n\n${sharedInstructions}`,
       };
   }
 }
@@ -111,7 +111,7 @@ export function buildAgentGuidedSubIssues(
       assign_to_self: true,
       title: "Learn how to trigger your agent on any issue",
       description: [
-        `**Every issue has a right-side panel** called **Properties**. From there you control who works on what. Agents in Multica are triggered when an issue has:`,
+        `**Every issue has a right-side panel** called **Properties**. From there you control who works on what. Agents in MATO are triggered when an issue has:`,
         ``,
         `  Assignee = your agent  AND  Status = Todo (not Backlog)`,
         ``,
@@ -126,7 +126,7 @@ export function buildAgentGuidedSubIssues(
         ``,
         `**You'll know it worked when**: the Live card shows your agent thinking, and the Status flips to **In Progress** automatically.`,
         ``,
-        `[Learn about assigning issues →](https://multica.ai/docs/assigning-issues)`,
+        `[Learn about assigning issues →](https://mato.ai/docs/assigning-issues)`,
       ].join("\n"),
     },
     {
@@ -149,7 +149,7 @@ export function buildAgentGuidedSubIssues(
         ``,
         `**You'll know it worked when**: the agent replies in the chat panel (or comment thread) within a few seconds.`,
         ``,
-        `[Learn about chat →](https://multica.ai/docs/chat)`,
+        `[Learn about chat →](https://mato.ai/docs/chat)`,
       ].join("\n"),
     },
     {
@@ -178,7 +178,7 @@ export function buildAgentGuidedSubIssues(
         ``,
         `**You'll know it worked when**: the next task you assign to an agent picks up details from this context without you explaining again.`,
         ``,
-        `[Learn about workspaces →](https://multica.ai/docs/workspaces)`,
+        `[Learn about workspaces →](https://mato.ai/docs/workspaces)`,
       ].join("\n"),
     },
   ];
@@ -192,7 +192,7 @@ export function buildAgentGuidedSubIssues(
       assign_to_self: true,
       title: "Invite your teammates",
       description: [
-        `Multica works best when a small team shares agents.`,
+        `MATO works best when a small team shares agents.`,
         ``,
         `**Where to find it**:`,
         `1. Sidebar → **Settings** (⚙️, bottom)`,
@@ -203,7 +203,7 @@ export function buildAgentGuidedSubIssues(
         ``,
         `They'll receive an email with a join link. Pending invites show in the collapsible "Pending Invitations" section below the member list — you can revoke from there.`,
         ``,
-        `[Learn about members and roles →](https://multica.ai/docs/members-roles)`,
+        `[Learn about members and roles →](https://mato.ai/docs/members-roles)`,
       ].join("\n"),
     });
   }
@@ -253,7 +253,7 @@ export function buildAgentGuidedSubIssues(
       ``,
       `**You'll know it worked when**: the new agent appears in the Assignee dropdown on any issue, and shows up in the left list on the Agents page.`,
       ``,
-      `[Learn about creating agents →](https://multica.ai/docs/agents-create)`,
+      `[Learn about creating agents →](https://mato.ai/docs/agents-create)`,
     ].join("\n"),
   });
 
@@ -300,7 +300,7 @@ export function buildAgentGuidedSubIssues(
         ``,
         `**Try it next time you assign an agent**: keep the issue open and watch the Live card appear below the description.`,
         ``,
-        `[Learn about tasks →](https://multica.ai/docs/tasks)`,
+        `[Learn about tasks →](https://mato.ai/docs/tasks)`,
       ].join("\n"),
     },
     {
@@ -321,7 +321,7 @@ export function buildAgentGuidedSubIssues(
         ``,
         `**Tip**: "Archive completed" is the fastest way to clear the noise from issues already finished.`,
         ``,
-        `[Learn about the inbox →](https://multica.ai/docs/inbox)`,
+        `[Learn about the inbox →](https://mato.ai/docs/inbox)`,
       ].join("\n"),
     },
     {
@@ -340,7 +340,7 @@ export function buildAgentGuidedSubIssues(
         ``,
         `**Good first autopilots**: daily digest of GitHub activity, weekly "what's blocked" check, or a Monday-morning triage of any issues still in Backlog.`,
         ``,
-        `[Learn about autopilots →](https://multica.ai/docs/autopilots)`,
+        `[Learn about autopilots →](https://mato.ai/docs/autopilots)`,
       ].join("\n"),
     },
   ];
@@ -363,24 +363,24 @@ export function buildSelfServeSubIssues(
         `A **runtime** pairs the daemon (a small background process on your machine) with one AI coding tool — Claude Code, Codex, and so on. If you have several tools installed, you'll see one runtime per tool. The runtime is what executes the tasks your agents pick up.`,
         ``,
         `**Option A — Desktop app (macOS, recommended if you're on a Mac)**:`,
-        `1. Go to [github.com/multica-ai/multica/releases/latest](https://github.com/multica-ai/multica/releases/latest) and download the \`.dmg\` for macOS`,
+        `1. Go to [github.com/mato.ai/mato/releases/latest](https://github.com/mato.ai/mato/releases/latest) and download the \`.dmg\` for macOS`,
         `2. Install and open the app`,
         `3. Sign in with the same account — the daemon is built in, you're done`,
         ``,
         `**Option B — CLI (macOS, Linux, or Windows via WSL)**:`,
         `1. In a terminal, install the CLI:`,
         `   \`\`\``,
-        `   curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh | bash`,
+        `   curl -fsSL https://raw.githubusercontent.com/mato.ai/mato/main/scripts/install.sh | bash`,
         `   \`\`\``,
         `2. Then run setup (signs you in and starts a background daemon):`,
         `   \`\`\``,
-        `   multica setup`,
+        `   mato setup`,
         `   \`\`\``,
         `   The daemon keeps running after you close the terminal — you don't have to leave anything open.`,
         ``,
         `**Verify**: sidebar → bottom **Configure** section → **Runtimes** → you should see at least one connected runtime.`,
         ``,
-        `[Learn about runtimes →](https://multica.ai/docs/daemon-runtimes)`,
+        `[Learn about runtimes →](https://mato.ai/docs/daemon-runtimes)`,
       ].join("\n"),
     },
     {
@@ -405,7 +405,7 @@ export function buildSelfServeSubIssues(
         ``,
         `**You'll know it worked when**: the new agent appears in the Assignee dropdown on any issue.`,
         ``,
-        `[Learn about creating agents →](https://multica.ai/docs/agents-create)`,
+        `[Learn about creating agents →](https://mato.ai/docs/agents-create)`,
       ].join("\n"),
     },
   ];
@@ -419,7 +419,7 @@ export function buildSelfServeSubIssues(
       description: [
         `**Prerequisite**: you have a runtime + agent from the two tasks above.`,
         ``,
-        `**How Multica triggers agents**:`,
+        `**How MATO triggers agents**:`,
         `- Assign an issue to an agent`,
         `- Set status to **Todo** (not Backlog — backlog pauses agents)`,
         `- The agent picks it up automatically`,
@@ -433,7 +433,7 @@ export function buildSelfServeSubIssues(
         ``,
         `**⚠️ Gotcha**: new issues default to **Backlog**. You must flip to **Todo** to trigger the agent.`,
         ``,
-        `[Learn about assigning issues →](https://multica.ai/docs/assigning-issues)`,
+        `[Learn about assigning issues →](https://mato.ai/docs/assigning-issues)`,
       ].join("\n"),
     },
     {
@@ -459,7 +459,7 @@ export function buildSelfServeSubIssues(
         ``,
         `**You'll know it worked when**: the next task you assign to an agent picks up details from this context without you explaining again.`,
         ``,
-        `[Learn about workspaces →](https://multica.ai/docs/workspaces)`,
+        `[Learn about workspaces →](https://mato.ai/docs/workspaces)`,
       ].join("\n"),
     },
   ];
@@ -484,7 +484,7 @@ export function buildSelfServeSubIssues(
         ``,
         `**Bonus**: inside any issue's comment box, type \`@\` to mention an agent or member.`,
         ``,
-        `[Learn about chat →](https://multica.ai/docs/chat)`,
+        `[Learn about chat →](https://mato.ai/docs/chat)`,
       ].join("\n"),
     },
   ];
@@ -515,14 +515,14 @@ export function buildSelfServeSubIssues(
       assign_to_self: true,
       title: "Invite your teammates",
       description: [
-        `Multica works best when a small team shares agents.`,
+        `MATO works best when a small team shares agents.`,
         ``,
         `**Where to find it**:`,
         `1. Sidebar → **Settings** (⚙️, bottom)`,
         `2. Left tab list → **Members** (people icon)`,
         `3. Click **Add member** → enter email → pick role → **Send invite**`,
         ``,
-        `[Learn about members and roles →](https://multica.ai/docs/members-roles)`,
+        `[Learn about members and roles →](https://mato.ai/docs/members-roles)`,
       ].join("\n"),
     });
   }
@@ -559,7 +559,7 @@ export function buildSelfServeSubIssues(
         ``,
         `It shows in real time which tool the agent is calling, streaming thoughts, and current status. After the run finishes, the **Task Run History** below the card lists every past run — click **View transcript** to open the full timeline.`,
         ``,
-        `[Learn about tasks →](https://multica.ai/docs/tasks)`,
+        `[Learn about tasks →](https://mato.ai/docs/tasks)`,
       ].join("\n"),
     },
     {
@@ -577,7 +577,7 @@ export function buildSelfServeSubIssues(
         `2. Pick a template, or click **+ New autopilot** for a blank one`,
         `3. Fill: **Name** / **Prompt** / **Agent** / **Schedule** (frequency + time + timezone) → **Create**`,
         ``,
-        `[Learn about autopilots →](https://multica.ai/docs/autopilots)`,
+        `[Learn about autopilots →](https://mato.ai/docs/autopilots)`,
       ].join("\n"),
     },
   );

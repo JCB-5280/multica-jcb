@@ -1,18 +1,18 @@
 {
-  "name": "@multica/desktop",
-  "productName": "Multica",
+  "name": "@mato/desktop",
+  "productName": "MATO",
   "version": "0.1.0",
   "private": true,
-  "description": "Multica Desktop — native desktop client for the Multica platform.",
-  "homepage": "https://multica.ai",
+  "description": "MATO Desktop — native desktop client for the MATO platform.",
+  "homepage": "https://mato.ai",
   "repository": {
     "type": "git",
-    "url": "https://github.com/multica-ai/multica.git",
+    "url": "https://github.com/mato.ai/mato.git",
     "directory": "apps/desktop"
   },
   "author": {
-    "name": "Multica",
-    "email": "support@multica.ai"
+    "name": "MATO",
+    "email": "support@mato.ai"
   },
   "license": "UNLICENSED",
   "main": "./out/main/index.js",
@@ -42,9 +42,9 @@
     "@fontsource-variable/inter": "^5.2.5",
     "@fontsource-variable/source-serif-4": "^5.2.9",
     "@fontsource/geist-mono": "^5.2.7",
-    "@multica/core": "workspace:*",
-    "@multica/ui": "workspace:*",
-    "@multica/views": "workspace:*",
+    "@mato/core": "workspace:*",
+    "@mato/ui": "workspace:*",
+    "@mato/views": "workspace:*",
     "electron-updater": "^6.8.3",
     "fix-path": "^5.0.0",
     "react-router-dom": "^7.6.0",
@@ -54,7 +54,7 @@
   },
   "devDependencies": {
     "@electron-toolkit/tsconfig": "^2.0.0",
-    "@multica/tsconfig": "workspace:*",
+    "@mato/tsconfig": "workspace:*",
     "@tailwindcss/vite": "^4",
     "@testing-library/jest-dom": "catalog:",
     "@testing-library/react": "catalog:",

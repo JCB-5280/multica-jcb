@@ -3,7 +3,7 @@ import type {
   DashboardUsageByAgent,
   DashboardAgentRunTime,
   DashboardRunTimeDaily,
-} from "@multica/core/types";
+} from "@mato/core/types";
 import { estimateCost, estimateCostBreakdown, type DailyTokenData } from "../runtimes/utils";
 import type {
   DailyTimeData,

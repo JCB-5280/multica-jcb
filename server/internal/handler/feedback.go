@@ -8,10 +8,10 @@ import (
 	"strings"
 
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/multica-ai/multica/server/internal/analytics"
-	"github.com/multica-ai/multica/server/internal/logger"
-	"github.com/multica-ai/multica/server/internal/middleware"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
+	"github.com/mato-ai/mato/server/internal/analytics"
+	"github.com/mato-ai/mato/server/internal/logger"
+	"github.com/mato-ai/mato/server/internal/middleware"
+	db "github.com/mato-ai/mato/server/pkg/db/generated"
 )
 
 // feedbackImageRegex is a coarse check for markdown image syntax ![alt](url).

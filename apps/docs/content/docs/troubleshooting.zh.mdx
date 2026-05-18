@@ -1,40 +1,40 @@
 ---
 title: 故障排查
-description: self-host Multica 遇到的 Top 7 常见问题——症状、原因、怎么查、怎么修。
+description: self-host MATO 遇到的 Top 7 常见问题——症状、原因、怎么查、怎么修。
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 
-按症状查问题。每条问题都给**症状 / 可能原因 / 怎么查 / 怎么修**四段。如果你的情况不在下面，到 [GitHub](https://github.com/multica-ai/multica/issues) 提 issue。
+按症状查问题。每条问题都给**症状 / 可能原因 / 怎么查 / 怎么修**四段。如果你的情况不在下面，到 [GitHub](https://github.com/mato-ai/mato/issues) 提 issue。
 
 ## 守护进程连不上服务器
 
-**症状**：[`multica daemon`](/cli) 的 `status` 命令显示 `offline` 或 `connection refused`；服务器日志里没有 `/api/daemon/register` 或 `/api/daemon/heartbeat` 的请求。守护进程机制详见 [守护进程与运行时](/daemon-runtimes)。
+**症状**：[`mato daemon`](/cli) 的 `status` 命令显示 `offline` 或 `connection refused`；服务器日志里没有 `/api/daemon/register` 或 `/api/daemon/heartbeat` 的请求。守护进程机制详见 [守护进程与运行时](/daemon-runtimes)。
 
 **可能原因**：
 
-1. **`MULTICA_SERVER_URL` 指错地址** —— 默认是 `ws://localhost:8080/ws`，self-host 要改成你自己的 server 地址
+1. **`MATO_SERVER_URL` 指错地址** —— 默认是 `ws://localhost:8080/ws`，self-host 要改成你自己的 server 地址
 2. **网络 / 防火墙阻挡** —— daemon 和 server 不在同一网络，或出站被 block
-3. **Token 过期或无效** —— 你从来没跑过 `multica login`，或 PAT 被撤销
+3. **Token 过期或无效** —— 你从来没跑过 `mato login`，或 PAT 被撤销
 4. **服务器拒绝注册** —— 你登录的账号不在目标工作区（register 返 403）
 5. **DNS 解析失败** —— hostname 在 daemon 机器上解不出来
 
 **怎么查**：
 
 ```bash
-multica daemon logs --lines 100    # 看 daemon 侧错误
-echo $MULTICA_SERVER_URL          # 确认地址配对
+mato daemon logs --lines 100    # 看 daemon 侧错误
+echo $MATO_SERVER_URL          # 确认地址配对
 curl -i http://<server-host>:8080/health   # 直接戳 server
 curl -i http://<server-host>:8080/readyz  # 连同 DB + migration readiness 一起检查
-cat ~/.multica/config.json        # 看 api_token 是否存在
-multica workspace list            # 确认你是目标工作区成员
+cat ~/.mato/config.json        # 看 api_token 是否存在
+mato workspace list            # 确认你是目标工作区成员
 ```
 
-**怎么修**：按上面原因对症处理。最常见的两个是**改 `MULTICA_SERVER_URL` 重启 daemon**（`multica daemon restart`）和**重新登录**（`multica logout && multica login`）。
+**怎么修**：按上面原因对症处理。最常见的两个是**改 `MATO_SERVER_URL` 重启 daemon**（`mato daemon restart`）和**重新登录**（`mato logout && mato login`）。
 
 ## 任务一直卡在 queued
 
-**症状**：把 issue 分给 agent 后，issue 状态立刻变 `in_progress`，但过了很久页面没有 agent 执行的迹象；`multica daemon status` 显示 daemon `online`。
+**症状**：把 issue 分给 agent 后，issue 状态立刻变 `in_progress`，但过了很久页面没有 agent 执行的迹象；`mato daemon status` 显示 daemon `online`。
 
 **可能原因**（按触发概率排）：
 
@@ -47,19 +47,19 @@ multica workspace list            # 确认你是目标工作区成员
 **怎么查**：
 
 ```bash
-multica daemon status --output json       # runtime 列表 + last_seen_at
-multica agent list                         # 查 agent 的 archived 状态
-multica issue show <issue-id>             # 看 task 历史
+mato daemon status --output json       # runtime 列表 + last_seen_at
+mato agent list                         # 查 agent 的 archived 状态
+mato issue show <issue-id>             # 看 task 历史
 ```
 
 服务器侧（self-host）可以 grep `"no_tasks"` / `"no_capacity"` 看 claim 的结果。
 
 **怎么修**：
 
-- 并发打满 → 等现有任务跑完，或 `multica agent update <id> --max-concurrent-tasks 10` 提升上限
+- 并发打满 → 等现有任务跑完，或 `mato agent update <id> --max-concurrent-tasks 10` 提升上限
 - 同 issue 串行 → 等前一个任务结束，或改分给不同 agent
-- Agent 被 archive → `multica agent restore <id>`
-- Runtime 未注册 → `multica daemon restart`，daemon 会重新注册
+- Agent 被 archive → `mato agent restore <id>`
+- Runtime 未注册 → `mato daemon restart`，daemon 会重新注册
 
 ## WebSocket 连不上
 
@@ -80,7 +80,7 @@ multica issue show <issue-id>             # 看 task 历史
 
 **怎么修**：
 
-- Origin 错 → 在 server 的 `.env` 设 `FRONTEND_ORIGIN=https://multica.yourdomain.com`（或逗号分隔的 `CORS_ALLOWED_ORIGINS`），重启 server
+- Origin 错 → 在 server 的 `.env` 设 `FRONTEND_ORIGIN=https://mato.yourdomain.com`（或逗号分隔的 `CORS_ALLOWED_ORIGINS`），重启 server
 - 协议不匹配 → 确保 `FRONTEND_ORIGIN` 的协议和前端一致
 - 反向代理 → 在 Nginx 加 `proxy_http_version 1.1; proxy_set_header Upgrade $http_upgrade; proxy_set_header Connection "upgrade";`
 - Cookie 过期 → 刷新页面重新登录
@@ -114,27 +114,27 @@ multica issue show <issue-id>             # 看 task 历史
 
 **可能原因**（互斥）：
 
-1. **`MULTICA_DEV_VERIFICATION_CODE` 为空** —— 固定验证码默认关闭
+1. **`MATO_DEV_VERIFICATION_CODE` 为空** —— 固定验证码默认关闭
 2. **`APP_ENV=production`** —— 这是正确的生产配置；固定本地测试验证码在 production 中会被忽略
 3. **配置的验证码不是 6 位数字** —— 这个快捷码只接受 6 位数字
 
 **怎么查**：
 
 ```bash
-cat .env | grep -E 'APP_ENV|MULTICA_DEV_VERIFICATION_CODE'
-docker exec <container> env | grep -E 'APP_ENV|MULTICA_DEV_VERIFICATION_CODE'
+cat .env | grep -E 'APP_ENV|MATO_DEV_VERIFICATION_CODE'
+docker exec <container> env | grep -E 'APP_ENV|MATO_DEV_VERIFICATION_CODE'
 ```
 
 检查邮箱（含 spam）看有没有收到真实验证码。
 
 **怎么修**：
 
-- 生产环境保持 `MULTICA_DEV_VERIFICATION_CODE` 为空，配好 Resend 后使用真实验证码
-- 本地开发或内网测试可以从 server 日志抄生成的验证码；如果需要 `888888`，设置 `APP_ENV=development` 和 `MULTICA_DEV_VERIFICATION_CODE=888888`。不要在公网实例启用固定验证码（详见 [登录与注册配置 → 固定本地测试验证码](/auth-setup#固定本地测试验证码)）
+- 生产环境保持 `MATO_DEV_VERIFICATION_CODE` 为空，配好 Resend 后使用真实验证码
+- 本地开发或内网测试可以从 server 日志抄生成的验证码；如果需要 `888888`，设置 `APP_ENV=development` 和 `MATO_DEV_VERIFICATION_CODE=888888`。不要在公网实例启用固定验证码（详见 [登录与注册配置 → 固定本地测试验证码](/auth-setup#固定本地测试验证码)）
 
 ## 端口冲突
 
-**症状**：`multica server` 或 `multica daemon start` 启动失败，报 `address already in use`。
+**症状**：`mato server` 或 `mato daemon start` 启动失败，报 `address already in use`。
 
 **可能原因**：
 
@@ -159,10 +159,10 @@ netstat -ano | findstr :8080    # Windows
 
 | 组件 | 位置 | 命令 |
 |---|---|---|
-| **守护进程** | `~/.multica/daemon.log`（后台模式）或前台 stdout | `multica daemon logs -f --lines 100` |
+| **守护进程** | `~/.mato/daemon.log`（后台模式）或前台 stdout | `mato daemon logs -f --lines 100` |
 | **服务器（Docker）** | container stdout | `docker logs -f <container>` |
-| **服务器（systemd）** | journal | `journalctl -u multica-server -f` |
+| **服务器（systemd）** | journal | `journalctl -u mato-server -f` |
 | **前端（dev）** | `pnpm dev` 所在终端 | 直接看 |
 | **前端（browser）** | DevTools → Console | 按 `F12` |
 
-需要更详细的 daemon 日志，把它从后台挪到前台跑：`multica daemon stop && multica daemon start --foreground`。
+需要更详细的 daemon 日志，把它从后台挪到前台跑：`mato daemon stop && mato daemon start --foreground`。

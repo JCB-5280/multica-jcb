@@ -6,7 +6,7 @@ aliases:
   - Database Tables
   - pgvector Schema
   - Schema Reference
-description: Complete reference for every table in the Multica PostgreSQL database — structure, relationships, indexes, constraints, JSONB columns, and the pgvector extension that's installed but not yet used for semantic search.
+description: Complete reference for every table in the MATO PostgreSQL database — structure, relationships, indexes, constraints, JSONB columns, and the pgvector extension that's installed but not yet used for semantic search.
 tags:
   - database
   - postgresql

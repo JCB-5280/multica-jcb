@@ -5,7 +5,7 @@ aliases:
   - Workspace Isolation
   - Tenant Architecture
   - RBAC
-description: How Multica achieves logical multi-tenancy through workspace_id filtering, slug management, role-based access control, and invitation flows. Covers current isolation guarantees and their limits.
+description: How MATO achieves logical multi-tenancy through workspace_id filtering, slug management, role-based access control, and invitation flows. Covers current isolation guarantees and their limits.
 tags:
   - backend
   - multi-tenancy
@@ -34,7 +34,7 @@ layer: backend
 ## Current Architecture: Logical Multi-Tenancy
 
 > [!NOTE] This Is the Standard SaaS Pattern
-> Multica uses logical multi-tenancy — all workspaces share one database, isolation enforced at the application layer via `workspace_id` column filters. This is how Linear, Notion, and most SaaS products work.
+> MATO uses logical multi-tenancy — all workspaces share one database, isolation enforced at the application layer via `workspace_id` column filters. This is how Linear, Notion, and most SaaS products work.
 
 All workspace-scoped tables have:
 

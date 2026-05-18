@@ -2,15 +2,15 @@ import type { Metadata, Viewport } from "next";
 import { headers } from "next/headers";
 import { Inter, Geist_Mono, Source_Serif_4 } from "next/font/google";
 import { ThemeProvider } from "@/components/theme-provider";
-import { Toaster } from "@multica/ui/components/ui/sonner";
-import { cn } from "@multica/ui/lib/utils";
+import { Toaster } from "@mato/ui/components/ui/sonner";
+import { cn } from "@mato/ui/lib/utils";
 import { WebProviders } from "@/components/web-providers";
 import {
   DEFAULT_LOCALE,
   SUPPORTED_LOCALES,
   type SupportedLocale,
-} from "@multica/core/i18n";
-import { RESOURCES } from "@multica/views/locales";
+} from "@mato/core/i18n";
+import { RESOURCES } from "@mato/views/locales";
 import "./globals.css";
 
 // Font stack: Inter for Latin UI text + system Chinese fonts for zh content.
@@ -73,10 +73,10 @@ export const viewport: Viewport = {
 };
 
 export const metadata: Metadata = {
-  metadataBase: new URL("https://www.multica.ai"),
+  metadataBase: new URL("https://www.mato.ai"),
   title: {
-    default: "Multica — Project Management for Human + Agent Teams",
-    template: "%s | Multica",
+    default: "MATO — Project Management for Human + Agent Teams",
+    template: "%s | MATO",
   },
   description:
     "Open-source platform that turns coding agents into real teammates. Assign tasks, track progress, compound skills.",
@@ -86,13 +86,13 @@ export const metadata: Metadata = {
   },
   openGraph: {
     type: "website",
-    siteName: "Multica",
+    siteName: "MATO",
     locale: "en_US",
   },
   twitter: {
     card: "summary_large_image",
-    site: "@multica_hq",
-    creator: "@multica_hq",
+    site: "@mato_hq",
+    creator: "@mato_hq",
   },
   alternates: {
     canonical: "/",
@@ -122,7 +122,7 @@ export default async function RootLayout({
   children: React.ReactNode;
 }) {
   const h = await headers();
-  const headerLocale = h.get("x-multica-locale");
+  const headerLocale = h.get("x-mato-locale");
   const locale: SupportedLocale = isSupportedLocale(headerLocale)
     ? headerLocale
     : DEFAULT_LOCALE;

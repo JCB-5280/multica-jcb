@@ -178,8 +178,8 @@ func (b *codexBackend) Execute(ctx context.Context, prompt string, opts ExecOpti
 		// 1. Initialize handshake
 		_, err := c.request(runCtx, "initialize", map[string]any{
 			"clientInfo": map[string]any{
-				"name":    "multica-agent-sdk",
-				"title":   "Multica Agent SDK",
+				"name":    "mato-agent-sdk",
+				"title":   "MATO Agent SDK",
 				"version": "0.2.0",
 			},
 			"capabilities": map[string]any{

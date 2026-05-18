@@ -1,11 +1,11 @@
 # Integrations
 
-## How Multica Connects to Agent CLIs
+## How MATO Connects to Agent CLIs
 
-The core integration model is: Multica does not run agent CLIs directly. Instead, a local daemon process (which the user runs on their machine) spawns agent CLI subprocesses and acts as the bridge between Multica's server and the actual AI agent.
+The core integration model is: MATO does not run agent CLIs directly. Instead, a local daemon process (which the user runs on their machine) spawns agent CLI subprocesses and acts as the bridge between MATO's server and the actual AI agent.
 
 ```
-Multica Server
+MATO Server
      ↕  (WebSocket + HTTP)
    Daemon  ← You install this; it runs on your machine or CI
      ↕  (subprocess stdin/stdout)
@@ -219,13 +219,13 @@ Add `server/pkg/agent/mynewagent_test.go` with a test that:
 
 ## GitHub Integration
 
-Multica has a GitHub App integration for linking PRs to issues.
+MATO has a GitHub App integration for linking PRs to issues.
 
 ### Setup Flow
 
 1. User clicks "Connect GitHub" in workspace settings
 2. Browser redirects to GitHub OAuth flow with app installation URL
-3. User installs the Multica GitHub App on their GitHub account/org
+3. User installs the MATO GitHub App on their GitHub account/org
 4. GitHub redirects back to `GET /api/workspaces/{slug}/github/callback`
 5. Server stores the installation in `github_installation`
 
@@ -281,9 +281,9 @@ If neither is configured, the verification code is printed to the server log:
 WARN: no email backend configured — printing verification code to log: 123456
 ```
 
-The `MULTICA_DEV_VERIFICATION_CODE` env var sets a static code (useful for automated tests):
+The `MATO_DEV_VERIFICATION_CODE` env var sets a static code (useful for automated tests):
 ```
-MULTICA_DEV_VERIFICATION_CODE=000000
+MATO_DEV_VERIFICATION_CODE=000000
 ```
 This is rejected if `APP_ENV=production`.
 
@@ -297,7 +297,7 @@ This is rejected if `APP_ENV=production`.
 AWS_REGION=us-east-1
 AWS_ACCESS_KEY_ID=...
 AWS_SECRET_ACCESS_KEY=...
-AWS_S3_BUCKET=multica-uploads
+AWS_S3_BUCKET=mato-uploads
 ```
 
 Files are uploaded to S3. URLs are either direct S3 URLs or CloudFront signed URLs:
@@ -350,9 +350,9 @@ The `mcp_config` JSONB column on the `agent` table allows configuring MCP server
 }
 ```
 
-When the daemon spawns the agent, it passes the MCP config via `--mcp-config` to the agent CLI (currently implemented for Claude Code). The agent CLI handles the MCP connection — Multica just passes the configuration through.
+When the daemon spawns the agent, it passes the MCP config via `--mcp-config` to the agent CLI (currently implemented for Claude Code). The agent CLI handles the MCP connection — MATO just passes the configuration through.
 
-This means any MCP-compatible tool can be made available to agents without changes to Multica's core code. You configure MCP servers per-agent in the UI or via the API.
+This means any MCP-compatible tool can be made available to agents without changes to MATO's core code. You configure MCP servers per-agent in the UI or via the API.
 
 ---
 
@@ -369,4 +369,4 @@ Redis is an optional infrastructure dependency that unlocks horizontal scaling a
 | Local skill list store | In-memory per-node | Shared, survives restarts |
 | Heartbeat liveness store | In-memory per-node | Shared, crash-safe |
 
-Without Redis, Multica runs correctly on a single node. With Redis, it can scale horizontally. The environment variable is simply `REDIS_URL=redis://localhost:6379`.
+Without Redis, MATO runs correctly on a single node. With Redis, it can scale horizontally. The environment variable is simply `REDIS_URL=redis://localhost:6379`.

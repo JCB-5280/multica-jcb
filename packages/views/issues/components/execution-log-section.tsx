@@ -4,15 +4,15 @@ import { useMemo, useState } from "react";
 import { useQuery } from "@tanstack/react-query";
 import { ChevronRight, Loader2, RotateCcw, Square } from "lucide-react";
 import { toast } from "sonner";
-import { api } from "@multica/core/api";
-import { issueKeys } from "@multica/core/issues/queries";
-import type { AgentTask, TaskFailureReason } from "@multica/core/types";
-import { timeAgo } from "@multica/core/utils";
+import { api } from "@mato/core/api";
+import { issueKeys } from "@mato/core/issues/queries";
+import type { AgentTask, TaskFailureReason } from "@mato/core/types";
+import { timeAgo } from "@mato/core/utils";
 import {
   Tooltip,
   TooltipContent,
   TooltipTrigger,
-} from "@multica/ui/components/ui/tooltip";
+} from "@mato/ui/components/ui/tooltip";
 import { ActorAvatar } from "../../common/actor-avatar";
 import { TranscriptButton } from "../../common/task-transcript";
 import { failureReasonLabel } from "../../agents/components/tabs/task-failure";

@@ -259,7 +259,7 @@ export class ApiClient {
     if (typeof document === "undefined") return null;
     const match = document.cookie
       .split("; ")
-      .find((c) => c.startsWith("multica_csrf="));
+      .find((c) => c.startsWith("mato_csrf="));
     return match ? match.split("=")[1] ?? null : null;
   }
 
@@ -431,7 +431,7 @@ export class ApiClient {
    * 409 (already decided) and creates nothing new.
    *
    * The content templates live in TypeScript (see
-   * @multica/views/onboarding/utils/starter-content-templates) and are
+   * @mato/views/onboarding/utils/starter-content-templates) and are
    * rendered from the user's questionnaire answers before being sent.
    */
   async importStarterContent(

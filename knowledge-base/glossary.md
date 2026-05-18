@@ -5,8 +5,8 @@ aliases:
   - Definitions
   - Key Terms
   - Vocabulary
-  - Multica Glossary
-description: Plain-English definitions for every key term used across the Multica codebase and documentation — architecture concepts, patterns, infrastructure terms, and product-specific vocabulary.
+  - MATO Glossary
+description: Plain-English definitions for every key term used across the MATO codebase and documentation — architecture concepts, patterns, infrastructure terms, and product-specific vocabulary.
 tags:
   - glossary
   - reference
@@ -35,7 +35,7 @@ layer: all
 An append-only audit trail in the `activity_log` table recording who did what in a workspace. Tracks actor type (`member`, `agent`, `system`), action name, and a JSONB `details` payload. Not surfaced in the product UI yet — primarily for debugging and future compliance features.
 
 ### Agent
-In Multica, "agent" has two distinct meanings that are easy to confuse:
+In MATO, "agent" has two distinct meanings that are easy to confuse:
 
 1. **The agent record** (`agent` table) — a named configuration object: name, instructions, model, skills, and runtime settings. Think of this as the *job description*.
 2. **The agent runtime** (`agent_runtime` table) — a concrete execution environment on a developer's machine, registered by the daemon when it detects an installed CLI. Think of this as the *employee showing up to work*.
@@ -43,7 +43,7 @@ In Multica, "agent" has two distinct meanings that are easy to confuse:
 An agent without an active runtime is configured but cannot receive tasks.
 
 ### Agent CLI
-The actual AI coding tool installed on a developer's machine that the daemon spawns as a subprocess. Examples: `claude` (Claude Code), `codex` (OpenAI), `cursor`, `gemini`. Multica supports 11 providers. See [[integrations]].
+The actual AI coding tool installed on a developer's machine that the daemon spawns as a subprocess. Examples: `claude` (Claude Code), `codex` (OpenAI), `cursor`, `gemini`. MATO supports 11 providers. See [[integrations]].
 
 ### Agent_skill (junction table)
 The many-to-many link between agents and skills. When a skill is attached to an agent via `POST /api/agents/{id}/skills/{skillId}`, a row is added here.
@@ -87,7 +87,7 @@ An ongoing conversation between a human user and an agent, outside the context o
 A React component in `packages/core/platform/` that initializes the API client, auth/workspace stores, WebSocket connection, and TanStack Query client. Both the web app and desktop app wrap their roots with `<CoreProvider>`.
 
 ### CSRF (Cross-Site Request Forgery)
-An attack where a malicious website tricks a logged-in user's browser into making state-changing requests. Multica prevents it by requiring an `X-CSRF-Token` header (or `_csrf` form field) on all POST/PATCH/PUT/DELETE requests that use the cookie-based auth session. Bearer token requests are exempt (the token itself proves intent).
+An attack where a malicious website tricks a logged-in user's browser into making state-changing requests. MATO prevents it by requiring an `X-CSRF-Token` header (or `_csrf` form field) on all POST/PATCH/PUT/DELETE requests that use the cookie-based auth session. Bearer token requests are exempt (the token itself proves intent).
 
 ---
 
@@ -116,7 +116,7 @@ A shared React component in `packages/views/layout/` that checks auth state and 
 ## E
 
 ### Electron
-The framework used to build the Multica desktop app (`apps/desktop/`). Combines a Chromium renderer with a Node.js main process. The desktop app shares UI code with the web app via the shared packages (`packages/core/`, `packages/views/`, `packages/ui/`).
+The framework used to build the MATO desktop app (`apps/desktop/`). Combines a Chromium renderer with a Node.js main process. The desktop app shares UI code with the web app via the shared packages (`packages/core/`, `packages/views/`, `packages/ui/`).
 
 ### Events Bus
 An in-process Go channel-based event system (not the WebSocket). Handlers publish events like `task:completed` or `issue:updated` internally; the WebSocket hub subscribes and broadcasts them to connected clients.
@@ -136,7 +136,7 @@ A boolean on `agent_task_queue` that overrides crash resume. Normally, if a task
 ## G
 
 ### GitHub App
-A GitHub integration that Multica uses to receive pull request events and mirror PR state into the `github_pull_request` table. Linked to a workspace via `github_installation`. PRs are auto-linked to issues when the PR title contains the workspace's issue prefix.
+A GitHub integration that MATO uses to receive pull request events and mirror PR state into the `github_pull_request` table. Linked to a workspace via `github_installation`. PRs are auto-linked to issues when the PR title contains the workspace's issue prefix.
 
 ### Glossary File (conventions)
 The naming and translation glossary for the project (Chinese voice guide, i18n terms, file naming rules) lives in `apps/docs/content/docs/developers/conventions.mdx`. The old `packages/views/locales/glossary.md` is now a stub. Always use the docs site version.
@@ -172,7 +172,7 @@ A workspace-level setting (e.g., `"MUL"`) that prefixes issue numbers. Generated
 ## J
 
 ### JWT (JSON Web Token)
-A signed, self-contained authentication token. Multica signs JWTs with `JWT_SECRET` and stores them in an HttpOnly cookie (`multica_auth`). The cookie is automatically sent on every request to the same origin. JWT validation checks the signature and expiry time.
+A signed, self-contained authentication token. MATO signs JWTs with `JWT_SECRET` and stores them in an HttpOnly cookie (`mato_auth`). The cookie is automatically sent on every request to the same origin. JWT validation checks the signature and expiry time.
 
 ---
 
@@ -196,13 +196,13 @@ The isolation strategy where all tenants (workspaces) share one database, with i
 ## M
 
 ### Magic Link (Email Login)
-Multica's authentication mechanism. The user enters their email; the server sends a 6-digit code; the user enters the code. No passwords. The code is hashed (SHA-256) and stored in `verification_code`; only the hash is checked, never the plaintext.
+MATO's authentication mechanism. The user enters their email; the server sends a 6-digit code; the user enters the code. No passwords. The code is hashed (SHA-256) and stored in `verification_code`; only the hash is checked, never the plaintext.
 
 ### `max_concurrent_tasks`
 An `agent` table column controlling how many tasks one agent runs simultaneously. Default is 1. The task claim query enforces this by counting running tasks before claiming another.
 
 ### MCP (Model Context Protocol)
-A protocol for extending AI agents with additional tools (database queries, API calls, file operations). In Multica, each agent can have an `mcp_config` JSONB blob that defines MCP servers. At task execution, the daemon writes this to a temp file and passes it to the agent CLI via `--mcp-config`.
+A protocol for extending AI agents with additional tools (database queries, API calls, file operations). In MATO, each agent can have an `mcp_config` JSONB blob that defines MCP servers. At task execution, the daemon writes this to a temp file and passes it to the agent CLI via `--mcp-config`.
 
 ### Member
 A human user who belongs to a workspace. Stored in the `member` table as a `(workspace_id, user_id, role)` triple. Roles: `owner` > `admin` > `member`.
@@ -244,7 +244,7 @@ A long-lived API token for programmatic access (`mul_` prefix, 40 hex chars). St
 A utility in `packages/core/api/schema.ts` that validates an API response against a Zod schema and returns a fallback value (never throws) on validation failure. Used everywhere API responses are consumed to protect against desktop app version drift.
 
 ### `pg_cron`
-A PostgreSQL extension that runs scheduled SQL jobs inside the database engine. Multica uses it to run `rollup_task_usage_daily()` every 5 minutes. The extension is installed by migration 076 but the cron job itself must be scheduled manually (post-deployment operator task).
+A PostgreSQL extension that runs scheduled SQL jobs inside the database engine. MATO uses it to run `rollup_task_usage_daily()` every 5 minutes. The extension is installed by migration 076 but the cron job itself must be scheduled manually (post-deployment operator task).
 
 ### `pgvector`
 A PostgreSQL extension for storing and querying vector embeddings. It's installed (part of the Docker image) but no table in the current schema has a vector column. The primary use case would be semantic skill retrieval — finding the most relevant skills for a task rather than injecting all attached skills.
@@ -253,7 +253,7 @@ A PostgreSQL extension for storing and querying vector embeddings. It's installe
 A user's personal quick-access shortcut in the sidebar. Stored in `pinned_item`. Can pin issues or projects. Ordered by `position` float for drag-to-reorder.
 
 ### Polymorphic
-A pattern in the Multica schema where a relationship can point to different entity types. Implemented as `{entity}_type TEXT + {entity}_id UUID` column pairs (e.g., `assignee_type + assignee_id`, `author_type + author_id`). No foreign key constraint is possible because PostgreSQL FK must point to a specific table.
+A pattern in the MATO schema where a relationship can point to different entity types. Implemented as `{entity}_type TEXT + {entity}_id UUID` column pairs (e.g., `assignee_type + assignee_id`, `author_type + author_id`). No foreign key constraint is possible because PostgreSQL FK must point to a specific table.
 
 ### Priority
 A field on issues (`urgent`, `high`, `medium`, `low`, `none`) and autopilots. Also an INT column on `agent_task_queue` — higher values are claimed first during task dispatch.
@@ -398,7 +398,7 @@ Headers that identify which workspace an API request targets. The desktop app an
 ## Z
 
 ### Zustand
-The client state management library. In Multica, Zustand stores live in `packages/core/` and hold UI state: filters, selections, view modes, modal open/close, tab layout (desktop), etc. Server data (issues, agents, etc.) never goes into Zustand — it stays in the TanStack Query cache.
+The client state management library. In MATO, Zustand stores live in `packages/core/` and hold UI state: filters, selections, view modes, modal open/close, tab layout (desktop), etc. Server data (issues, agents, etc.) never goes into Zustand — it stays in the TanStack Query cache.
 
 ### Zustand Selector Stability
 A common Zustand footgun: returning a freshly constructed object or array from a selector causes infinite re-renders because React sees a new reference on every render. Fix: either select primitive values separately (`s => s.a`, `s => s.b`) or use the `shallow` comparison from `zustand/shallow`.

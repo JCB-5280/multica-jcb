@@ -14,18 +14,18 @@ import (
 	"github.com/jackc/pgx/v5/pgxpool"
 	"github.com/redis/go-redis/v9"
 
-	"github.com/multica-ai/multica/server/internal/analytics"
-	"github.com/multica-ai/multica/server/internal/auth"
-	"github.com/multica-ai/multica/server/internal/daemonws"
-	"github.com/multica-ai/multica/server/internal/events"
-	"github.com/multica-ai/multica/server/internal/handler"
-	obsmetrics "github.com/multica-ai/multica/server/internal/metrics"
-	"github.com/multica-ai/multica/server/internal/middleware"
-	"github.com/multica-ai/multica/server/internal/realtime"
-	"github.com/multica-ai/multica/server/internal/service"
-	"github.com/multica-ai/multica/server/internal/storage"
-	"github.com/multica-ai/multica/server/internal/util"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
+	"github.com/mato-ai/mato/server/internal/analytics"
+	"github.com/mato-ai/mato/server/internal/auth"
+	"github.com/mato-ai/mato/server/internal/daemonws"
+	"github.com/mato-ai/mato/server/internal/events"
+	"github.com/mato-ai/mato/server/internal/handler"
+	obsmetrics "github.com/mato-ai/mato/server/internal/metrics"
+	"github.com/mato-ai/mato/server/internal/middleware"
+	"github.com/mato-ai/mato/server/internal/realtime"
+	"github.com/mato-ai/mato/server/internal/service"
+	"github.com/mato-ai/mato/server/internal/storage"
+	"github.com/mato-ai/mato/server/internal/util"
+	db "github.com/mato-ai/mato/server/pkg/db/generated"
 )
 
 var defaultOrigins = []string{
@@ -214,7 +214,7 @@ func NewRouterWithOptions(pool *pgxpool.Pool, hub *realtime.Hub, bus *events.Bus
 	// Public API
 	r.Get("/api/config", h.GetConfig)
 
-	// GitHub App webhook (no Multica auth — requests are authenticated via
+	// GitHub App webhook (no MATO auth — requests are authenticated via
 	// HMAC-SHA256 signature in the handler) and post-install setup callback.
 	r.Post("/api/webhooks/github", h.HandleGitHubWebhook)
 	r.Get("/api/github/setup", h.GitHubSetupCallback)

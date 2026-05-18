@@ -6,10 +6,10 @@ import (
 	"log/slog"
 	"strings"
 
-	"github.com/multica-ai/multica/server/internal/events"
-	"github.com/multica-ai/multica/server/internal/handler"
-	"github.com/multica-ai/multica/server/internal/realtime"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/mato-ai/mato/server/internal/events"
+	"github.com/mato-ai/mato/server/internal/handler"
+	"github.com/mato-ai/mato/server/internal/realtime"
+	"github.com/mato-ai/mato/server/pkg/protocol"
 )
 
 // registerListeners wires up event bus listeners for WS broadcasting.

@@ -2,7 +2,7 @@
 
 ## Overview
 
-In Multica, "agent" has two related but distinct meanings:
+In MATO, "agent" has two related but distinct meanings:
 
 1. **The agent record** — a named configuration stored in the database (name, instructions, model, skills, etc.). Think of it as a job description or employee profile.
 2. **The agent runtime** — a concrete execution environment running on some machine (the local daemon). Think of it as the actual employee showing up to work.
@@ -30,7 +30,7 @@ An agent without a runtime is configured but idle. An agent with an active runti
 ┌──────────────────────────────────────────────────────────────────────┐
 │  RUNTIME REGISTRATION PHASE (daemon running on user's machine)       │
 │                                                                      │
-│  multica daemon starts on developer's laptop                         │
+│  mato daemon starts on developer's laptop                         │
 │    → detects installed agent CLIs (claude, codex, cursor, etc.)     │
 │    → POST /api/workspaces/{slug}/daemon/register                     │
 │    → receives daemon_token (mdt_...) scoped to this workspace        │

@@ -5,7 +5,7 @@
  * (react-markdown link component), and link-hover-card (Open button).
  */
 
-import { isGlobalPath } from "@multica/core/paths";
+import { isGlobalPath } from "@mato/core/paths";
 
 /**
  * Top-level workspace-scoped routes. Used to detect "/{route}/..." paths that
@@ -33,7 +33,7 @@ const WORKSPACE_ROUTE_SEGMENTS = new Set([
 ]);
 
 /**
- * Open a link — internal paths dispatch multica:navigate, external open new tab.
+ * Open a link — internal paths dispatch mato:navigate, external open new tab.
  *
  * If `currentSlug` is provided and `href` is a workspace-scoped path lacking a
  * slug (e.g. "/issues/abc" instead of "/{slug}/issues/abc"), the slug is
@@ -54,7 +54,7 @@ export function openLink(href: string, currentSlug?: string | null): void {
       // the user wrote what they meant.
     }
     window.dispatchEvent(
-      new CustomEvent("multica:navigate", { detail: { path } }),
+      new CustomEvent("mato:navigate", { detail: { path } }),
     );
   } else {
     window.open(href, "_blank", "noopener,noreferrer");

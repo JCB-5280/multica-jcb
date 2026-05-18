@@ -1,11 +1,11 @@
 ---
 title: Self-host quickstart
-description: Run Multica on your own server or machine with Docker. Takes about 10 minutes.
+description: Run MATO on your own server or machine with Docker. Takes about 10 minutes.
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 
-This page walks you through running the Multica **server** (backend + frontend + PostgreSQL) on your own machine or server with Docker. When you're done, your data is fully under your control — including [workspaces](/workspaces), [issues](/issues), [comments](/comments), and [agent](/agents) configuration.
+This page walks you through running the MATO **server** (backend + frontend + PostgreSQL) on your own machine or server with Docker. When you're done, your data is fully under your control — including [workspaces](/workspaces), [issues](/issues), [comments](/comments), and [agent](/agents) configuration.
 
 Agent **execution** still relies on the [daemon](/daemon-runtimes) you run locally plus the [AI coding tools](/providers) installed on that machine — exactly like Cloud. Self-host swaps out the server layer, not the execution layer.
 
@@ -19,15 +19,15 @@ Agent **execution** still relies on the [daemon](/daemon-runtimes) you run local
 ## 1. Pull the project and start the backend
 
 ```bash
-git clone https://github.com/multica-ai/multica.git
-cd multica
+git clone https://github.com/mato-ai/mato.git
+cd mato
 make selfhost
 ```
 
 `make selfhost` will:
 
 1. Generate a `.env` from `.env.example` if missing, with a **random JWT_SECRET**
-2. Pull the official Docker images (PostgreSQL, Multica backend, Multica frontend)
+2. Pull the official Docker images (PostgreSQL, MATO backend, MATO frontend)
 3. Bring up every service using `docker-compose.selfhost.yml`
 4. Wait until the backend's `/health` endpoint is ready
 
@@ -48,11 +48,11 @@ Once it's up:
 ## 2. Important: keep production safety on
 
 <Callout type="warning">
-**`docker-compose.selfhost.yml` sets `APP_ENV` to `production` by default** and leaves `MULTICA_DEV_VERIFICATION_CODE` empty, so there is no fixed code on public instances.
+**`docker-compose.selfhost.yml` sets `APP_ENV` to `production` by default** and leaves `MATO_DEV_VERIFICATION_CODE` empty, so there is no fixed code on public instances.
 
-Only set `MULTICA_DEV_VERIFICATION_CODE` for local or private test automation. If a fixed code is enabled while `APP_ENV` is non-production, anyone who can request a code can sign in with that fixed value. See [Auth setup → Fixed local testing codes](/auth-setup#fixed-local-testing-codes).
+Only set `MATO_DEV_VERIFICATION_CODE` for local or private test automation. If a fixed code is enabled while `APP_ENV` is non-production, anyone who can request a code can sign in with that fixed value. See [Auth setup → Fixed local testing codes](/auth-setup#fixed-local-testing-codes).
 
-Before any public deployment, make sure `.env` has `APP_ENV=production` and `MULTICA_DEV_VERIFICATION_CODE` is empty.
+Before any public deployment, make sure `.env` has `APP_ENV=production` and `MATO_DEV_VERIFICATION_CODE` is empty.
 </Callout>
 
 ## 3. Configure the email service (optional but recommended)
@@ -79,7 +79,7 @@ Use this when the deployment can't reach `api.resend.com`, or you already have a
 ```bash
 SMTP_HOST=smtp.internal.example.com
 SMTP_PORT=587                  # default 25; use 587 for STARTTLS submission
-SMTP_USERNAME=multica          # leave empty for unauthenticated relay
+SMTP_USERNAME=mato          # leave empty for unauthenticated relay
 SMTP_PASSWORD=...
 RESEND_FROM_EMAIL=noreply@yourdomain.com  # reused as the From: header
 ```
@@ -94,21 +94,21 @@ Open [http://localhost:3000](http://localhost:3000):
 
 - Enter your email
 - Grab the verification code from your configured email backend (Resend or SMTP relay); if neither is configured, copy it from the server container stdout — look for the `[DEV] Verification code` line
-- Do not use `888888` unless you explicitly set `MULTICA_DEV_VERIFICATION_CODE=888888` on a non-production private instance
+- Do not use `888888` unless you explicitly set `MATO_DEV_VERIFICATION_CODE=888888` on a non-production private instance
 - Log in and create your first workspace
 
 ## 5. Point the CLI at your own server
 
-The CLI install is the same as in [Cloud quickstart → 2. Install the CLI](/cloud-quickstart#2-install-the-multica-cli) — Homebrew / script / PowerShell, pick one. Once installed, **use the self-host variant of the setup command**:
+The CLI install is the same as in [Cloud quickstart → 2. Install the CLI](/cloud-quickstart#2-install-the-mato-cli) — Homebrew / script / PowerShell, pick one. Once installed, **use the self-host variant of the setup command**:
 
 ```bash
-multica setup self-host --server-url http://<your-server-address>:8080 --app-url http://<your-server-address>:3000
+mato setup self-host --server-url http://<your-server-address>:8080 --app-url http://<your-server-address>:3000
 ```
 
 If you're running everything on one local machine:
 
 ```bash
-multica setup self-host
+mato setup self-host
 ```
 
 That defaults to `http://localhost:8080` (backend) and `http://localhost:3000` (frontend).
@@ -131,4 +131,4 @@ Same flow as Cloud — see [Cloud quickstart → Steps 5-6](/cloud-quickstart#5-
 - [Auth setup](/auth-setup) — Resend / OAuth / signup allowlist in detail
 - [GitHub integration](/github-integration) — connect a GitHub App so PRs auto-link to issues and merging closes them
 - [Troubleshooting](/troubleshooting) — start here when things go wrong
-- [Desktop app](/desktop-app) — optional Desktop setup via `~/.multica/desktop.json`; the web frontend + CLI remains the quickest self-host path
+- [Desktop app](/desktop-app) — optional Desktop setup via `~/.mato/desktop.json`; the web frontend + CLI remains the quickest self-host path

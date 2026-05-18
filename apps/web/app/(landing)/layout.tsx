@@ -1,6 +1,6 @@
 import { cookies, headers } from "next/headers";
 import { Instrument_Serif, Noto_Serif_SC } from "next/font/google";
-import { LOCALE_COOKIE } from "@multica/core/i18n";
+import { LOCALE_COOKIE } from "@mato/core/i18n";
 import { LocaleProvider } from "@/features/landing/i18n";
 import type { Locale } from "@/features/landing/i18n";
 
@@ -21,13 +21,13 @@ const jsonLd = {
   "@graph": [
     {
       "@type": "Organization",
-      name: "Multica",
-      url: "https://www.multica.ai",
-      sameAs: ["https://github.com/multica-ai/multica"],
+      name: "MATO",
+      url: "https://www.mato.ai",
+      sameAs: ["https://github.com/mato-ai/mato"],
     },
     {
       "@type": "SoftwareApplication",
-      name: "Multica",
+      name: "MATO",
       applicationCategory: "ProjectManagement",
       operatingSystem: "Web",
       description:

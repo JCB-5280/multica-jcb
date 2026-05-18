@@ -5,7 +5,7 @@ description: Let agents start work on a cron schedule — or trigger once manual
 
 import { Callout } from "fumadocs-ui/components/callout";
 
-Autopilots let [agents](/agents) **start work automatically on a schedule** — configure a cron expression and a timezone, and Multica dispatches a [`task`](/tasks) on its own, without you triggering anything. It fits periodic checks, recurring reports, and overnight cleanup jobs — the "standing order" shape of work. Compared to the other three trigger paths ([assigning](/assigning-issues), [@-mention](/mentioning-agents), and [chat](/chat), where you are the one kicking things off), the core difference with Autopilots is that they are **time-driven**.
+Autopilots let [agents](/agents) **start work automatically on a schedule** — configure a cron expression and a timezone, and MATO dispatches a [`task`](/tasks) on its own, without you triggering anything. It fits periodic checks, recurring reports, and overnight cleanup jobs — the "standing order" shape of work. Compared to the other three trigger paths ([assigning](/assigning-issues), [@-mention](/mentioning-agents), and [chat](/chat), where you are the one kicking things off), the core difference with Autopilots is that they are **time-driven**.
 
 ## Configure an autopilot
 
@@ -35,7 +35,7 @@ A few examples:
 - `*/30 * * * *`, `UTC` — every 30 minutes
 - `0 3 * * *`, `UTC` — every day at 3 AM UTC
 
-The Multica server scans for due triggers every **30 seconds** — **the actual fire time can lag by up to 30 seconds**, not down to the second. If the server is restarted across a fire time, it catches up missed triggers on startup (nothing is lost, but they fire right away).
+The MATO server scans for due triggers every **30 seconds** — **the actual fire time can lag by up to 30 seconds**, not down to the second. If the server is restarted across a fire time, it catches up missed triggers on startup (nothing is lost, but they fire right away).
 
 ## Trigger once manually
 
@@ -45,7 +45,7 @@ To avoid waiting for cron while debugging an autopilot, trigger it manually:
 - CLI:
 
 ```bash
-multica autopilot trigger <autopilot-id>
+mato autopilot trigger <autopilot-id>
 ```
 
 A manual trigger goes through the exact same execution flow as a `schedule` trigger — only the `source` field on the run record is marked `manual`.

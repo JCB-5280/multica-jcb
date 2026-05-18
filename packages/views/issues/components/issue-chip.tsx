@@ -1,8 +1,8 @@
 "use client";
 
 import { useQuery } from "@tanstack/react-query";
-import { issueListOptions, issueDetailOptions } from "@multica/core/issues/queries";
-import { useWorkspaceId } from "@multica/core/hooks";
+import { issueListOptions, issueDetailOptions } from "@mato/core/issues/queries";
+import { useWorkspaceId } from "@mato/core/hooks";
 import { StatusIcon } from "./status-icon";
 
 /**

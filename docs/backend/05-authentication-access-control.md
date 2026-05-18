@@ -2,7 +2,7 @@
 
 ## Authentication Methods
 
-Multica supports three authentication methods:
+MATO supports three authentication methods:
 
 | Method | Token Format | Used By | Lifetime |
 |--------|-------------|---------|---------|
@@ -14,7 +14,7 @@ Multica supports three authentication methods:
 
 ## Email Magic-Link Flow
 
-Multica does not use passwords. Authentication is via a 6-digit verification code sent to the user's email.
+MATO does not use passwords. Authentication is via a 6-digit verification code sent to the user's email.
 
 **Step 1: Request a code**
 ```
@@ -25,7 +25,7 @@ POST /api/auth/login
 - Stores a hashed version with expiry in the `verification_code` table
 - Sends the code via Resend API (or SMTP if configured)
 - If neither email backend is configured, prints the code to the server log (development only)
-- If `MULTICA_DEV_VERIFICATION_CODE` env var is set (non-production only), that static value is accepted as a valid code
+- If `MATO_DEV_VERIFICATION_CODE` env var is set (non-production only), that static value is accepted as a valid code
 
 **Step 2: Verify the code**
 ```
@@ -37,7 +37,7 @@ POST /api/auth/verify
 - If valid:
   - Creates user account if this is their first login (`INSERT OR IGNORE`)
   - Issues a JWT signed with `JWT_SECRET` env var
-  - Sets the JWT as an HttpOnly cookie `multica_auth`
+  - Sets the JWT as an HttpOnly cookie `mato_auth`
   - Also returns the JWT in the response body (for non-cookie clients)
   - Deletes the verification_code row
 
@@ -104,7 +104,7 @@ The middleware chain (`internal/middleware/auth.go`) runs before every protected
 func Auth(queries *db.Queries, patCache *auth.PATCache) func(http.Handler) http.Handler {
     return func(next http.Handler) http.Handler {
         return http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-            // 1. Extract token from Authorization header OR multica_auth cookie
+            // 1. Extract token from Authorization header OR mato_auth cookie
             tokenString, fromCookie := extractToken(r)
             
             // 2. If cookie auth, validate CSRF for state-changing methods
@@ -204,7 +204,7 @@ WebSocket connections cannot set custom headers in the browser, so the authentic
 
 **Cookie mode (web browser):**
 1. Client connects to `GET /api/ws?workspace_slug=myworkspace`
-2. Browser automatically sends `multica_auth` cookie with the upgrade request
+2. Browser automatically sends `mato_auth` cookie with the upgrade request
 3. Server reads and validates the cookie
 4. No auth message needed — server immediately responds with `auth_ack`
 

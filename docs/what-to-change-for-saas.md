@@ -1,12 +1,12 @@
 # What to Change for SaaS
 
-This document identifies every part of the Multica codebase that assumes self-hosting or single-tenant usage, and flags what would need to change to support a multi-tenant hosted SaaS with user accounts, billing, tenant data isolation, and all the operational concerns that come with running a commercial product.
+This document identifies every part of the MATO codebase that assumes self-hosting or single-tenant usage, and flags what would need to change to support a multi-tenant hosted SaaS with user accounts, billing, tenant data isolation, and all the operational concerns that come with running a commercial product.
 
 ---
 
 ## Executive Summary
 
-Multica's architecture is already multi-tenant in the database sense — workspaces are logically isolated and all queries filter by `workspace_id`. The core data model does not need to change.
+MATO's architecture is already multi-tenant in the database sense — workspaces are logically isolated and all queries filter by `workspace_id`. The core data model does not need to change.
 
 What **does** need to change:
 
@@ -107,11 +107,11 @@ You need to add:
 
 ### JWT Secret Default
 
-**Critical:** The server logs a warning but still starts if `JWT_SECRET` is not set, using `"multica-dev-secret-change-in-production"`:
+**Critical:** The server logs a warning but still starts if `JWT_SECRET` is not set, using `"mato-dev-secret-change-in-production"`:
 
 ```go
 // server/internal/auth/jwt.go
-const defaultJWTSecret = "multica-dev-secret-change-in-production"
+const defaultJWTSecret = "mato-dev-secret-change-in-production"
 ```
 
 For SaaS, this default must not exist. The server should refuse to start if `JWT_SECRET` is missing, and the startup check should be a hard failure, not a warning.
@@ -283,7 +283,7 @@ Not present in the codebase. For SaaS, you need:
 
 ### The fundamental tension
 
-Multica's current model is that AI agents run locally on the user's machine (the daemon). This is great for self-hosted/developer use cases but creates friction for SaaS:
+MATO's current model is that AI agents run locally on the user's machine (the daemon). This is great for self-hosted/developer use cases but creates friction for SaaS:
 
 - Users have to install and run a daemon process
 - Daemonless SaaS (agents running in the cloud) would be far simpler UX

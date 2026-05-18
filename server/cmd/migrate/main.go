@@ -7,8 +7,8 @@ import (
 	"os"
 
 	"github.com/jackc/pgx/v5/pgxpool"
-	"github.com/multica-ai/multica/server/internal/logger"
-	"github.com/multica-ai/multica/server/internal/migrations"
+	"github.com/mato-ai/mato/server/internal/logger"
+	"github.com/mato-ai/mato/server/internal/migrations"
 )
 
 func main() {
@@ -27,7 +27,7 @@ func main() {
 
 	dbURL := os.Getenv("DATABASE_URL")
 	if dbURL == "" {
-		dbURL = "postgres://multica:multica@localhost:5432/multica?sslmode=disable"
+		dbURL = "postgres://mato:mato@localhost:5432/mato?sslmode=disable"
 	}
 
 	ctx := context.Background()

@@ -8,28 +8,28 @@
 # Frontend: http://localhost:3000
 # Backend:  http://localhost:8080 (also used by CLI/daemon)
 
-name: multica
+name: mato
 
 services:
   postgres:
     image: pgvector/pgvector:pg17
     environment:
-      POSTGRES_DB: ${POSTGRES_DB:-multica}
-      POSTGRES_USER: ${POSTGRES_USER:-multica}
-      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-multica}
+      POSTGRES_DB: ${POSTGRES_DB:-mato}
+      POSTGRES_USER: ${POSTGRES_USER:-mato}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-mato}
     ports:
       - "${POSTGRES_PORT:-5432}:5432"
     volumes:
       - pgdata:/var/lib/postgresql/data
     restart: unless-stopped
     healthcheck:
-      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-multica} -d ${POSTGRES_DB:-multica}"]
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-mato} -d ${POSTGRES_DB:-mato}"]
       interval: 5s
       timeout: 5s
       retries: 5
 
   backend:
-    image: ${MULTICA_BACKEND_IMAGE:-ghcr.io/multica-ai/multica-backend}:${MULTICA_IMAGE_TAG:-latest}
+    image: ${MATO_BACKEND_IMAGE:-ghcr.io/mato-ai/mato-backend}:${MATO_IMAGE_TAG:-latest}
     depends_on:
       postgres:
         condition: service_healthy
@@ -38,14 +38,14 @@ services:
     volumes:
       - backend_uploads:/app/data/uploads
     environment:
-      DATABASE_URL: postgres://${POSTGRES_USER:-multica}:${POSTGRES_PASSWORD:-multica}@postgres:5432/${POSTGRES_DB:-multica}?sslmode=disable
+      DATABASE_URL: postgres://${POSTGRES_USER:-mato}:${POSTGRES_PASSWORD:-mato}@postgres:5432/${POSTGRES_DB:-mato}?sslmode=disable
       PORT: "8080"
       METRICS_ADDR: ${METRICS_ADDR:-}
       JWT_SECRET: ${JWT_SECRET:-change-me-in-production}
       FRONTEND_ORIGIN: ${FRONTEND_ORIGIN:-http://localhost:3000}
       CORS_ALLOWED_ORIGINS: ${CORS_ALLOWED_ORIGINS:-}
       RESEND_API_KEY: ${RESEND_API_KEY:-}
-      RESEND_FROM_EMAIL: ${RESEND_FROM_EMAIL:-noreply@multica.ai}
+      RESEND_FROM_EMAIL: ${RESEND_FROM_EMAIL:-noreply@mato.ai}
       SMTP_HOST: ${SMTP_HOST:-}
       SMTP_PORT: ${SMTP_PORT:-25}
       SMTP_USERNAME: ${SMTP_USERNAME:-}
@@ -61,8 +61,8 @@ services:
       CLOUDFRONT_PRIVATE_KEY: ${CLOUDFRONT_PRIVATE_KEY:-}
       COOKIE_DOMAIN: ${COOKIE_DOMAIN:-}
       APP_ENV: ${APP_ENV:-production}
-      MULTICA_DEV_VERIFICATION_CODE: ${MULTICA_DEV_VERIFICATION_CODE:-}
-      MULTICA_APP_URL: ${MULTICA_APP_URL:-http://localhost:3000}
+      MATO_DEV_VERIFICATION_CODE: ${MATO_DEV_VERIFICATION_CODE:-}
+      MATO_APP_URL: ${MATO_APP_URL:-http://localhost:3000}
       ALLOW_SIGNUP: ${ALLOW_SIGNUP:-true}
       ALLOWED_EMAILS: ${ALLOWED_EMAILS:-}
       ALLOWED_EMAIL_DOMAINS: ${ALLOWED_EMAIL_DOMAINS:-}
@@ -71,7 +71,7 @@ services:
     restart: unless-stopped
 
   frontend:
-    image: ${MULTICA_WEB_IMAGE:-ghcr.io/multica-ai/multica-web}:${MULTICA_IMAGE_TAG:-latest}
+    image: ${MATO_WEB_IMAGE:-ghcr.io/mato-ai/mato-web}:${MATO_IMAGE_TAG:-latest}
     depends_on:
       - backend
     ports:

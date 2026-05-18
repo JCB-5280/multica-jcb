@@ -11,7 +11,7 @@ import {
   ChartTooltip,
   ChartTooltipContent,
   type ChartConfig,
-} from "@multica/ui/components/ui/chart";
+} from "@mato/ui/components/ui/chart";
 
 // Hour-of-day cost. The "WHEN" tab in the runtime detail uses this to show
 // "during what hours of the day did this runtime spend money", which is

@@ -12,9 +12,9 @@ import (
 )
 
 func TestPatternsFromEnv_DefaultsWhenUnset(t *testing.T) {
-	t.Setenv("MULTICA_GC_ARTIFACT_PATTERNS", "")
+	t.Setenv("MATO_GC_ARTIFACT_PATTERNS", "")
 	defaults := []string{"node_modules", ".next", ".turbo"}
-	got := patternsFromEnv("MULTICA_GC_ARTIFACT_PATTERNS", defaults)
+	got := patternsFromEnv("MATO_GC_ARTIFACT_PATTERNS", defaults)
 	if !reflect.DeepEqual(got, defaults) {
 		t.Fatalf("expected defaults %v, got %v", defaults, got)
 	}
@@ -26,8 +26,8 @@ func TestPatternsFromEnv_DefaultsWhenUnset(t *testing.T) {
 }
 
 func TestPatternsFromEnv_DropsSeparatorBearingEntries(t *testing.T) {
-	t.Setenv("MULTICA_GC_ARTIFACT_PATTERNS", "node_modules, .next ,foo/bar, ../etc, ,target")
-	got := patternsFromEnv("MULTICA_GC_ARTIFACT_PATTERNS", nil)
+	t.Setenv("MATO_GC_ARTIFACT_PATTERNS", "node_modules, .next ,foo/bar, ../etc, ,target")
+	got := patternsFromEnv("MATO_GC_ARTIFACT_PATTERNS", nil)
 	want := []string{"node_modules", ".next", "target"}
 	if !reflect.DeepEqual(got, want) {
 		t.Fatalf("expected %v, got %v", want, got)
@@ -301,7 +301,7 @@ func TestResolveAgentsViaLoginShell_HardTimeoutOnBackgroundedStdout(t *testing.T
 
 // TestLoadConfig_SkipsLoginShellWhenLookPathSucceeds proves the laziness
 // requirement: if every agent CLI the operator cares about is already
-// resolvable via the daemon's PATH (or pinned to an explicit MULTICA_*_PATH),
+// resolvable via the daemon's PATH (or pinned to an explicit MATO_*_PATH),
 // the shell-fallback path must not run. We assert this by pointing SHELL at
 // a sentinel script that touches a marker file when invoked.
 func TestLoadConfig_SkipsLoginShellWhenLookPathSucceeds(t *testing.T) {
@@ -334,7 +334,7 @@ func TestLoadConfig_SkipsLoginShellWhenLookPathSucceeds(t *testing.T) {
 	// the fallback — except `claude` already resolves, and the user hasn't
 	// configured anything else, so the probe loop should be satisfied
 	// after the first probe alone.
-	t.Setenv("MULTICA_DAEMON_ID", "11111111-1111-1111-1111-111111111111")
+	t.Setenv("MATO_DAEMON_ID", "11111111-1111-1111-1111-111111111111")
 
 	if _, err := LoadConfig(Overrides{
 		ServerURL:      "http://localhost:0",

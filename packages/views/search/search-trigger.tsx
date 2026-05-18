@@ -1,8 +1,8 @@
 "use client";
 
 import { Search } from "lucide-react";
-import { SidebarMenuButton } from "@multica/ui/components/ui/sidebar";
-import { isMac, formatShortcut, modKey } from "@multica/core/platform";
+import { SidebarMenuButton } from "@mato/ui/components/ui/sidebar";
+import { isMac, formatShortcut, modKey } from "@mato/core/platform";
 import { useSearchStore } from "./search-store";
 import { useT } from "../i18n";
 

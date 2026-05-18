@@ -5,9 +5,9 @@ import (
 	"net/http/httptest"
 	"testing"
 
-	"github.com/multica-ai/multica/server/internal/analytics"
-	"github.com/multica-ai/multica/server/internal/events"
-	"github.com/multica-ai/multica/server/internal/realtime"
+	"github.com/mato-ai/mato/server/internal/analytics"
+	"github.com/mato-ai/mato/server/internal/events"
+	"github.com/mato-ai/mato/server/internal/realtime"
 )
 
 func TestMainRouterDoesNotExposePrometheusMetrics(t *testing.T) {

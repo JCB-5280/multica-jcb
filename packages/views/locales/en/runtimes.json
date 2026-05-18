@@ -104,7 +104,7 @@
   "queued_other": "{{count}} queued",
   "connect": {
     "title": "Connect a remote machine",
-    "description": "Run these commands on your remote machine (e.g. AWS EC2) to install the Multica CLI and register it as a runtime.",
+    "description": "Run these commands on your remote machine (e.g. AWS EC2) to install the MATO CLI and register it as a runtime.",
     "step1": "1. Install the CLI",
     "step2": "2. Configure",
     "step3": "3. Login with a personal access token",
@@ -137,7 +137,7 @@
     "cli_version_label": "CLI Version:",
     "version_unknown": "unknown",
     "managed_by_desktop": "Managed by Desktop",
-    "managed_by_desktop_title": "The CLI binary is managed by Multica Desktop — update Desktop to upgrade the CLI.",
+    "managed_by_desktop_title": "The CLI binary is managed by MATO Desktop — update Desktop to upgrade the CLI.",
     "latest": "Latest",
     "available": "available",
     "action": "Update",

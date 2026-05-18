@@ -34,7 +34,7 @@ const BUNDLED_ICON_PATH = join(__dirname, "../../resources/icon.png").replace(
 // macOS/Linux GUI launches inherit a minimal PATH from launchd that omits
 // the user's shell config (~/.zshrc, Homebrew, nvm, ~/.local/bin, etc.).
 // Run the user's login shell once to recover the real PATH so the bundled
-// multica CLI can find agent binaries like claude/codex/opencode. Must run
+// mato CLI can find agent binaries like claude/codex/opencode. Must run
 // before any child_process.spawn / execFile call in the main process —
 // ES module imports are hoisted, so this block executes before createWindow
 // or any daemon-manager spawn.
@@ -51,7 +51,7 @@ if (process.platform !== "win32") {
   process.env.PATH = `${fallbackPaths.join(":")}:${process.env.PATH ?? ""}`;
 }
 
-const PROTOCOL = "multica";
+const PROTOCOL = "mato";
 
 let mainWindow: BrowserWindow | null = null;
 let runtimeConfigResult: RuntimeConfigResult = {
@@ -66,7 +66,7 @@ function handleDeepLink(url: string): void {
     const parsed = new URL(url);
     if (parsed.protocol !== `${PROTOCOL}:`) return;
 
-    // multica://auth/callback?token=<jwt>
+    // mato://auth/callback?token=<jwt>
     if (parsed.hostname === "auth" && parsed.pathname === "/callback") {
       const token = parsed.searchParams.get("token");
       if (token && mainWindow) {
@@ -75,7 +75,7 @@ function handleDeepLink(url: string): void {
       return;
     }
 
-    // multica://invite/<invitationId>
+    // mato://invite/<invitationId>
     // Dispatched from the web invite page when the user chooses "Open in
     // desktop app". The renderer opens the invite overlay — no tab, no
     // route persistence, so deep-linking the same invite twice stays safe.
@@ -154,7 +154,7 @@ function createWindow(): void {
       // the PDF viewer in a dedicated BrowserView with `plugins: true` scoped
       // to that view, keeping the main renderer plugin-free.
       plugins: true,
-      additionalArguments: [`--multica-locale=${systemLocale}`],
+      additionalArguments: [`--mato-locale=${systemLocale}`],
     },
   });
 
@@ -225,10 +225,10 @@ function createWindow(): void {
 // without fighting for the shared single-instance lock. The suffix is
 // appended to the app name + userData path, so each worktree gets its own
 // lock file. Default (no env var) keeps behavior unchanged — the common
-// single-worktree case still lands at "Multica Canary".
+// single-worktree case still lands at "MATO Canary".
 const DEV_APP_NAME = process.env.DESKTOP_APP_SUFFIX
-  ? `Multica Canary ${process.env.DESKTOP_APP_SUFFIX}`
-  : "Multica Canary";
+  ? `MATO Canary ${process.env.DESKTOP_APP_SUFFIX}`
+  : "MATO Canary";
 
 if (is.dev) {
   app.setName(DEV_APP_NAME);
@@ -237,10 +237,10 @@ if (is.dev) {
   // Pin the production app name in code. Electron's Linux WM_CLASS is set
   // from app.getName() when the first BrowserWindow is realized; the
   // packaged ASAR's package.json `productName` already steers app.getName()
-  // to "Multica", but anchoring it here makes WM_CLASS ↔ StartupWMClass
+  // to "MATO", but anchoring it here makes WM_CLASS ↔ StartupWMClass
   // (declared in electron-builder.yml) survive a regression in
   // productName / the build pipeline. Must run before requestSingleInstanceLock().
-  app.setName("Multica");
+  app.setName("MATO");
 }
 
 // --- Protocol registration -----------------------------------------------
@@ -293,7 +293,7 @@ if (!gotTheLock) {
     });
 
     electronApp.setAppUserModelId(
-      is.dev ? "ai.multica.desktop.dev" : "ai.multica.desktop",
+      is.dev ? "ai.mato.desktop.dev" : "ai.mato.desktop",
     );
 
     // macOS: replace the default Electron dock icon with the bundled logo

@@ -3,7 +3,7 @@ import {
   type RenderOptions,
   type RenderResult,
 } from "@testing-library/react";
-import { I18nProvider } from "@multica/core/i18n/react";
+import { I18nProvider } from "@mato/core/i18n/react";
 import type { ReactElement, ReactNode } from "react";
 import { RESOURCES } from "../locales";
 

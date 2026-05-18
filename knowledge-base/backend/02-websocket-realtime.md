@@ -34,7 +34,7 @@ layer: backend
 ## Two WebSocket Subsystems
 
 > [!IMPORTANT] Do Not Confuse These Two
-> Multica has **two completely separate** WebSocket subsystems with different endpoints, auth, and protocols:
+> MATO has **two completely separate** WebSocket subsystems with different endpoints, auth, and protocols:
 > 1. **Realtime Hub** — pushes events to **browsers** and the desktop app (`/api/ws`)
 > 2. **Daemon Hub** — communicates with **local agent daemons** (`/api/daemon/ws`)
 

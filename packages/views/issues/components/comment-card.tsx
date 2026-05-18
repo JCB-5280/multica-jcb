@@ -3,16 +3,16 @@
 import { memo, useCallback, useRef, useState } from "react";
 import { CheckCircle2, ChevronRight, Copy, Download, Eye, FileText, MoreHorizontal, Pencil, RotateCcw, Trash2 } from "lucide-react";
 import { toast } from "sonner";
-import { Card } from "@multica/ui/components/ui/card";
-import { Button } from "@multica/ui/components/ui/button";
+import { Card } from "@mato/ui/components/ui/card";
+import { Button } from "@mato/ui/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
   DropdownMenuSeparator,
-} from "@multica/ui/components/ui/dropdown-menu";
-import { Tooltip, TooltipTrigger, TooltipContent } from "@multica/ui/components/ui/tooltip";
+} from "@mato/ui/components/ui/dropdown-menu";
+import { Tooltip, TooltipTrigger, TooltipContent } from "@mato/ui/components/ui/tooltip";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -22,21 +22,21 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "@multica/ui/components/ui/alert-dialog";
-import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@multica/ui/components/ui/collapsible";
+} from "@mato/ui/components/ui/alert-dialog";
+import { Collapsible, CollapsibleTrigger, CollapsibleContent } from "@mato/ui/components/ui/collapsible";
 import { ActorAvatar } from "../../common/actor-avatar";
-import { ReactionBar } from "@multica/ui/components/common/reaction-bar";
-import { QuickEmojiPicker } from "@multica/ui/components/common/quick-emoji-picker";
-import { cn } from "@multica/ui/lib/utils";
-import { useActorName } from "@multica/core/workspace/hooks";
-import { timeAgo } from "@multica/core/utils";
+import { ReactionBar } from "@mato/ui/components/common/reaction-bar";
+import { QuickEmojiPicker } from "@mato/ui/components/common/quick-emoji-picker";
+import { cn } from "@mato/ui/lib/utils";
+import { useActorName } from "@mato/core/workspace/hooks";
+import { timeAgo } from "@mato/core/utils";
 import { ContentEditor, type ContentEditorRef, copyMarkdown, ReadonlyContent, useFileDropZone, FileDropOverlay, useDownloadAttachment, useAttachmentPreview, isPreviewable } from "../../editor";
-import { FileUploadButton } from "@multica/ui/components/common/file-upload-button";
-import { useFileUpload } from "@multica/core/hooks/use-file-upload";
-import { api } from "@multica/core/api";
+import { FileUploadButton } from "@mato/ui/components/common/file-upload-button";
+import { useFileUpload } from "@mato/core/hooks/use-file-upload";
+import { api } from "@mato/core/api";
 import { ReplyInput } from "./reply-input";
-import type { TimelineEntry, Attachment } from "@multica/core/types";
-import { useCommentCollapseStore, useCommentDraftStore } from "@multica/core/issues/stores";
+import type { TimelineEntry, Attachment } from "@mato/core/types";
+import { useCommentCollapseStore, useCommentDraftStore } from "@mato/core/issues/stores";
 import { useT } from "../../i18n";
 
 // ---------------------------------------------------------------------------

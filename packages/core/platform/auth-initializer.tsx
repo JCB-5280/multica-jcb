@@ -100,7 +100,7 @@ export function AuthInitializer({
     }
 
     // Token mode: read from localStorage (Electron / legacy).
-    const token = storage.getItem("multica_token");
+    const token = storage.getItem("mato_token");
     if (!token) {
       onLogout?.();
       useAuthStore.setState({ isLoading: false });
@@ -120,7 +120,7 @@ export function AuthInitializer({
         logger.error("auth init failed", err);
         api.setToken(null);
         setCurrentWorkspace(null, null);
-        storage.removeItem("multica_token");
+        storage.removeItem("mato_token");
         onAuthFailure();
       });
   }, []);

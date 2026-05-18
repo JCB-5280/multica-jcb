@@ -6,9 +6,9 @@ import (
 	"time"
 
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/multica-ai/multica/server/internal/service"
-	"github.com/multica-ai/multica/server/internal/util"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
+	"github.com/mato-ai/mato/server/internal/service"
+	"github.com/mato-ai/mato/server/internal/util"
+	db "github.com/mato-ai/mato/server/pkg/db/generated"
 )
 
 const schedulerInterval = 30 * time.Second

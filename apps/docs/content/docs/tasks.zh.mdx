@@ -6,7 +6,7 @@ description: 智能体每一次工作的单位，有明确的状态机、超时�
 import { Callout } from "fumadocs-ui/components/callout";
 import { Mermaid } from "@/components/mermaid";
 
-**执行任务**（task）是 [智能体](/agents) 每一次工作的单位——把一个 [issue 分给智能体](/assigning-issues)、[在评论里 @提及智能体](/mentioning-agents)、在 [聊天](/chat) 里发一条消息、或者 [Autopilot](/autopilots) 到点触发，都会产生一个执行任务。Multica 把它放进队列，由 [守护进程](/daemon-runtimes) 领走后交给对应的 [AI 编程工具](/providers) 执行，结束时把结果写回服务器。
+**执行任务**（task）是 [智能体](/agents) 每一次工作的单位——把一个 [issue 分给智能体](/assigning-issues)、[在评论里 @提及智能体](/mentioning-agents)、在 [聊天](/chat) 里发一条消息、或者 [Autopilot](/autopilots) 到点触发，都会产生一个执行任务。MATO 把它放进队列，由 [守护进程](/daemon-runtimes) 领走后交给对应的 [AI 编程工具](/providers) 执行，结束时把结果写回服务器。
 
 执行任务和 [issue](/issues) 是两层不同对象：一个 issue 可以反复分配、反复 @提及、手动重跑——每次都产生一个**新的**执行任务。
 
@@ -33,7 +33,7 @@ graph LR
 
 ## 任务超时会怎样
 
-Multica 服务器每 30 秒扫描一次，有两种超时会触发失败：
+MATO 服务器每 30 秒扫描一次，有两种超时会触发失败：
 
 | 什么情况 | 超时阈值 |
 |---|---|
@@ -46,7 +46,7 @@ Multica 服务器每 30 秒扫描一次，有两种超时会触发失败：
 
 失败分两类：**可重试**和**不可重试**。
 
-**可重试**（Multica 自动重排队）：
+**可重试**（MATO 自动重排队）：
 
 - `runtime_offline`——任务派发后，守护进程失联了
 - `runtime_recovery`——守护进程崩溃重启，回收上次没跑完的任务
@@ -72,7 +72,7 @@ Multica 服务器每 30 秒扫描一次，有两种超时会触发失败：
 **手动重跑**（rerun）是你通过命令行或 API（`POST /api/issues/{id}/rerun`）主动发起的：
 
 ```bash
-multica issue rerun <issue-id>
+mato issue rerun <issue-id>
 ```
 
 行为：
@@ -100,7 +100,7 @@ multica issue rerun <issue-id>
 
 可以——前提是对应的 AI 编程工具支持会话恢复。
 
-Multica 在任务过程中**两次**保存会话 ID——任务一开始（AI 工具返回第一条系统消息时）pin 一次，任务结束（完成或失败）时再 pin 一次。前者让守护进程中途崩溃时也能恢复，后者留给下一次**自动重试**——届时把这个 ID 传回去，智能体就能接着上次的对话和文件状态继续。**手动重跑会主动跳过这一步**，永远从全新会话开始——见 [手动重跑和自动重试的区别](#手动重跑和自动重试的区别)。
+MATO 在任务过程中**两次**保存会话 ID——任务一开始（AI 工具返回第一条系统消息时）pin 一次，任务结束（完成或失败）时再 pin 一次。前者让守护进程中途崩溃时也能恢复，后者留给下一次**自动重试**——届时把这个 ID 传回去，智能体就能接着上次的对话和文件状态继续。**手动重跑会主动跳过这一步**，永远从全新会话开始——见 [手动重跑和自动重试的区别](#手动重跑和自动重试的区别)。
 
 但**哪些 AI 编程工具真的支持**差别很大：
 

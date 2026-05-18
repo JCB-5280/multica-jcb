@@ -2,7 +2,7 @@
 
 ## What It Is
 
-Multica has two WebSocket subsystems with completely different purposes:
+MATO has two WebSocket subsystems with completely different purposes:
 
 1. **The Realtime Hub** (`internal/realtime/`) — pushes events to browsers and the desktop app
 2. **The Daemon Hub** (`internal/daemonws/`) — communicates with local agent daemon processes
@@ -30,7 +30,7 @@ Server: gorilla/websocket upgrades the connection
       Waits for auth message (or reads JWT from cookie)
         { type: "auth", payload: { token: "JWT..." } }
         — OR —
-        Cookie: multica_auth=... (cookie-based sessions)
+        Cookie: mato_auth=... (cookie-based sessions)
       ↓
       Validates JWT → extracts user_id
       ↓

@@ -1,6 +1,6 @@
 # Self-Hosting — Advanced Configuration
 
-This document covers advanced configuration for self-hosted Multica deployments. For the quick start guide, see [SELF_HOSTING.md](SELF_HOSTING.md).
+This document covers advanced configuration for self-hosted MATO deployments. For the quick start guide, see [SELF_HOSTING.md](SELF_HOSTING.md).
 
 ## Configuration
 
@@ -10,7 +10,7 @@ All configuration is done via environment variables. Copy `.env.example` as a st
 
 | Variable | Description | Example |
 |----------|-------------|---------|
-| `DATABASE_URL` | PostgreSQL connection string | `postgres://multica:multica@localhost:5432/multica?sslmode=disable` |
+| `DATABASE_URL` | PostgreSQL connection string | `postgres://mato:mato@localhost:5432/mato?sslmode=disable` |
 | `JWT_SECRET` | **Must change from default.** Secret key for signing JWT tokens. Use a long random string. | `openssl rand -hex 32` |
 | `FRONTEND_ORIGIN` | URL where the frontend is served (used for CORS) | `https://app.example.com` |
 
@@ -25,14 +25,14 @@ These have sensible defaults and only need to be set when tuning a large or cons
 
 ### Email (Required for Authentication)
 
-Multica supports two email backends. `SMTP_HOST` takes priority when set; otherwise `RESEND_API_KEY` is used. With neither configured, verification codes are printed to the server log — copy them from there to log in.
+MATO supports two email backends. `SMTP_HOST` takes priority when set; otherwise `RESEND_API_KEY` is used. With neither configured, verification codes are printed to the server log — copy them from there to log in.
 
 #### Option A: Resend (recommended for cloud deployments)
 
 | Variable | Description |
 |----------|-------------|
 | `RESEND_API_KEY` | Your Resend API key |
-| `RESEND_FROM_EMAIL` | Sender email address (default: `noreply@multica.ai`) |
+| `RESEND_FROM_EMAIL` | Sender email address (default: `noreply@mato.ai`) |
 
 #### Option B: SMTP relay (for self-hosted / on-premise deployments)
 
@@ -48,7 +48,7 @@ Use this option when your deployment cannot reach the public internet or you alr
 
 STARTTLS is used automatically when advertised by the server. Port 465 (SMTPS / implicit TLS) is not currently supported - use ports 25 or 587 with STARTTLS.
 
-> **Note:** If neither Resend nor SMTP is configured, generated verification codes are printed to backend logs — copy them from there to log in. A fixed local testing code (e.g. `888888`) is **opt-in only**: set `MULTICA_DEV_VERIFICATION_CODE=888888` in `.env` and keep `APP_ENV` non-production. The Docker self-host stack pins `APP_ENV=production`, so the shortcut is ignored there. **Never enable a fixed code on a publicly reachable instance.**
+> **Note:** If neither Resend nor SMTP is configured, generated verification codes are printed to backend logs — copy them from there to log in. A fixed local testing code (e.g. `888888`) is **opt-in only**: set `MATO_DEV_VERIFICATION_CODE=888888` in `.env` and keep `APP_ENV` non-production. The Docker self-host stack pins `APP_ENV=production`, so the shortcut is ignored there. **Never enable a fixed code on a publicly reachable instance.**
 
 ### Google OAuth (Optional)
 
@@ -108,37 +108,37 @@ These are configured on each user's machine, not on the server:
 
 | Variable | Default | Description |
 |----------|---------|-------------|
-| `MULTICA_SERVER_URL` | `ws://localhost:8080/ws` | WebSocket URL for daemon → server connection |
-| `MULTICA_APP_URL` | `http://localhost:3000` | Frontend URL for CLI login flow |
-| `MULTICA_DAEMON_POLL_INTERVAL` | `3s` | How often the daemon polls for tasks |
-| `MULTICA_DAEMON_HEARTBEAT_INTERVAL` | `15s` | Heartbeat frequency |
+| `MATO_SERVER_URL` | `ws://localhost:8080/ws` | WebSocket URL for daemon → server connection |
+| `MATO_APP_URL` | `http://localhost:3000` | Frontend URL for CLI login flow |
+| `MATO_DAEMON_POLL_INTERVAL` | `3s` | How often the daemon polls for tasks |
+| `MATO_DAEMON_HEARTBEAT_INTERVAL` | `15s` | Heartbeat frequency |
 
 Agent-specific overrides:
 
 | Variable | Description |
 |----------|-------------|
-| `MULTICA_CLAUDE_PATH` | Custom path to the `claude` binary |
-| `MULTICA_CLAUDE_MODEL` | Override the Claude model used |
-| `MULTICA_CODEX_PATH` | Custom path to the `codex` binary |
-| `MULTICA_CODEX_MODEL` | Override the Codex model used |
-| `MULTICA_COPILOT_PATH` | Custom path to the `copilot` (GitHub Copilot CLI) binary |
-| `MULTICA_COPILOT_MODEL` | Override the Copilot model used (note: GitHub Copilot routes models through your account entitlement, so this may not be honoured) |
-| `MULTICA_OPENCODE_PATH` | Custom path to the `opencode` binary |
-| `MULTICA_OPENCODE_MODEL` | Override the OpenCode model used |
-| `MULTICA_OPENCLAW_PATH` | Custom path to the `openclaw` binary |
-| `MULTICA_OPENCLAW_MODEL` | Override the OpenClaw model used |
-| `MULTICA_HERMES_PATH` | Custom path to the `hermes` binary |
-| `MULTICA_HERMES_MODEL` | Override the Hermes model used |
-| `MULTICA_GEMINI_PATH` | Custom path to the `gemini` binary |
-| `MULTICA_GEMINI_MODEL` | Override the Gemini model used |
-| `MULTICA_PI_PATH` | Custom path to the `pi` binary |
-| `MULTICA_PI_MODEL` | Override the Pi model used |
-| `MULTICA_CURSOR_PATH` | Custom path to the `cursor-agent` binary |
-| `MULTICA_CURSOR_MODEL` | Override the Cursor Agent model used |
+| `MATO_CLAUDE_PATH` | Custom path to the `claude` binary |
+| `MATO_CLAUDE_MODEL` | Override the Claude model used |
+| `MATO_CODEX_PATH` | Custom path to the `codex` binary |
+| `MATO_CODEX_MODEL` | Override the Codex model used |
+| `MATO_COPILOT_PATH` | Custom path to the `copilot` (GitHub Copilot CLI) binary |
+| `MATO_COPILOT_MODEL` | Override the Copilot model used (note: GitHub Copilot routes models through your account entitlement, so this may not be honoured) |
+| `MATO_OPENCODE_PATH` | Custom path to the `opencode` binary |
+| `MATO_OPENCODE_MODEL` | Override the OpenCode model used |
+| `MATO_OPENCLAW_PATH` | Custom path to the `openclaw` binary |
+| `MATO_OPENCLAW_MODEL` | Override the OpenClaw model used |
+| `MATO_HERMES_PATH` | Custom path to the `hermes` binary |
+| `MATO_HERMES_MODEL` | Override the Hermes model used |
+| `MATO_GEMINI_PATH` | Custom path to the `gemini` binary |
+| `MATO_GEMINI_MODEL` | Override the Gemini model used |
+| `MATO_PI_PATH` | Custom path to the `pi` binary |
+| `MATO_PI_MODEL` | Override the Pi model used |
+| `MATO_CURSOR_PATH` | Custom path to the `cursor-agent` binary |
+| `MATO_CURSOR_MODEL` | Override the Cursor Agent model used |
 
 ## Database Setup
 
-Multica requires PostgreSQL 17 with the pgvector extension.
+MATO requires PostgreSQL 17 with the pgvector extension.
 
 ### Using Docker Compose (Recommended)
 
@@ -205,10 +205,10 @@ In production, put a reverse proxy in front of both the backend and frontend to 
 **Single-domain layout** — frontend and backend served on the same hostname (this is what `docker-compose.selfhost.yml` defaults to):
 
 ```
-multica.example.com {
+mato.example.com {
     # WebSocket route — must come before the catch-all
-    @multica_ws path /ws /ws/*
-    handle @multica_ws {
+    @mato_ws path /ws /ws/*
+    handle @mato_ws {
         reverse_proxy localhost:8080 {
             flush_interval -1
         }
@@ -227,8 +227,8 @@ app.example.com {
 }
 
 api.example.com {
-    @multica_ws path /ws /ws/*
-    handle @multica_ws {
+    @mato_ws path /ws /ws/*
+    handle @mato_ws {
         reverse_proxy localhost:8080 {
             flush_interval -1
         }
@@ -306,7 +306,7 @@ NEXT_PUBLIC_WS_URL=wss://api.example.com/ws
 
 ## LAN / Non-localhost Access
 
-By default, Multica works on `localhost`. If you access it from another machine on the LAN (e.g. `http://192.168.1.100:3000`), you need to tell the backend to accept that origin:
+By default, MATO works on `localhost`. If you access it from another machine on the LAN (e.g. `http://192.168.1.100:3000`), you need to tell the backend to accept that origin:
 
 ```bash
 # .env — replace with your server's LAN IP
@@ -389,5 +389,5 @@ docker compose -f docker-compose.selfhost.yml pull
 docker compose -f docker-compose.selfhost.yml up -d
 ```
 
-Pin `MULTICA_IMAGE_TAG` in `.env` to an exact release like `v0.2.4` if you want to stay on a specific version. Migrations run automatically on backend startup. They are idempotent — running them multiple times has no effect.
+Pin `MATO_IMAGE_TAG` in `.env` to an exact release like `v0.2.4` if you want to stay on a specific version. Migrations run automatically on backend startup. They are idempotent — running them multiple times has no effect.
 If the selected GHCR tag has not been published yet, fall back to `docker compose -f docker-compose.selfhost.yml -f docker-compose.selfhost.build.yml up -d --build`.

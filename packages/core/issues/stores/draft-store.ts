@@ -63,7 +63,7 @@ export const useIssueDraftStore = create<IssueDraftStore>()(
       },
     }),
     {
-      name: "multica_issue_draft",
+      name: "mato_issue_draft",
       storage: createJSONStorage(() => createWorkspaceAwareStorage(defaultStorage)),
     },
   ),

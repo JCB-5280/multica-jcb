@@ -5,7 +5,7 @@ aliases:
   - React Architecture
   - Next.js Architecture
   - Monorepo Frontend
-description: How the Multica frontend is structured — the shared package architecture, state management with TanStack Query and Zustand, routing abstraction, real-time integration, and differences between the web and desktop apps.
+description: How the MATO frontend is structured — the shared package architecture, state management with TanStack Query and Zustand, routing abstraction, real-time integration, and differences between the web and desktop apps.
 tags:
   - frontend
   - nextjs
@@ -39,7 +39,7 @@ graph TB
     subgraph Shared["Shared Packages"]
         Core["packages/core\nBusiness logic, stores, API client\nZero react-dom"]
         Views["packages/views\nShared UI pages and components\nZero next/* or react-router"]
-        UI["packages/ui\nDesign system atoms\nZero @multica/core imports"]
+        UI["packages/ui\nDesign system atoms\nZero @mato/core imports"]
     end
 
     subgraph Apps
@@ -113,7 +113,7 @@ views/
 Atomic UI components with zero business logic. Based on shadcn/ui with Base UI primitives (`@base-ui/react`, not Radix). Install new components with `pnpm ui:add <name>` from project root.
 
 > [!IMPORTANT] UI Has Zero Core Imports
-> `packages/ui/` has zero imports from `@multica/core`. If a UI component needs business logic, it receives it as props.
+> `packages/ui/` has zero imports from `@mato/core`. If a UI component needs business logic, it receives it as props.
 
 ---
 
@@ -317,7 +317,7 @@ The desktop app adds only Electron-specific wiring:
 | SSR | Yes (Next.js) | No (pure client-side) |
 
 > [!WARNING] DragStrip Required
-> Every full-window desktop view must mount `<DragStrip />` from `@multica/views/platform` as the first flex child. Without it, users can't drag the macOS window. Interactive UI inside the top 48px needs `WebkitAppRegion: "no-drag"`.
+> Every full-window desktop view must mount `<DragStrip />` from `@mato/views/platform` as the first flex child. Without it, users can't drag the macOS window. Interactive UI inside the top 48px needs `WebkitAppRegion: "no-drag"`.
 
 ---
 

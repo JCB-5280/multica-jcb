@@ -2,11 +2,11 @@
 
 import { useEffect, useState } from "react";
 import { Save, LogOut } from "lucide-react";
-import { Input } from "@multica/ui/components/ui/input";
-import { Textarea } from "@multica/ui/components/ui/textarea";
-import { Label } from "@multica/ui/components/ui/label";
-import { Button } from "@multica/ui/components/ui/button";
-import { Card, CardContent } from "@multica/ui/components/ui/card";
+import { Input } from "@mato/ui/components/ui/input";
+import { Textarea } from "@mato/ui/components/ui/textarea";
+import { Label } from "@mato/ui/components/ui/label";
+import { Button } from "@mato/ui/components/ui/button";
+import { Card, CardContent } from "@mato/ui/components/ui/card";
 import {
   AlertDialog,
   AlertDialogContent,
@@ -16,25 +16,25 @@ import {
   AlertDialogFooter,
   AlertDialogCancel,
   AlertDialogAction,
-} from "@multica/ui/components/ui/alert-dialog";
+} from "@mato/ui/components/ui/alert-dialog";
 import { toast } from "sonner";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { useAuthStore } from "@multica/core/auth";
-import { useLeaveWorkspace, useDeleteWorkspace } from "@multica/core/workspace/mutations";
-import { useWorkspaceId } from "@multica/core/hooks";
+import { useAuthStore } from "@mato/core/auth";
+import { useLeaveWorkspace, useDeleteWorkspace } from "@mato/core/workspace/mutations";
+import { useWorkspaceId } from "@mato/core/hooks";
 import {
   memberListOptions,
   workspaceKeys,
   workspaceListOptions,
-} from "@multica/core/workspace/queries";
-import { api } from "@multica/core/api";
+} from "@mato/core/workspace/queries";
+import { api } from "@mato/core/api";
 import {
   resolvePostAuthDestination,
   useCurrentWorkspace,
   useHasOnboarded,
-} from "@multica/core/paths";
-import { setCurrentWorkspace } from "@multica/core/platform";
-import type { Workspace } from "@multica/core/types";
+} from "@mato/core/paths";
+import { setCurrentWorkspace } from "@mato/core/platform";
+import type { Workspace } from "@mato/core/types";
 import { useNavigation } from "../../navigation";
 import { DeleteWorkspaceDialog } from "./delete-workspace-dialog";
 import { useT } from "../../i18n";

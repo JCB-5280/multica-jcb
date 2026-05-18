@@ -7,8 +7,8 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5/pgtype"
-	"github.com/multica-ai/multica/server/internal/realtime"
-	db "github.com/multica-ai/multica/server/pkg/db/generated"
+	"github.com/mato-ai/mato/server/internal/realtime"
+	db "github.com/mato-ai/mato/server/pkg/db/generated"
 )
 
 // fakeScopeQuerier implements scopeAuthQuerier with in-memory maps.

@@ -12,10 +12,10 @@ import {
   Wrench,
 } from "lucide-react";
 import { useQueryClient } from "@tanstack/react-query";
-import { useWorkspaceId } from "@multica/core/hooks";
-import { runtimeKeys } from "@multica/core/runtimes/queries";
-import { useWSEvent } from "@multica/core/realtime";
-import { paths, useWorkspaceSlug } from "@multica/core/paths";
+import { useWorkspaceId } from "@mato/core/hooks";
+import { runtimeKeys } from "@mato/core/runtimes/queries";
+import { useWSEvent } from "@mato/core/realtime";
+import { paths, useWorkspaceSlug } from "@mato/core/paths";
 import {
   Dialog,
   DialogContent,
@@ -23,8 +23,8 @@ import {
   DialogFooter,
   DialogHeader,
   DialogTitle,
-} from "@multica/ui/components/ui/dialog";
-import { Button } from "@multica/ui/components/ui/button";
+} from "@mato/ui/components/ui/dialog";
+import { Button } from "@mato/ui/components/ui/button";
 import { useNavigation } from "../../navigation";
 import { useT } from "../../i18n";
 
@@ -116,15 +116,15 @@ export function ConnectRemoteDialog({ onClose }: { onClose: () => void }) {
 // Step 1: Installation instructions
 // ---------------------------------------------------------------------------
 
-const INSTALL_CMD = "curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh | bash";
+const INSTALL_CMD = "curl -fsSL https://raw.githubusercontent.com/mato.ai/mato/main/scripts/install.sh | bash";
 
-const CONFIGURE_CMD = `multica config set server_url https://api.multica.ai
-multica config set app_url https://multica.ai`;
+const CONFIGURE_CMD = `mato config set server_url https://api.mato.ai
+mato config set app_url https://mato.ai`;
 
-const LOGIN_CMD = "multica login --token <YOUR_TOKEN>";
+const LOGIN_CMD = "mato login --token <YOUR_TOKEN>";
 
-const START_CMD = `multica daemon start --device-name "my-ec2-instance"
-multica daemon status`;
+const START_CMD = `mato daemon start --device-name "my-ec2-instance"
+mato daemon status`;
 
 function CodeBlock({
   code,
@@ -262,13 +262,13 @@ function InstructionsStep({
               <li>
                 {t(($) => $.connect.trouble_check_status)}
                 <code className="rounded bg-muted px-1 py-0.5 font-mono text-[10px]">
-                  {"multica daemon status"}
+                  {"mato daemon status"}
                 </code>
               </li>
               <li>
                 {t(($) => $.connect.trouble_view_logs)}
                 <code className="rounded bg-muted px-1 py-0.5 font-mono text-[10px]">
-                  {"multica daemon logs -f"}
+                  {"mato daemon logs -f"}
                 </code>
               </li>
               <li>
@@ -280,7 +280,7 @@ function InstructionsStep({
               <li>
                 {t(($) => $.connect.trouble_remote_note_prefix)}
                 <code className="rounded bg-muted px-1 py-0.5 font-mono text-[10px]">
-                  {"multica daemon"}
+                  {"mato daemon"}
                 </code>
                 {t(($) => $.connect.trouble_remote_note_suffix)}
               </li>
@@ -322,7 +322,7 @@ function WaitingStep({ onBack }: { onBack: () => void }) {
         <p className="text-sm text-muted-foreground">
           {t(($) => $.connect.waiting_hint_prefix)}
           <code className="rounded bg-muted px-1.5 py-0.5 font-mono text-xs">
-            {"multica daemon status"}
+            {"mato daemon status"}
           </code>
           {t(($) => $.connect.waiting_hint_suffix)}
         </p>

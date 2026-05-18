@@ -1,11 +1,11 @@
 ---
 title: AI coding tools matrix
-description: Multica supports 11 AI coding tools; they implement the same interface, but the capability details diverge significantly.
+description: MATO supports 11 AI coding tools; they implement the same interface, but the capability details diverge significantly.
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 
-Multica ships with built-in support for **11 AI coding tools**. They all implement the same interface — queue, dispatch, execute, return results — so you can drive any of them from the same Multica board. **But the capability details diverge significantly**: whether session resumption actually works, whether MCP is supported, where skill files live, how models are selected. This page is the full matrix.
+MATO ships with built-in support for **11 AI coding tools**. They all implement the same interface — queue, dispatch, execute, return results — so you can drive any of them from the same MATO board. **But the capability details diverge significantly**: whether session resumption actually works, whether MCP is supported, where skill files live, how models are selected. This page is the full matrix.
 
 For guidance on picking a tool when creating an agent, see [Creating and configuring agents](/agents-create).
 
@@ -93,7 +93,7 @@ If you set `mcp_config` in an agent configuration but pick a tool other than Cla
 
 ## Where skill files go
 
-Each tool uses **its own** skill discovery path. Before a task runs, the Multica daemon copies the workspace's skill files into the corresponding path:
+Each tool uses **its own** skill discovery path. Before a task runs, the MATO daemon copies the workspace's skill files into the corresponding path:
 
 | Tool | Path | Native discovery? |
 |---|---|---|
@@ -117,4 +117,4 @@ For creating and using skills, see [Skills](/skills).
 
 - [Creating and configuring agents](/agents-create) — pick a tool for your agent
 - [Tasks](/tasks) — task lifecycle and session-resumption mechanics
-- [Daemon and runtimes](/daemon-runtimes) — where the tools run and how they connect to Multica
+- [Daemon and runtimes](/daemon-runtimes) — where the tools run and how they connect to MATO

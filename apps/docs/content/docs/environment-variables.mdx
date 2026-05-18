@@ -1,11 +1,11 @@
 ---
 title: Environment variables
-description: The full list of environment variables for running a self-hosted Multica server.
+description: The full list of environment variables for running a self-hosted MATO server.
 ---
 
 import { Callout } from "fumadocs-ui/components/callout";
 
-A self-hosted Multica [server](/self-host-quickstart) reads its configuration from environment variables at startup — database, sign-in, email, storage, signup allowlists all live here. This page groups every variable by purpose: each section spells out **what happens if you leave it unset** and **which ones you must set in production**. For how to actually configure the auth-related ones, see [Sign-in and signup configuration](/auth-setup).
+A self-hosted MATO [server](/self-host-quickstart) reads its configuration from environment variables at startup — database, sign-in, email, storage, signup allowlists all live here. This page groups every variable by purpose: each section spells out **what happens if you leave it unset** and **which ones you must set in production**. For how to actually configure the auth-related ones, see [Sign-in and signup configuration](/auth-setup).
 
 ## Core server variables
 
@@ -13,15 +13,15 @@ These are the core variables you must think about before deploying — some have
 
 | Variable | Default | Required in production? |
 |---|---|---|
-| `DATABASE_URL` | `postgres://multica:multica@localhost:5432/multica?sslmode=disable` | **Yes** |
+| `DATABASE_URL` | `postgres://mato:mato@localhost:5432/mato?sslmode=disable` | **Yes** |
 | `PORT` | `8080` | No (unless you change the port) |
-| `JWT_SECRET` | `multica-dev-secret-change-in-production` | **Yes** (the default is unsafe) |
+| `JWT_SECRET` | `mato-dev-secret-change-in-production` | **Yes** (the default is unsafe) |
 | `APP_ENV` | empty | **Yes** (must be `production`) |
 | `FRONTEND_ORIGIN` | empty | **Yes** (self-host must set its own domain) |
-| `MULTICA_DEV_VERIFICATION_CODE` | empty | No (must stay empty in production) |
+| `MATO_DEV_VERIFICATION_CODE` | empty | No (must stay empty in production) |
 
 <Callout type="warning">
-**Keep `MULTICA_DEV_VERIFICATION_CODE` empty in production.** A fixed local test code is disabled by default, but if you opt in with `MULTICA_DEV_VERIFICATION_CODE=888888`, anyone who can request a code can sign in with that fixed value while `APP_ENV` is non-production. The shortcut is ignored when `APP_ENV=production`.
+**Keep `MATO_DEV_VERIFICATION_CODE` empty in production.** A fixed local test code is disabled by default, but if you opt in with `MATO_DEV_VERIFICATION_CODE=888888`, anyone who can request a code can sign in with that fixed value while `APP_ENV` is non-production. The shortcut is ignored when `APP_ENV=production`.
 </Callout>
 
 ### Database connection pool
@@ -35,14 +35,14 @@ These are the core variables you must think about before deploying — some have
 
 ## Email configuration
 
-Multica supports two delivery backends — [Resend](https://resend.com/) for cloud deployments, or an SMTP relay for internal / on-premise networks. `SMTP_HOST` takes priority over `RESEND_API_KEY` when both are set.
+MATO supports two delivery backends — [Resend](https://resend.com/) for cloud deployments, or an SMTP relay for internal / on-premise networks. `SMTP_HOST` takes priority over `RESEND_API_KEY` when both are set.
 
 ### Resend
 
 | Variable | Default | Description |
 |---|---|---|
 | `RESEND_API_KEY` | empty | Resend API key |
-| `RESEND_FROM_EMAIL` | `noreply@multica.ai` | Sender address (must be a domain verified in your Resend account; also reused as the `From:` header when SMTP is in use) |
+| `RESEND_FROM_EMAIL` | `noreply@mato.ai` | Sender address (must be a domain verified in your Resend account; also reused as the `From:` header when SMTP is in use) |
 
 ### SMTP relay
 
@@ -74,7 +74,7 @@ Full setup (including Google Cloud Console steps) is in [Sign-in and signup conf
 
 ## File storage configuration
 
-Multica stores user-uploaded attachments (images and files in comments). **S3 is preferred**; if S3 is not configured, it falls back to local disk.
+MATO stores user-uploaded attachments (images and files in comments). **S3 is preferred**; if S3 is not configured, it falls back to local disk.
 
 ### S3 / S3-compatible storage
 
@@ -126,7 +126,7 @@ Three allowlist layers combine by priority. **If any layer is set to a non-empty
 
 **The counterintuitive part**: `ALLOWED_EMAIL_DOMAINS=company.io` + `ALLOW_SIGNUP=true` does **not** mean "allow company.io or everyone" — it means **only allow company.io**. The allowlist layers are AND semantics — the full decision tree is in [Sign-in and signup configuration → Signup allowlists](/auth-setup#restricting-who-can-sign-up).
 
-**Invite flows themselves do not check the signup allowlist** — but the invitee must still be able to **sign in** before accepting the invite. If they already have a Multica account (for example from another workspace), they can accept directly, unaffected by the allowlist; **if they have never signed up**, the first step of sign-in (requesting a verification code) still passes through the allowlist check, and an email rejected by `ALLOW_SIGNUP=false` or by `ALLOWED_EMAILS` / `ALLOWED_EMAIL_DOMAINS` **cannot finish signup, and therefore cannot accept the invite**.
+**Invite flows themselves do not check the signup allowlist** — but the invitee must still be able to **sign in** before accepting the invite. If they already have a MATO account (for example from another workspace), they can accept directly, unaffected by the allowlist; **if they have never signed up**, the first step of sign-in (requesting a verification code) still passes through the allowlist check, and an email rejected by `ALLOW_SIGNUP=false` or by `ALLOWED_EMAILS` / `ALLOWED_EMAIL_DOMAINS` **cannot finish signup, and therefore cannot accept the invite**.
 
 ## Daemon tuning parameters
 
@@ -134,12 +134,12 @@ The daemon runs on the user's local machine, and its config is read from local e
 
 | Variable | Default | Description |
 |---|---|---|
-| `MULTICA_SERVER_URL` | `ws://localhost:8080/ws` | Server address (self-host: replace with your domain) |
-| `MULTICA_DAEMON_HEARTBEAT_INTERVAL` | `15s` | Heartbeat interval |
-| `MULTICA_DAEMON_POLL_INTERVAL` | `3s` | Task polling interval |
-| `MULTICA_DAEMON_MAX_CONCURRENT_TASKS` | `20` | Max concurrent tasks |
-| `MULTICA_<PROVIDER>_PATH` | matches the CLI name | Path to each AI coding tool's executable (for example `MULTICA_CLAUDE_PATH`) |
-| `MULTICA_<PROVIDER>_MODEL` | empty | Default model for each AI coding tool |
+| `MATO_SERVER_URL` | `ws://localhost:8080/ws` | Server address (self-host: replace with your domain) |
+| `MATO_DAEMON_HEARTBEAT_INTERVAL` | `15s` | Heartbeat interval |
+| `MATO_DAEMON_POLL_INTERVAL` | `3s` | Task polling interval |
+| `MATO_DAEMON_MAX_CONCURRENT_TASKS` | `20` | Max concurrent tasks |
+| `MATO_<PROVIDER>_PATH` | matches the CLI name | Path to each AI coding tool's executable (for example `MATO_CLAUDE_PATH`) |
+| `MATO_<PROVIDER>_MODEL` | empty | Default model for each AI coding tool |
 
 For a full explanation of how each parameter affects daemon behavior, see [Daemon and runtimes](/daemon-runtimes).
 
@@ -147,12 +147,12 @@ For a full explanation of how each parameter affects daemon behavior, see [Daemo
 
 | Variable | Default | Description |
 |---|---|---|
-| `FRONTEND_ORIGIN` | empty | Frontend address. Invite email links, the CORS allowlist, and the cookie domain are all derived from this. When unset, invite email links fall back to the hosted domain `https://app.multica.ai` — self-host must set this explicitly |
+| `FRONTEND_ORIGIN` | empty | Frontend address. Invite email links, the CORS allowlist, and the cookie domain are all derived from this. When unset, invite email links fall back to the hosted domain `https://app.mato.ai` — self-host must set this explicitly |
 | `CORS_ALLOWED_ORIGINS` | empty | Additional allowed CORS origins (comma-separated) |
 | `ALLOWED_ORIGINS` | empty | WebSocket-specific origin allowlist (comma-separated); when unset, fallback order is `CORS_ALLOWED_ORIGINS` → `FRONTEND_ORIGIN` → `localhost:3000/5173/5174` |
 
 <Callout type="warning">
-**Leaving `FRONTEND_ORIGIN` unset creates two silent failures**: (1) invite email links point at `https://app.multica.ai` (the hosted domain), and clicking them doesn't bring users back to your self-hosted instance; (2) WebSocket Origin checks fall back to `localhost:3000 / 5173 / 5174`, so every WebSocket connection in a production deployment is rejected and the frontend appears to "lose real-time updates."
+**Leaving `FRONTEND_ORIGIN` unset creates two silent failures**: (1) invite email links point at `https://app.mato.ai` (the hosted domain), and clicking them doesn't bring users back to your self-hosted instance; (2) WebSocket Origin checks fall back to `localhost:3000 / 5173 / 5174`, so every WebSocket connection in a production deployment is rejected and the frontend appears to "lose real-time updates."
 </Callout>
 
 ## GitHub integration
@@ -167,13 +167,13 @@ The [GitHub PR ↔ issue integration](/github-integration) needs two variables. 
 **Behavior when either is unset:**
 
 - `Connect GitHub` in Settings → Integrations is **disabled** and shows a "not configured" hint to admins.
-- The `/api/webhooks/github` endpoint returns **`503 github webhooks not configured`** — Multica refuses to process events with no secret rather than treating every signature as valid.
+- The `/api/webhooks/github` endpoint returns **`503 github webhooks not configured`** — MATO refuses to process events with no secret rather than treating every signature as valid.
 
 **Note:** `GITHUB_WEBHOOK_SECRET` is reused as the signing key for the install-flow state token, so operators only need to manage one secret. It is **not** the GitHub App's *Client* secret — Client secrets are OAuth-related and not used by this integration. See [GitHub integration → Self-host setup](/github-integration#self-host-setup) for the full walkthrough.
 
 ## Usage analytics
 
-By default, the server reports to Multica's official PostHog instance. To opt out, set `ANALYTICS_DISABLED=true`.
+By default, the server reports to MATO's official PostHog instance. To opt out, set `ANALYTICS_DISABLED=true`.
 
 | Variable | Default | Description |
 |---|---|---|
@@ -186,4 +186,4 @@ By default, the server reports to Multica's official PostHog instance. To opt ou
 - [Sign-in and signup configuration](/auth-setup) — how to actually configure the auth-related variables above and where the traps are
 - [GitHub integration](/github-integration) — how to set up the GitHub App that backs `GITHUB_APP_SLUG` / `GITHUB_WEBHOOK_SECRET`
 - [Troubleshooting](/troubleshooting) — symptoms and fixes for common misconfigurations
-- [Daemon and runtimes](/daemon-runtimes) — what the `MULTICA_DAEMON_*` parameters actually do
+- [Daemon and runtimes](/daemon-runtimes) — what the `MATO_DAEMON_*` parameters actually do

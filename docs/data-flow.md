@@ -100,7 +100,7 @@ DaemonHub (internal/daemonws/hub.go)
 
 ## Phase 3: Daemon Claims and Dispatches the Task
 
-**On the daemon side** (multica daemon running locally):
+**On the daemon side** (mato daemon running locally):
 
 ```
 Daemon (server/internal/daemon/daemon.go)

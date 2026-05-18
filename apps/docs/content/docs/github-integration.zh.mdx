@@ -41,7 +41,7 @@ PR 的 `merged` 字段翻成 `true` 时，逐个评估关联的 issue：
 | `cancelled` | **不变**——cancelled 是用户明确放弃工作的信号，集成不覆盖 |
 | 其他（`todo` / `in_progress` / `in_review` / `blocked` / `backlog`）| 转成 `done` |
 
-PR **关闭但没合并**——只更新 PR 卡片的状态为 `Closed`，issue 状态不变。"关闭但不合并"语义因团队而异，Multica 不替用户做决定。
+PR **关闭但没合并**——只更新 PR 卡片的状态为 `Closed`，issue 状态不变。"关闭但不合并"语义因团队而异，MATO 不替用户做决定。
 
 <Callout type="info">
 状态变更的 actor 是 `system`。订阅了该 issue 的成员会收到 inbox 通知，和成员手动改状态时一致。
@@ -51,15 +51,15 @@ PR **关闭但没合并**——只更新 PR 卡片的状态为 `Closed`，issue 
 
 - **Commit message 里的编号**——只扫 PR 的分支 / 标题 / 正文。一个 commit message 写 `MUL-123: fix login` 不会触发关联，除非同样的字符串也出现在 PR 标题或正文里
 - **PR 评论里的编号**——只扫 PR 自己的元数据，后续的 GitHub comment 不读
-- **App 没安装的仓库里的 PR**——没 App，Multica 收不到 webhook
-- **手动把 PR 关联到 issue**——暂时没有这个 UI。如果你们的约定把编号放到 Multica 不扫的地方，请改放到 PR 标题或正文里
+- **App 没安装的仓库里的 PR**——没 App，MATO 收不到 webhook
+- **手动把 PR 关联到 issue**——暂时没有这个 UI。如果你们的约定把编号放到 MATO 不扫的地方，请改放到 PR 标题或正文里
 
 ## 断开连接
 
 **Settings → Integrations** 里没有 installation 列表——现有 installation 直接到 GitHub 上管理：
 
-- **从 GitHub 卸载** —— 个人在 `https://github.com/settings/installations`、组织在 `https://github.com/organizations/<org>/settings/installations` 卸载 Multica App。Multica 收到 `installation.deleted` webhook 后立刻删行；任何已打开的 Settings tab 实时更新，不用刷新
-- **Multica 这边的断开是 admin only** —— 卡片对非 admin 不显示连接操作
+- **从 GitHub 卸载** —— 个人在 `https://github.com/settings/installations`、组织在 `https://github.com/organizations/<org>/settings/installations` 卸载 MATO App。MATO 收到 `installation.deleted` webhook 后立刻删行；任何已打开的 Settings tab 实时更新，不用刷新
+- **MATO 这边的断开是 admin only** —— 卡片对非 admin 不显示连接操作
 
 断开之后，已经镜像的 PR 行保留在数据库里——历史 issue 侧栏仍能显示当时关联的 PR，但来自这个 installation 的新 webhook 事件不再被接受。
 
@@ -67,11 +67,11 @@ PR **关闭但没合并**——只更新 PR 卡片的状态为 `Closed`，issue 
 
 - **Connect / Disconnect** 需要工作区 **owner 或 admin**。普通成员能看到卡片描述但看不到 Connect 按钮
 - **Pull requests** 侧栏对所有能看到该 issue 的成员可见——和 issue 详情页其他部分权限一致
-- GitHub App 申请的是 PR 和 Metadata 的 **只读** 权限。Multica 从不向 GitHub 推 commit、评论或 status check
+- GitHub App 申请的是 PR 和 Metadata 的 **只读** 权限。MATO 从不向 GitHub 推 commit、评论或 status check
 
 ## Self-Host 配置
 
-如果你在 Multica Cloud 上，集成已经配好——跳过本节。
+如果你在 MATO Cloud 上，集成已经配好——跳过本节。
 
 Self-Host 需要：建一个 GitHub App、指向你的 server、设两个环境变量。完整流程如下。
 
@@ -86,8 +86,8 @@ Self-Host 需要：建一个 GitHub App、指向你的 server、设两个环境�
 
 | 字段 | 值 |
 |---|---|
-| **GitHub App name** | 任何能辨识的名字，例如 `Multica` 或 `Multica (staging)` |
-| **Homepage URL** | 你的 Multica 前端，例如 `https://multica.example.com` |
+| **GitHub App name** | 任何能辨识的名字，例如 `MATO` 或 `MATO (staging)` |
+| **Homepage URL** | 你的 MATO 前端，例如 `https://mato.example.com` |
 | **Callback URL** | 留空——本集成不使用 OAuth 用户身份 |
 | **Setup URL** | `https://<api-host>/api/github/setup`。**勾选 "Redirect on update"** |
 | **Webhook → Active** | 启用 |
@@ -100,11 +100,11 @@ Self-Host 需要：建一个 GitHub App、指向你的 server、设两个环境�
 
 点 **Create GitHub App** 之后，从详情页记下两件事：
 
-- 顶部 **public link** 的尾部即 slug。`https://github.com/apps/multica-acme` → slug = `multica-acme`
+- 顶部 **public link** 的尾部即 slug。`https://github.com/apps/mato-acme` → slug = `mato-acme`
 - 你刚生成的 **webhook secret**（GitHub 之后不会再让你读取这个值——现在就保存好）
 
 <Callout type="warning">
-**Webhook secret ≠ Client secret。** App 设置页里两个字段紧挨着。**Webhook secret** 用于签 `pull_request` payload，这才是 Multica 需要的那个；**Client secret** 是 OAuth 用的，和本集成无关。混淆这两个会得到「每条 webhook 都 `401 invalid signature`」的诡异症状。
+**Webhook secret ≠ Client secret。** App 设置页里两个字段紧挨着。**Webhook secret** 用于签 `pull_request` payload，这才是 MATO 需要的那个；**Client secret** 是 OAuth 用的，和本集成无关。混淆这两个会得到「每条 webhook 都 `401 invalid signature`」的诡异症状。
 </Callout>
 
 ### 2. 配置环境变量
@@ -112,14 +112,14 @@ Self-Host 需要：建一个 GitHub App、指向你的 server、设两个环境�
 API server 上：
 
 ```dotenv
-GITHUB_APP_SLUG=multica-acme
+GITHUB_APP_SLUG=mato-acme
 GITHUB_WEBHOOK_SECRET=<你刚生成的 webhook secret>
 ```
 
 两个都必填。任何一个缺失：
 
 - Settings 里 `Connect GitHub` 按钮会被 **disable**，并显示「not configured」提示
-- `/api/webhooks/github` 直接返回 **`503 github webhooks not configured`**——Multica 在 secret 没配置时拒绝处理事件，不会出现「没 secret 也接受 webhook」的安全坑
+- `/api/webhooks/github` 直接返回 **`503 github webhooks not configured`**——MATO 在 secret 没配置时拒绝处理事件，不会出现「没 secret 也接受 webhook」的安全坑
 
 `FRONTEND_ORIGIN` 也必须设置（任何生产 self-host 都已经设了）——setup 回调结束后用它把用户跳回 `<FRONTEND_ORIGIN>/settings`。
 
@@ -137,7 +137,7 @@ make migrate-up
 
 ### 4. 在 UI 里连接
 
-到 Multica：
+到 MATO：
 
 1. 以 owner 或 admin 身份打开 **Settings → Integrations**
 2. 点 **Connect GitHub**，GitHub 在新 tab 打开
@@ -172,7 +172,7 @@ curl -i -X POST https://<api-host>/api/webhooks/github \
 目前还没做的几个边界：
 
 - **手动 link UI 暂未提供**——关联 PR 的唯一方法是把 issue 编号写到 PR 分支 / 标题 / 正文
-- **不读 CI / check 状态**——只镜像 PR 本身，构建状态、reviewer 评论、reviewer 列表都没接进 Multica
+- **不读 CI / check 状态**——只镜像 PR 本身，构建状态、reviewer 评论、reviewer 列表都没接进 MATO
 - **没有工作区级别的 merge → status 映射配置**——默认固定是 `merged → done`（cancelled 除外）。可配置映射是后续迭代
 - **同 issue 多 PR 时，merge 行为偏激进**——两个 PR 都引用 `MUL-123` 时，第一个 merge 就把 issue 转 Done。"等所有关联 PR 都解决再推进 issue 状态"的优化已经在做了
 

@@ -17,19 +17,19 @@ import {
 import type { QueryKey } from "@tanstack/react-query";
 import { arrayMove } from "@dnd-kit/sortable";
 import { Eye, MoreHorizontal } from "lucide-react";
-import type { Issue, IssueAssigneeGroup, IssueAssigneeType, IssueStatus, UpdateIssueRequest } from "@multica/core/types";
-import { Button } from "@multica/ui/components/ui/button";
-import { useLoadMoreByAssigneeGroup, useLoadMoreByStatus } from "@multica/core/issues/mutations";
-import type { AssigneeGroupedIssuesFilter, MyIssuesFilter } from "@multica/core/issues/queries";
+import type { Issue, IssueAssigneeGroup, IssueAssigneeType, IssueStatus, UpdateIssueRequest } from "@mato/core/types";
+import { Button } from "@mato/ui/components/ui/button";
+import { useLoadMoreByAssigneeGroup, useLoadMoreByStatus } from "@mato/core/issues/mutations";
+import type { AssigneeGroupedIssuesFilter, MyIssuesFilter } from "@mato/core/issues/queries";
 import {
   DropdownMenu,
   DropdownMenuTrigger,
   DropdownMenuContent,
   DropdownMenuItem,
-} from "@multica/ui/components/ui/dropdown-menu";
-import { useViewStoreApi, useViewStore } from "@multica/core/issues/stores/view-store-context";
-import type { IssueGrouping, SortField, SortDirection } from "@multica/core/issues/stores/view-store";
-import { useActorName } from "@multica/core/workspace/hooks";
+} from "@mato/ui/components/ui/dropdown-menu";
+import { useViewStoreApi, useViewStore } from "@mato/core/issues/stores/view-store-context";
+import type { IssueGrouping, SortField, SortDirection } from "@mato/core/issues/stores/view-store";
+import { useActorName } from "@mato/core/workspace/hooks";
 import { sortIssues } from "../utils/sort";
 import { StatusIcon } from "./status-icon";
 import { BoardColumn, type BoardColumnGroup } from "./board-column";

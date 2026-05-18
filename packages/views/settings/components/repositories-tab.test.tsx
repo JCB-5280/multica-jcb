@@ -2,7 +2,7 @@ import type { ReactNode } from "react";
 import { describe, it, expect, beforeEach, vi } from "vitest";
 import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { I18nProvider } from "@multica/core/i18n/react";
+import { I18nProvider } from "@mato/core/i18n/react";
 import enCommon from "../../locales/en/common.json";
 import enSettings from "../../locales/en/settings.json";
 
@@ -12,7 +12,7 @@ const workspaceRef = vi.hoisted(() => ({
     id: "workspace-1",
     name: "Test Workspace",
     slug: "test-workspace",
-    repos: [{ url: "https://github.com/multica-ai/multica" }] as { url: string }[],
+    repos: [{ url: "https://github.com/mato.ai/mato" }] as { url: string }[],
   },
 }));
 const membersRef = vi.hoisted(() => ({
@@ -24,24 +24,24 @@ vi.mock("@tanstack/react-query", () => ({
   useQueryClient: () => ({ setQueryData: vi.fn() }),
 }));
 
-vi.mock("@multica/core/hooks", () => ({
+vi.mock("@mato/core/hooks", () => ({
   useWorkspaceId: () => "workspace-1",
 }));
 
-vi.mock("@multica/core/paths", () => ({
+vi.mock("@mato/core/paths", () => ({
   useCurrentWorkspace: () => workspaceRef.current,
 }));
 
-vi.mock("@multica/core/workspace/queries", () => ({
+vi.mock("@mato/core/workspace/queries", () => ({
   memberListOptions: () => ({ queryKey: ["members"], queryFn: vi.fn() }),
   workspaceKeys: { list: () => ["workspaces"] },
 }));
 
-vi.mock("@multica/core/api", () => ({
+vi.mock("@mato/core/api", () => ({
   api: { updateWorkspace: mockUpdateWorkspace },
 }));
 
-vi.mock("@multica/core/auth", () => {
+vi.mock("@mato/core/auth", () => {
   const useAuthStore = Object.assign(
     (sel?: (s: { user: { id: string } }) => unknown) =>
       sel ? sel({ user: { id: "user-1" } }) : { user: { id: "user-1" } },
@@ -75,7 +75,7 @@ describe("RepositoriesTab — view/edit toggle", () => {
       id: "workspace-1",
       name: "Test Workspace",
       slug: "test-workspace",
-      repos: [{ url: "https://github.com/multica-ai/multica" }],
+      repos: [{ url: "https://github.com/mato.ai/mato" }],
     };
     membersRef.current = [{ user_id: "user-1", role: "owner" }];
   });
@@ -83,7 +83,7 @@ describe("RepositoriesTab — view/edit toggle", () => {
   it("renders persisted repos in display mode (no input)", () => {
     render(<RepositoriesTab />, { wrapper: I18nWrapper });
     expect(screen.queryByRole("textbox")).toBeNull();
-    expect(screen.getByText("https://github.com/multica-ai/multica")).toBeTruthy();
+    expect(screen.getByText("https://github.com/mato.ai/mato")).toBeTruthy();
   });
 
   it("Save button is disabled when clean", () => {
@@ -98,7 +98,7 @@ describe("RepositoriesTab — view/edit toggle", () => {
     await user.click(screen.getByRole("button", { name: "Edit repository" }));
 
     const input = screen.getByRole("textbox") as HTMLInputElement;
-    expect(input.value).toBe("https://github.com/multica-ai/multica");
+    expect(input.value).toBe("https://github.com/mato.ai/mato");
   });
 
   it("Save re-enables after editing, then returns to display mode + disabled on success", async () => {
@@ -113,7 +113,7 @@ describe("RepositoriesTab — view/edit toggle", () => {
     await user.click(screen.getByRole("button", { name: "Edit repository" }));
     const input = screen.getByRole("textbox");
     await user.clear(input);
-    await user.type(input, "https://github.com/multica-ai/edited");
+    await user.type(input, "https://github.com/mato.ai/edited");
 
     const saveBtn = screen.getByRole("button", { name: /^Save$/ });
     expect(saveBtn).not.toBeDisabled();
@@ -160,7 +160,7 @@ describe("RepositoriesTab — view/edit toggle", () => {
     await user.click(screen.getByRole("button", { name: "Cancel edit" }));
 
     expect(screen.queryByRole("textbox")).toBeNull();
-    expect(screen.getByText("https://github.com/multica-ai/multica")).toBeTruthy();
+    expect(screen.getByText("https://github.com/mato.ai/mato")).toBeTruthy();
     expect(screen.getByRole("button", { name: /^Save$/ })).toBeDisabled();
     expect(mockUpdateWorkspace).not.toHaveBeenCalled();
   });
@@ -172,13 +172,13 @@ describe("RepositoriesTab — view/edit toggle", () => {
     await user.click(screen.getByRole("button", { name: "Edit repository" }));
     const input = screen.getByRole("textbox") as HTMLInputElement;
     await user.clear(input);
-    await user.type(input, "https://github.com/multica-ai/changed");
+    await user.type(input, "https://github.com/mato.ai/changed");
     expect(screen.getByRole("button", { name: /^Save$/ })).not.toBeDisabled();
 
     await user.click(screen.getByRole("button", { name: "Cancel edit" }));
 
     expect(screen.queryByRole("textbox")).toBeNull();
-    expect(screen.getByText("https://github.com/multica-ai/multica")).toBeTruthy();
+    expect(screen.getByText("https://github.com/mato.ai/mato")).toBeTruthy();
     expect(screen.getByRole("button", { name: /^Save$/ })).toBeDisabled();
   });
 
@@ -193,7 +193,7 @@ describe("RepositoriesTab — view/edit toggle", () => {
 
     expect(screen.queryByRole("textbox")).toBeNull();
     // Original persisted row is still there; the new empty row is gone.
-    expect(screen.getByText("https://github.com/multica-ai/multica")).toBeTruthy();
+    expect(screen.getByText("https://github.com/mato.ai/mato")).toBeTruthy();
     expect(screen.getByRole("button", { name: /^Save$/ })).toBeDisabled();
   });
 
@@ -211,7 +211,7 @@ describe("RepositoriesTab — view/edit toggle", () => {
     await user.click(screen.getByRole("button", { name: "Edit repository" }));
     const input = screen.getByRole("textbox") as HTMLInputElement;
     await user.clear(input);
-    await user.type(input, "git@github.com:multica-ai/multica.git");
+    await user.type(input, "git@github.com:mato.ai/mato.git");
 
     // type="text" (not "url") so the browser does not run native URL
     // validation; the value reaches the server which has the real check.
@@ -222,7 +222,7 @@ describe("RepositoriesTab — view/edit toggle", () => {
 
     await waitFor(() => {
       expect(mockUpdateWorkspace).toHaveBeenCalledWith("workspace-1", {
-        repos: [{ url: "git@github.com:multica-ai/multica.git" }],
+        repos: [{ url: "git@github.com:mato.ai/mato.git" }],
       });
     });
   });

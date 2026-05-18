@@ -7,33 +7,33 @@ import type {
   AgentRuntime,
   RuntimeLocalSkillSummary,
   Skill,
-} from "@multica/core/types";
-import { useAuthStore } from "@multica/core/auth";
-import { useWorkspaceId } from "@multica/core/hooks";
+} from "@mato/core/types";
+import { useAuthStore } from "@mato/core/auth";
+import { useWorkspaceId } from "@mato/core/hooks";
 import {
   runtimeListOptions,
   runtimeLocalSkillsKeys,
   runtimeLocalSkillsOptions,
   resolveRuntimeLocalSkillImport,
-} from "@multica/core/runtimes";
+} from "@mato/core/runtimes";
 import {
   skillDetailOptions,
   workspaceKeys,
-} from "@multica/core/workspace/queries";
-import { Button } from "@multica/ui/components/ui/button";
-import { Input } from "@multica/ui/components/ui/input";
-import { Label } from "@multica/ui/components/ui/label";
-import { Badge } from "@multica/ui/components/ui/badge";
+} from "@mato/core/workspace/queries";
+import { Button } from "@mato/ui/components/ui/button";
+import { Input } from "@mato/ui/components/ui/input";
+import { Label } from "@mato/ui/components/ui/label";
+import { Badge } from "@mato/ui/components/ui/badge";
 import {
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@multica/ui/components/ui/select";
-import { Skeleton } from "@multica/ui/components/ui/skeleton";
-import { Textarea } from "@multica/ui/components/ui/textarea";
-import { useScrollFade } from "@multica/ui/hooks/use-scroll-fade";
+} from "@mato/ui/components/ui/select";
+import { Skeleton } from "@mato/ui/components/ui/skeleton";
+import { Textarea } from "@mato/ui/components/ui/textarea";
+import { useScrollFade } from "@mato/ui/hooks/use-scroll-fade";
 import { toast } from "sonner";
 import { useT } from "../../i18n";
 

@@ -6,7 +6,7 @@ import (
 	"strings"
 	"testing"
 
-	"github.com/multica-ai/multica/server/internal/realtime"
+	"github.com/mato-ai/mato/server/internal/realtime"
 )
 
 func TestRealtimeCollectorExposesCounters(t *testing.T) {
@@ -23,11 +23,11 @@ func TestRealtimeCollectorExposesCounters(t *testing.T) {
 	body := rec.Body.String()
 
 	for _, want := range []string{
-		"multica_realtime_active_connections 3",
-		"multica_realtime_messages_sent_total 11",
-		"multica_realtime_redis_connected 1",
-		`multica_realtime_redis_mirror_errors_total{target="primary"} 2`,
-		`multica_realtime_redis_mirror_errors_total{target="secondary"} 5`,
+		"mato_realtime_active_connections 3",
+		"mato_realtime_messages_sent_total 11",
+		"mato_realtime_redis_connected 1",
+		`mato_realtime_redis_mirror_errors_total{target="primary"} 2`,
+		`mato_realtime_redis_mirror_errors_total{target="secondary"} 5`,
 	} {
 		if !strings.Contains(body, want) {
 			t.Fatalf("metrics body missing %q\n%s", want, body)

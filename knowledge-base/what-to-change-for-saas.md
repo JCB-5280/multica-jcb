@@ -6,7 +6,7 @@ aliases:
   - Production Hardening
   - SaaS Readiness
   - Commercial SaaS Checklist
-description: Every self-hosting assumption baked into the Multica codebase — security gaps, missing billing, admin tooling holes, weak isolation, and operational infrastructure that must exist before running as a multi-tenant SaaS product. Rated by risk and effort.
+description: Every self-hosting assumption baked into the MATO codebase — security gaps, missing billing, admin tooling holes, weak isolation, and operational infrastructure that must exist before running as a multi-tenant SaaS product. Rated by risk and effort.
 tags:
   - saas
   - production
@@ -65,7 +65,7 @@ The server **runs with a hardcoded default secret** if `JWT_SECRET` is not set:
 secret := os.Getenv("JWT_SECRET")
 if secret == "" {
     slog.Warn("JWT_SECRET not set, using insecure default")
-    secret = "multica-dev-secret-change-in-production"
+    secret = "mato-dev-secret-change-in-production"
 }
 ```
 
@@ -138,7 +138,7 @@ Daemon tokens are workspace-scoped and have an expiry, but there's no automatic 
 
 1. **Subscription model** — integrate Stripe (or equivalent). Choose between:
    - Per-seat pricing: count `member` rows per workspace
-   - Usage pricing: read from `task_usage_daily`; Multica already tracks token consumption
+   - Usage pricing: read from `task_usage_daily`; MATO already tracks token consumption
    - Flat workspace subscription
 
 2. **Plan enforcement middleware** — before creating issues, agents, inviting members, etc., check subscription status. Gate features behind plan tiers.

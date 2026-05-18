@@ -2,16 +2,16 @@
 
 import { useEffect } from "react";
 import { useQuery } from "@tanstack/react-query";
-import { useNavigationStore } from "@multica/core/navigation";
-import { useAuthStore } from "@multica/core/auth";
+import { useNavigationStore } from "@mato/core/navigation";
+import { useAuthStore } from "@mato/core/auth";
 import {
   paths,
   resolvePostAuthDestination,
   useCurrentWorkspace,
   useHasOnboarded,
-} from "@multica/core/paths";
-import { workspaceListOptions } from "@multica/core/workspace";
-import { useRecentIssuesStore } from "@multica/core/issues/stores";
+} from "@mato/core/paths";
+import { workspaceListOptions } from "@mato/core/workspace";
+import { useRecentIssuesStore } from "@mato/core/issues/stores";
 import { useNavigation } from "../navigation";
 
 /**

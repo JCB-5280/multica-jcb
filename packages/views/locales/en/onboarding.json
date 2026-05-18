@@ -3,7 +3,7 @@
     "step_of": "Step {{current}} of {{total}}"
   },
   "welcome": {
-    "wordmark": "Welcome to Multica",
+    "wordmark": "Welcome to MATO",
     "headline_line1": "Your AI teammates,",
     "headline_line2": "in",
     "headline_emphasis": "one workspace.",
@@ -53,7 +53,7 @@
     "q2_writer": "Writer or content creator",
     "q2_founder": "Founder or operator",
     "q2_other_placeholder": "e.g. researcher, designer, ops lead",
-    "q3_question": "What do you want to do with Multica?",
+    "q3_question": "What do you want to do with MATO?",
     "q3_coding": "Write and ship code",
     "q3_planning": "Plan and manage projects",
     "q3_writing_research": "Research or write",
@@ -88,14 +88,14 @@
   "cli_install": {
     "copy_aria": "Copy",
     "intro": "You'll need an AI coding tool on this machine (Claude Code, Codex, Cursor, …) for the daemon to do real work. Also works on servers and remote dev boxes.",
-    "step1_label": "Install the Multica CLI",
+    "step1_label": "Install the MATO CLI",
     "step2_label": "Start the daemon"
   },
   "starter_content": {
     "title": "Welcome — add starter tasks?",
     "description_prefix": "A ",
     "description_term": "Getting Started",
-    "description_suffix": " project with short tasks that walk through how agents, issues, and context work in Multica.",
+    "description_suffix": " project with short tasks that walk through how agents, issues, and context work in MATO.",
     "dismiss_action": "Start blank workspace",
     "import_action": "Add starter tasks",
     "success_toast": "Starter tasks added — check your sidebar",
@@ -233,7 +233,7 @@
   },
   "step_runtime": {
     "scanning_headline": "Looking for your tools…",
-    "scanning_lede_prefix": "Multica drives local AI coding tools like ",
+    "scanning_lede_prefix": "MATO drives local AI coding tools like ",
     "scanning_lede_suffix": ", and others. We're waiting to hear back from your machine about which ones are installed.",
     "found_headline": "We found your runtimes.",
     "found_lede": "We scanned your machine for AI coding tools you've already set up. Pick one for your first agent.",
@@ -245,7 +245,7 @@
     "online_label": "online",
     "offline_label": "offline",
     "empty_headline": "No supported tools detected.",
-    "empty_lede_prefix": "Multica drives local AI coding tools like ",
+    "empty_lede_prefix": "MATO drives local AI coding tools like ",
     "empty_lede_suffix": ", and others — we didn't find any on this machine. Install one and come back, or pick a path below.",
     "empty_skip_title": "Skip for now",
     "empty_skip_subtitle": "Enter your workspace in read-only mode. Agents can't execute tasks until a runtime connects — but you can still browse, plan, and invite teammates.",

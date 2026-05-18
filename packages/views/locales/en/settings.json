@@ -68,7 +68,7 @@
     },
     "system": {
       "title": "System Notifications",
-      "description": "Control native OS notification banners shown when Multica is in the background.",
+      "description": "Control native OS notification banners shown when MATO is in the background.",
       "label": "Show system notifications",
       "hint": "Show a banner from your operating system for new inbox items when the app isn't focused."
     }

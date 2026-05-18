@@ -4,8 +4,8 @@ import (
 	"encoding/json"
 	"testing"
 
-	"github.com/multica-ai/multica/server/internal/events"
-	"github.com/multica-ai/multica/server/pkg/protocol"
+	"github.com/mato-ai/mato/server/internal/events"
+	"github.com/mato-ai/mato/server/pkg/protocol"
 )
 
 // TestRegisterListeners_FrameContainsActorType asserts that every WS frame

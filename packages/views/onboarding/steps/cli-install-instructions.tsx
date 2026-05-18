@@ -2,12 +2,12 @@
 
 import { useState } from "react";
 import { Check, Copy, Terminal } from "lucide-react";
-import { Card, CardContent } from "@multica/ui/components/ui/card";
+import { Card, CardContent } from "@mato/ui/components/ui/card";
 import { useT } from "../../i18n";
 
 const INSTALL_CMD =
-  "curl -fsSL https://raw.githubusercontent.com/multica-ai/multica/main/scripts/install.sh | bash";
-const SETUP_CMD = "multica setup";
+  "curl -fsSL https://raw.githubusercontent.com/mato.ai/mato/main/scripts/install.sh | bash";
+const SETUP_CMD = "mato setup";
 
 function CopyButton({ text }: { text: string }) {
   const { t } = useT("onboarding");
@@ -55,7 +55,7 @@ function Step({ n, label, cmd }: { n: number; label: string; cmd: string }) {
 /**
  * CLI install instructions — two copy-and-run commands. Hardcoded because
  * there's nothing environmental to infer: step 1 is the public install
- * script, step 2 is the cloud `multica setup` which the CLI itself knows
+ * script, step 2 is the cloud `mato setup` which the CLI itself knows
  * the endpoints for. Local development tests a self-host variant by
  * typing the extended command directly in the terminal; no need to
  * thread env vars through React.

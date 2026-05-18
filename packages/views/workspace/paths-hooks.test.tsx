@@ -5,11 +5,11 @@ import {
   WorkspaceSlugProvider,
   useWorkspaceSlug,
   useCurrentWorkspace,
-} from "@multica/core/paths";
-import { workspaceKeys } from "@multica/core/workspace/queries";
-import type { Workspace } from "@multica/core/types";
+} from "@mato/core/paths";
+import { workspaceKeys } from "@mato/core/workspace/queries";
+import type { Workspace } from "@mato/core/types";
 
-// Hook tests for @multica/core/paths live here because packages/core/ runs
+// Hook tests for @mato/core/paths live here because packages/core/ runs
 // Vitest in node environment (no jsdom). packages/views/ already has jsdom +
 // @testing-library/react configured, so it's the correct home per CLAUDE.md
 // testing rules ("shared UI components live in packages/views/*.test.tsx").

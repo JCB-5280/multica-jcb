@@ -28,13 +28,13 @@ export const localeLabels: Record<Lang, string> = {
 // this dict only carries TSX-rendered chrome above the MDX body.
 export const homeCopy = {
   en: {
-    eyebrow: "Multica Docs",
+    eyebrow: "MATO Docs",
     titleLead: "Humans and agents,",
     titleAccent: "in one place.",
     byline: ["Getting started", "Updated April 2026", "6 min read"],
   },
   zh: {
-    eyebrow: "Multica 文档",
+    eyebrow: "MATO 文档",
     titleLead: "人与智能体，",
     titleAccent: "共处一方。",
     byline: ["开始使用", "2026 年 4 月更新", "阅读约 6 分钟"],

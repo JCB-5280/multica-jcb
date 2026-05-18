@@ -18,7 +18,7 @@ import { Node, mergeAttributes } from "@tiptap/core";
 import { ReactNodeViewRenderer, NodeViewWrapper } from "@tiptap/react";
 import type { NodeViewProps } from "@tiptap/react";
 import { Eye, FileText, Loader2, Download } from "lucide-react";
-import { FILE_CARD_URL_PATTERN } from "@multica/ui/markdown";
+import { FILE_CARD_URL_PATTERN } from "@mato/ui/markdown";
 import { useT } from "../../i18n";
 import { useAttachmentDownloadResolver } from "../attachment-download-context";
 import { useAttachmentPreview } from "../attachment-preview-modal";

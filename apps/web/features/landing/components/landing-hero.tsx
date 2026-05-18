@@ -3,8 +3,8 @@
 import Image from "next/image";
 import Link from "next/link";
 import { Download } from "lucide-react";
-import { useAuthStore } from "@multica/core/auth";
-import { captureDownloadIntent } from "@multica/core/analytics";
+import { useAuthStore } from "@mato/core/auth";
+import { captureDownloadIntent } from "@mato/core/analytics";
 import { useLocale } from "../i18n";
 import {
   ClaudeCodeLogo,
